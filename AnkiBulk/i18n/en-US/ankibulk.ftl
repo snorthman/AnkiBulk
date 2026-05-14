@@ -1,0 +1,209 @@
+# AnkiBulk — English (en-US)
+#
+# Fluent syntax cheatsheet:
+#   - Message ids: kebab-case, used as the key in tr('id').
+#   - Variables: { $name }; pass via kwargs in Python, e.g. tr('id', name='x').
+#   - Unicode is literal (UTF-8). Write → not →.
+#   - Multi-line values: indent continuation lines under the id.
+#   - Plurals/selects: { $n -> [one] one row *[other] { $n } rows }.
+
+
+## ─────────────────────────────────────────────────────────────────────
+## Common buttons
+## ─────────────────────────────────────────────────────────────────────
+
+btn-ok = OK
+btn-cancel = Cancel
+btn-close = Close
+btn-bulk-add = Bulk Add
+
+
+## ─────────────────────────────────────────────────────────────────────
+## Top-level menu (main.py)
+## ─────────────────────────────────────────────────────────────────────
+
+menu-ankibulk = AnkiBulk
+menu-bulk-add = Bulk Add
+menu-help = Help
+
+
+## ─────────────────────────────────────────────────────────────────────
+## Main dialog (dialog.py)
+## ─────────────────────────────────────────────────────────────────────
+
+dialog-title = Bulk Add
+dialog-invalid-yaml-title = Invalid YAML
+dialog-invalid-yaml-body = The YAML content is not valid and cannot be applied to the table.
+dialog-discard = Discard
+
+
+## ─────────────────────────────────────────────────────────────────────
+## Toggle labels (group names)
+## ─────────────────────────────────────────────────────────────────────
+
+group-table = Table
+group-text = Text
+
+hint-first-time =
+    Tip: switch to Text view to copy your notes to your clipboard, so you can edit these rows using an LLM, spreadsheet or other tool.
+
+
+## ─────────────────────────────────────────────────────────────────────
+## Table group (table/group.py)
+## ─────────────────────────────────────────────────────────────────────
+
+table-undo-tooltip = Undo (Ctrl+Z)
+table-redo-tooltip = Redo (Ctrl+Y)
+table-row-insert-tooltip = Insert a new row (Enter)
+table-row-remove-tooltip = Delete the selected row (Delete)
+table-row-clear-tooltip = Clear the sort field, or delete the row if empty (Backspace)
+table-insert-clipboard-tooltip = Insert clipboard lines as new rows (Ctrl+V)
+table-update-from-selection-tooltip = Reload example rows and notetype given the current browser selection (Ctrl+R)
+table-unsaved-title = Unsaved entries
+table-unsaved-body = All new entries in the table will be discarded. Are you sure?
+table-update-notetype-change =
+    Updating to selection causes the notetype to change
+    from { $old } to { $new }.
+    This will clear all new entries in the table.
+table-updated-example-rows = Updated example rows, using { $name } notetype
+table-added-rows =
+    { $n ->
+        [one] Added 1 row
+       *[other] Added { $n } rows
+    }
+
+
+## ─────────────────────────────────────────────────────────────────────
+## Text group (text/group.py)
+## ─────────────────────────────────────────────────────────────────────
+
+text-undo-tooltip = Undo (Ctrl+Z)
+text-redo-tooltip = Redo (Ctrl+Y)
+text-options-tooltip = Copy to Clipboard options
+text-copy-to-clipboard-tooltip = Copy content to clipboard (Ctrl+Shift+C)
+text-examples-placeholder = No example notes ...
+text-editables-placeholder = No new notes ...
+text-copied = Copied
+text-copy-yaml-error = YAML has errors; could not copy as { $format }
+
+
+## ─────────────────────────────────────────────────────────────────────
+## Options dialog (text/options.py)
+## ─────────────────────────────────────────────────────────────────────
+
+options-title = Copy to Clipboard Options
+options-preset = Preset
+options-copy-as = Copy as
+options-include-examples = Include example notes
+options-mark-examples = Mark examples as
+options-mark-tag-placeholder = example_note
+options-non-yaml-warning = This format is for pasting into external tools. Paste YAML back into the editor.
+options-additional-text = Additional text to include:
+options-additional-text-placeholder = e.g. instructions for an LLM...
+
+
+## ─────────────────────────────────────────────────────────────────────
+## Bulk add results (dialog.py)
+## ─────────────────────────────────────────────────────────────────────
+
+bulk-add-invalid-yaml = Fix the YAML errors in the Text view before adding.
+bulk-add-no-content = No new notes to add
+bulk-add-no-notes = No notes to add
+bulk-add-added =
+    { $n ->
+        [one] Added 1 note
+       *[other] Added { $n } notes
+    }
+bulk-add-failed =
+    { $n ->
+        [one] 1 note failed to add.
+       *[other] { $n } notes failed to add.
+    }
+
+
+## ─────────────────────────────────────────────────────────────────────
+## Linter messages (text/linter.py)
+## ─────────────────────────────────────────────────────────────────────
+
+lint-flow-style = Use block style (start each entry with '- '), not flow style (brackets/braces).
+lint-syntax-error = Syntax error: { $msg }
+lint-parse-error = Syntax error: Could not parse the content; check the formatting.
+lint-not-list = Each entry should start with '- '.
+lint-not-dict = Each entry should be a set of 'Field: value' pairs.
+lint-unknown-fields =
+    { $n ->
+        [one] Notetype "{ $notetype }" does not have a field named: { $fields }
+        *[other] Notetype "{ $notetype }" does not have fields named: { $fields }
+    }
+lint-value-not-text = Field "{ $key }": value must be text. Wrap the value in quotes, e.g. "{ $key }: '{ $val }'".
+
+lint-err-special-char = A special character needs to be inside quotes.
+lint-err-block-end = Unexpected text after a quoted value; remove stray characters or fix the quotes.
+lint-err-no-colon-allowed = Unexpected ':' found; if the value contains a colon, wrap it in quotes.
+lint-err-missing-colon = Missing ':' after a field name.
+lint-err-mismatched-brackets = Mismatched brackets or braces; check for missing quotes.
+lint-err-unexpected-colon = Unexpected ':'; wrap values containing colons in quotes.
+lint-err-unclosed-quotes = Mismatched quotes or brackets; check that all quotes are closed.
+lint-err-formatting = Formatting error; check for missing quotes or special characters.
+lint-err-generic = Could not parse the content; check the formatting.
+
+
+## ─────────────────────────────────────────────────────────────────────
+## Help dialog (help.py)
+## ─────────────────────────────────────────────────────────────────────
+
+help-title = AnkiBulk Help
+help-heading = AnkiBulk
+help-intro =
+    AnkiBulk is designed for quickly adding many notes at once.
+    The idea is simple: you type words into the sort field column
+    in the table — one per row — and then switch to the
+    Text view to copy everything to your clipboard. From there,
+    paste it into an LLM, a spreadsheet, or any other tool to fill in
+    the remaining fields. When you're done, paste the result back and
+    click Bulk Add. 
+
+help-selection-heading = Browser selection
+help-selection-desc =
+    Select one or more cards in the browser before opening AnkiBulk.
+    The first card's notetype determines the table columns, and all
+    selected notes appear as read-only example rows (grey). These
+    examples give context when filling in new notes — for instance,
+    an LLM can see your existing cards and match the style. If nothing
+    is selected, you can choose any notetype manually.
+
+help-table-heading = Table view
+help-table-desc =
+    The table shows existing notes (read-only, grey) and new notes
+    (editable, white). Only the sort field column is directly editable;
+    double-click any other cell in an editable row to jump to it.
+
+help-table-insert-clipboard = Paste clipboard as new rows (one row per line).
+help-table-update-selection = Refresh example rows from the current browser selection.
+help-table-right-click-header = Right-click header
+help-table-right-click-header-desc = Show or hide columns.
+help-table-enter = Commit the current cell and move to the next row. A new row is added automatically at the end.
+help-table-delete = Remove the selected editable row.
+help-table-backspace = Remove the selected row if the sort field is empty.
+
+help-text-heading = Text view
+help-text-desc =
+    Toggle to Text view to edit notes in YAML format. The top pane shows
+    your selected example notes; the bottom pane is for your new notes.
+    Switching back to the Table view validates and applies the YAML.
+
+help-text-options =
+    Configure the copy format (YAML, JSON, XML, CSV, or TSV),
+    whether to include example notes, and additional text.
+help-text-copy =
+    Copy the content in the chosen format, ready to paste
+    into an LLM or other tool.
+
+help-bulk-add-heading = Bulk Add
+help-bulk-add-desc =
+    Click Bulk Add to create notes from all editable rows that have
+    content in the sort field. Notes are added to the selected deck.
+
+help-link-issues = Report an issue
+help-link-discussions = Suggestions & discussion
+help-link-github = GitHub

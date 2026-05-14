@@ -1,0 +1,110 @@
+/* ================================================================
+   AnkiBulk — Global stylesheet
+   ================================================================
+   Widget hierarchy:
+     Dialog (QDialog)
+       ├── Chooser (Type / Deck)
+       ├── ToggleSwitch
+       ├── QGroupBox#contentGroup
+       │     └── QStackedWidget
+       │           ├── TableGroup#tableGroup (QWidget)
+       │           │     ├── QPushButton  ×2  ("Insert Clipboard to Table", "Update from Selection")
+       │           │     └── Table#table (QTableWidget)
+       │           │           ├── QHeaderView (horizontal — column names)
+       │           │           ├── QHeaderView (vertical — row numbers)
+       │           │           ├── QTableWidgetItem cells (::item)
+       │           │           └── QMenu (column visibility context menu)
+       │           │                 └── QCheckBox (per-column toggles)
+       │           └── TextGroup#textGroup (QWidget)
+       │                 ├── QPushButton  ×2  ("Options", "Copy to Clipboard")
+       │                 ├── QPlainTextEdit#textExamples (read-only)
+       │                 ├── QPlainTextEdit#textEditables (editable)
+       │                 └── QLabel#textStatus
+       ├── QPushButton ("Bulk Add")
+       └── QPushButton ("Close")
+   ================================================================ */
+
+
+/* -- Content group box ------------------------------------------- */
+
+QGroupBox#contentGroup {
+    padding: 0px;
+    margin: 0px;
+    border: 1px solid #C0C0C0;
+}
+
+
+/* -- Icon toolbar buttons ---------------------------------------- */
+
+QPushButton#iconBtn {
+    border: 1px solid #E4E4E4;
+    border-radius: 3px;
+    padding: 1px;
+    background: transparent;
+    min-width: 24px;
+    min-height: 24px;
+    max-width: 24px;
+    max-height: 24px;
+}
+
+QPushButton#iconBtn:hover {
+    border: 1px solid #B0B0B0;
+    background-color: #E8E8E8;
+}
+
+QPushButton#iconBtn:pressed {
+    border: 1px solid #909090;
+    background-color: #D0D0D0;
+}
+
+QPushButton#iconBtn:disabled {
+    opacity: 0.4;
+}
+
+/* Button group: flush buttons with rounded outer corners only */
+QPushButton#iconBtn[btnPos="first"] {
+    border-radius: 3px 0px 0px 3px;
+    border-right: none;
+}
+QPushButton#iconBtn[btnPos="middle"] {
+    border-radius: 0px;
+    border-right: none;
+}
+QPushButton#iconBtn[btnPos="last"] {
+    border-radius: 0px 3px 3px 0px;
+}
+QPushButton#iconBtn[btnPos="solo"] {
+    border-radius: 3px;
+}
+
+/* Restore full border on hover/pressed for grouped buttons */
+QPushButton#iconBtn[btnPos="first"]:hover,
+QPushButton#iconBtn[btnPos="middle"]:hover {
+    border-right: 1px solid #B0B0B0;
+}
+QPushButton#iconBtn[btnPos="first"]:pressed,
+QPushButton#iconBtn[btnPos="middle"]:pressed {
+    border-right: 1px solid #909090;
+}
+
+/* Button group container spacing */
+QWidget#btnGroup { margin: 0px 2px; }
+
+
+/* -- TableGroup -------------------------------------------------- */
+
+#tableGroup {
+    background-color: #F5F5F5;
+}
+
+
+/* Existing notes (read-only) */
+#textExamples {
+    background-color: #F5F5F5;
+}
+
+#firstTimeHint {
+    background-color: #FEFFC4;
+    border: 2px solid black;
+    padding: 6px 10px;
+}
