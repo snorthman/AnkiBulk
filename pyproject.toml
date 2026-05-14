@@ -1,0 +1,29 @@
+[project]
+name = "AnkiSensei"
+version = "0.1.0"
+description = "Anki addon for AI-driven generative grammar drilling"
+requires-python = ">=3.13"
+dependencies = [
+    # All runtime deps below are bundled with Anki 25.09; listed here so
+    # the dev environment / type-checker can resolve them.
+    "requests>=2.32",
+    "jsonschema>=4",
+    # Vendored at build time into AnkiSensei/internal/ — Anki doesn't ship it.
+    "fluent.runtime>=0.4",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "PyQt6>=6.6",
+    "anki>=25.9.2",
+    "aqt>=25.9.2",
+    "setuptools",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "interactive: opens a real Qt window for manual testing",
+    "anki: launches full Anki GUI against the AnkiSenseiTest profile",
+]
