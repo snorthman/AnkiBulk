@@ -1,7 +1,5 @@
 # AnkiBulk
 
-Tested extensively with Anki version ⁨25.09; your results may vary for earlier versions.
-
 An Anki addon for quickly adding many notes at once.
 
 Type words into the sort field column, one per row, then switch to Text view to copy everything to your clipboard. Paste it into an LLM, spreadsheet, or any other tool to fill in the remaining fields. When you're done, paste the result back and click Bulk Add.
@@ -63,10 +61,14 @@ Click **Bulk Add** to create notes from all editable rows that have content in t
 | Ctrl+Y | Redo (Table view) |
 | Ctrl+Shift+C | Copy to Clipboard (Text view) |
 
-## Links
+## Contribute
 
 - [Report an issue](https://github.com/snorthman/AnkiBulk/issues)
 - [Suggestions & discussion](https://github.com/snorthman/AnkiBulk/discussions)
+
+_Tested extensively with Anki version 25.09; your results may vary for earlier versions._
+
+**All non-English languages are currently machine translated. Feel free to pull request translation fixes.**
 
 ## Donate
 
