@@ -1,0 +1,174 @@
+# AnkiBulk — Português Brasileiro (pt-BR)
+
+# ── Botões comuns ──────────────────────────────────────────────────
+
+btn-ok: "OK"
+btn-cancel: "Cancelar"
+btn-close: "Fechar"
+btn-confirm: "Confirmar"
+btn-bulk-add: "Adicionar em lote"
+
+
+# ── Menu principal (main.py) ────────────────────────────────────────
+
+menu-ankibulk: "AnkiBulk"
+menu-bulk-add: "Adicionar em lote"
+menu-help: "Ajuda"
+
+
+# ── Diálogo principal (dialog.py) ─────────────────────────────────────
+
+dialog-title: "Adicionar em lote"
+dialog-invalid-yaml-title: "YAML inválido"
+dialog-invalid-yaml-body: "O conteúdo YAML é inválido e não pode ser aplicado à tabela."
+dialog-discard: "Descartar"
+
+
+# ── Rótulos de alternância (nomes dos grupos) ─────────────────────────────────────
+
+group-table: "Tabela"
+group-text: "Texto"
+
+hint-first-time: >-
+  Dica: mude para a visualização de Texto para copiar suas notas para a área de transferência,
+  e assim editar as linhas usando um LLM, planilha ou outra ferramenta.
+
+
+# ── Grupo de tabela (table/group.py) ────────────────────────────────────
+
+table-undo-tooltip: "Desfazer (Ctrl+Z)"
+table-redo-tooltip: "Refazer (Ctrl+Y)"
+table-row-insert-tooltip: "Inserir uma nova linha (Enter)"
+table-row-remove-tooltip: "Excluir a linha selecionada (Delete)"
+table-row-clear-tooltip: "Limpar o campo de classificação, ou excluir a linha se vazia (Backspace)"
+table-insert-clipboard-tooltip: "Inserir linhas da área de transferência como novas linhas (Ctrl+V)"
+table-update-from-selection-tooltip: "Recarregar linhas de exemplo e tipo de nota com base na seleção atual (Ctrl+R)"
+table-unsaved-title: "Entradas não salvas"
+table-unsaved-body: "Todas as novas entradas na tabela serão descartadas. Tem certeza?"
+table-update-notetype-change: >-
+  Atualizar a seleção mudará o tipo de nota de {old} para {new}.
+  Isso apagará todas as novas entradas da tabela.
+table-updated-example-rows: "Linhas de exemplo atualizadas, tipo de nota {name}"
+table-added-rows:
+  one: "1 linha adicionada"
+  other: "{n} linhas adicionadas"
+
+
+# ── Grupo de texto (text/group.py) ──────────────────────────────────────
+
+text-undo-tooltip: "Desfazer (Ctrl+Z)"
+text-redo-tooltip: "Refazer (Ctrl+Y)"
+text-options-tooltip: "Opções de cópia para a área de transferência"
+text-copy-to-clipboard-tooltip: "Copiar conteúdo para a área de transferência (Ctrl+Shift+C)"
+text-examples-placeholder: "Sem notas de exemplo ..."
+text-editables-placeholder: "Sem notas novas ..."
+text-copied: "Copiado"
+text-copy-yaml-error: "O YAML tem erros; não foi possível copiar como {format}"
+
+
+# ── Diálogo de opções (text/options.py) ─────────────────────────────────
+
+options-title: "Opções de cópia para a área de transferência"
+options-preset: "Predefinição"
+options-copy-as: "Copiar como"
+options-include-examples: "Incluir notas de exemplo"
+options-mark-examples: "Marcar exemplos como"
+options-mark-tag-placeholder: "nota_exemplo"
+options-non-yaml-warning: "Este formato é para colar em ferramentas externas. Cole o YAML de volta no editor."
+options-additional-text: "Texto adicional:"
+options-additional-text-placeholder: "ex. instruções para um LLM ..."
+
+
+# ── Resultados da adição em lote (dialog.py) ─────────────────────────────────────
+
+bulk-add-invalid-yaml: "Corrija os erros de YAML na visualização de Texto antes de adicionar."
+bulk-add-no-content: "Nenhuma nota nova para adicionar"
+bulk-add-no-notes: "Nenhuma nota para adicionar"
+bulk-add-added:
+  one: "1 nota adicionada"
+  other: "{n} notas adicionadas"
+bulk-add-failed:
+  one: "1 nota não pôde ser adicionada."
+  other: "{n} notas não puderam ser adicionadas."
+
+
+# ── Mensagens do verificador (text/linter.py) ─────────────────────────────────
+
+lint-flow-style: "Use o estilo de bloco (comece cada entrada com '- '), não o estilo de fluxo (colchetes/chaves)."
+lint-syntax-error: "Erro de sintaxe: {msg}"
+lint-parse-error: "Erro de sintaxe: não foi possível analisar o conteúdo; verifique a formatação."
+lint-not-list: "Cada entrada deve começar com '- '."
+lint-not-dict: "Cada entrada deve ser um conjunto de pares 'Campo: valor'."
+lint-unknown-fields:
+  one: "O tipo de nota \"{notetype}\" não tem um campo chamado: {fields}"
+  other: "O tipo de nota \"{notetype}\" não tem campos chamados: {fields}"
+lint-value-not-text: "Campo \"{key}\": o valor deve ser texto. Coloque o valor entre aspas, ex. \"{key}: '{val}'\"."
+
+lint-err-special-char: "Um caractere especial precisa estar entre aspas."
+lint-err-block-end: "Texto inesperado após um valor entre aspas; remova os caracteres extras ou corrija as aspas."
+lint-err-no-colon-allowed: "':' inesperado; se o valor contém dois-pontos, coloque entre aspas."
+lint-err-missing-colon: "Falta ':' após o nome do campo."
+lint-err-mismatched-brackets: "Colchetes ou chaves não correspondentes; verifique as aspas ausentes."
+lint-err-unexpected-colon: "':' inesperado; coloque valores com dois-pontos entre aspas."
+lint-err-unclosed-quotes: "Aspas ou colchetes não fechados; verifique se todas as aspas estão fechadas."
+lint-err-formatting: "Erro de formatação; verifique aspas ausentes ou caracteres especiais."
+lint-err-generic: "Não foi possível analisar o conteúdo; verifique a formatação."
+
+
+# ── Diálogo de ajuda (help.py) ────────────────────────────────────────
+
+help-title: "Ajuda do AnkiBulk"
+help-heading: "AnkiBulk"
+help-intro: >-
+  O AnkiBulk foi projetado para adicionar muitas notas de uma vez.
+  A ideia é simples: você digita palavras na coluna do campo de classificação
+  da tabela — uma por linha — e depois muda para a
+  visualização de Texto para copiar tudo para a área de transferência. De lá,
+  cole em um LLM, planilha ou qualquer outra ferramenta para preencher
+  os campos restantes. Quando terminar, cole o resultado de volta
+  e clique em Adicionar em lote.
+
+help-selection-heading: "Seleção do navegador"
+help-selection-desc: >-
+  Selecione um ou mais cartões no navegador antes de abrir o AnkiBulk.
+  O tipo de nota do primeiro cartão determina as colunas da tabela, e todas
+  as notas selecionadas aparecem como linhas de exemplo somente leitura (cinza).
+  Esses exemplos dão contexto ao preencher novas notas — por exemplo,
+  um LLM pode ver seus cartões existentes e reproduzir o estilo.
+  Se nada estiver selecionado, você pode escolher qualquer tipo de nota manualmente.
+
+help-table-heading: "Visualização de tabela"
+help-table-desc: >-
+  A tabela mostra notas existentes (somente leitura, cinza) e novas notas
+  (editáveis, branco). Apenas a coluna do campo de classificação é diretamente editável;
+  clique duas vezes em outra célula de uma linha editável para ir até ela.
+
+help-table-insert-clipboard: "Colar a área de transferência como novas linhas (uma linha por entrada)."
+help-table-update-selection: "Atualizar linhas de exemplo a partir da seleção atual."
+help-table-right-click-header: "Clique com botão direito no cabeçalho"
+help-table-right-click-header-desc: "Mostrar ou ocultar colunas."
+help-table-enter: "Confirmar a célula atual e ir para a próxima linha. Uma nova linha é adicionada automaticamente no final."
+help-table-delete: "Remover a linha editável selecionada."
+help-table-backspace: "Remover a linha selecionada se o campo de classificação estiver vazio."
+
+help-text-heading: "Visualização de texto"
+help-text-desc: >-
+  Mude para a visualização de Texto para editar notas no formato YAML. O painel superior mostra
+  suas notas de exemplo; o painel inferior é para suas novas notas.
+  Ao voltar para a visualização de Tabela, o YAML é validado e aplicado.
+
+help-text-options: >-
+  Configure o formato de cópia (YAML, JSON, XML, CSV ou TSV),
+  se deve incluir notas de exemplo e texto adicional.
+help-text-copy: >-
+  Copie o conteúdo no formato escolhido, pronto para colar
+  em um LLM ou outra ferramenta.
+
+help-bulk-add-heading: "Adicionar em lote"
+help-bulk-add-desc: >-
+  Clique em Adicionar em lote para criar notas de todas as linhas editáveis
+  com conteúdo no campo de classificação. As notas são adicionadas ao baralho selecionado.
+
+help-link-issues: "Reportar um problema"
+help-link-discussions: "Sugestões e discussão"
+help-link-github: "GitHub"

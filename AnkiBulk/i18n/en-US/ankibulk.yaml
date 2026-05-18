@@ -55,8 +55,7 @@ table-update-from-selection-tooltip: "Reload example rows and notetype given the
 table-unsaved-title: "Unsaved entries"
 table-unsaved-body: "All new entries in the table will be discarded. Are you sure?"
 table-update-notetype-change: >-
-  Updating to selection causes the notetype to change
-  from {old} to {new}.
+  Updating to selection causes the notetype to change from {old} to {new}.
   This will clear all new entries in the table.
 table-updated-example-rows: "Updated example rows, using {name} notetype"
 table-added-rows:

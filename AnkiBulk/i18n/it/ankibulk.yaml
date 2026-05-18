@@ -1,0 +1,174 @@
+# AnkiBulk — Italiano (it)
+
+# ── Pulsanti comuni ──────────────────────────────────────────────────
+
+btn-ok: "OK"
+btn-cancel: "Annulla"
+btn-close: "Chiudi"
+btn-confirm: "Conferma"
+btn-bulk-add: "Aggiunta massiva"
+
+
+# ── Menu principale (main.py) ────────────────────────────────────────
+
+menu-ankibulk: "AnkiBulk"
+menu-bulk-add: "Aggiunta massiva"
+menu-help: "Guida"
+
+
+# ── Dialogo principale (dialog.py) ─────────────────────────────────────
+
+dialog-title: "Aggiunta massiva"
+dialog-invalid-yaml-title: "YAML non valido"
+dialog-invalid-yaml-body: "Il contenuto YAML non è valido e non può essere applicato alla tabella."
+dialog-discard: "Scarta"
+
+
+# ── Etichette di alternanza (nomi dei gruppi) ─────────────────────────────────────
+
+group-table: "Tabella"
+group-text: "Testo"
+
+hint-first-time: >-
+  Suggerimento: passa alla vista Testo per copiare le note negli appunti,
+  così puoi modificare le righe con un LLM, un foglio di calcolo o un altro strumento.
+
+
+# ── Gruppo tabella (table/group.py) ────────────────────────────────────
+
+table-undo-tooltip: "Annulla (Ctrl+Z)"
+table-redo-tooltip: "Ripristina (Ctrl+Y)"
+table-row-insert-tooltip: "Inserisci una nuova riga (Invio)"
+table-row-remove-tooltip: "Elimina la riga selezionata (Canc)"
+table-row-clear-tooltip: "Cancella il campo di ordinamento, o elimina la riga se vuota (Backspace)"
+table-insert-clipboard-tooltip: "Inserisci le righe dagli appunti come nuove righe (Ctrl+V)"
+table-update-from-selection-tooltip: "Ricarica le righe di esempio e il tipo di nota dalla selezione attuale (Ctrl+R)"
+table-unsaved-title: "Voci non salvate"
+table-unsaved-body: "Tutte le nuove voci nella tabella saranno eliminate. Sei sicuro?"
+table-update-notetype-change: >-
+  L'aggiornamento della selezione cambierà il tipo di nota da {old} a {new}.
+  Questo eliminerà tutte le nuove voci nella tabella.
+table-updated-example-rows: "Righe di esempio aggiornate, tipo di nota {name}"
+table-added-rows:
+  one: "Aggiunta 1 riga"
+  other: "Aggiunte {n} righe"
+
+
+# ── Gruppo testo (text/group.py) ──────────────────────────────────────
+
+text-undo-tooltip: "Annulla (Ctrl+Z)"
+text-redo-tooltip: "Ripristina (Ctrl+Y)"
+text-options-tooltip: "Opzioni di copia negli appunti"
+text-copy-to-clipboard-tooltip: "Copia il contenuto negli appunti (Ctrl+Maiusc+C)"
+text-examples-placeholder: "Nessuna nota di esempio ..."
+text-editables-placeholder: "Nessuna nuova nota ..."
+text-copied: "Copiato"
+text-copy-yaml-error: "Il YAML contiene errori; impossibile copiare come {format}"
+
+
+# ── Dialogo opzioni (text/options.py) ─────────────────────────────────
+
+options-title: "Opzioni di copia negli appunti"
+options-preset: "Preimpostazione"
+options-copy-as: "Copia come"
+options-include-examples: "Includi note di esempio"
+options-mark-examples: "Contrassegna esempi come"
+options-mark-tag-placeholder: "nota_esempio"
+options-non-yaml-warning: "Questo formato è per incollare in strumenti esterni. Incolla il YAML nell'editor."
+options-additional-text: "Testo aggiuntivo:"
+options-additional-text-placeholder: "es. istruzioni per un LLM ..."
+
+
+# ── Risultati dell'aggiunta massiva (dialog.py) ─────────────────────────────────────
+
+bulk-add-invalid-yaml: "Correggi gli errori YAML nella vista Testo prima di aggiungere."
+bulk-add-no-content: "Nessuna nuova nota da aggiungere"
+bulk-add-no-notes: "Nessuna nota da aggiungere"
+bulk-add-added:
+  one: "Aggiunta 1 nota"
+  other: "Aggiunte {n} note"
+bulk-add-failed:
+  one: "1 nota non è stata aggiunta."
+  other: "{n} note non sono state aggiunte."
+
+
+# ── Messaggi del verificatore (text/linter.py) ─────────────────────────────────
+
+lint-flow-style: "Usa lo stile a blocchi (inizia ogni voce con '- '), non lo stile a flusso (parentesi/graffe)."
+lint-syntax-error: "Errore di sintassi: {msg}"
+lint-parse-error: "Errore di sintassi: impossibile analizzare il contenuto; controlla la formattazione."
+lint-not-list: "Ogni voce deve iniziare con '- '."
+lint-not-dict: "Ogni voce deve essere un insieme di coppie 'Campo: valore'."
+lint-unknown-fields:
+  one: "Il tipo di nota \"{notetype}\" non ha un campo chiamato: {fields}"
+  other: "Il tipo di nota \"{notetype}\" non ha campi chiamati: {fields}"
+lint-value-not-text: "Campo \"{key}\": il valore deve essere testo. Metti il valore tra virgolette, es. \"{key}: '{val}'\"."
+
+lint-err-special-char: "Un carattere speciale deve essere tra virgolette."
+lint-err-block-end: "Testo inatteso dopo un valore tra virgolette; rimuovi i caratteri in eccesso o correggi le virgolette."
+lint-err-no-colon-allowed: "Due punti inattesi; se il valore contiene due punti, mettilo tra virgolette."
+lint-err-missing-colon: "Mancano i due punti dopo il nome del campo."
+lint-err-mismatched-brackets: "Parentesi non corrispondenti; controlla le virgolette mancanti."
+lint-err-unexpected-colon: "Due punti inattesi; metti i valori con due punti tra virgolette."
+lint-err-unclosed-quotes: "Virgolette o parentesi non chiuse; controlla che tutte le virgolette siano chiuse."
+lint-err-formatting: "Errore di formattazione; controlla virgolette mancanti o caratteri speciali."
+lint-err-generic: "Impossibile analizzare il contenuto; controlla la formattazione."
+
+
+# ── Dialogo guida (help.py) ────────────────────────────────────────
+
+help-title: "Guida AnkiBulk"
+help-heading: "AnkiBulk"
+help-intro: >-
+  AnkiBulk è progettato per aggiungere molte note alla volta.
+  L'idea è semplice: digiti le parole nella colonna del campo di ordinamento
+  della tabella — una per riga — poi passi alla
+  vista Testo per copiare tutto negli appunti. Da lì,
+  incolla in un LLM, un foglio di calcolo o qualsiasi altro strumento per compilare
+  i campi restanti. Quando hai finito, incolla il risultato
+  e fai clic su Aggiunta massiva.
+
+help-selection-heading: "Selezione dal browser"
+help-selection-desc: >-
+  Seleziona una o più carte nel browser prima di aprire AnkiBulk.
+  Il tipo di nota della prima carta determina le colonne della tabella, e tutte
+  le note selezionate appaiono come righe di esempio in sola lettura (grigio).
+  Questi esempi forniscono contesto nella creazione di nuove note — ad esempio,
+  un LLM può vedere le tue carte esistenti e replicare lo stile.
+  Se non è selezionato nulla, puoi scegliere qualsiasi tipo di nota manualmente.
+
+help-table-heading: "Vista tabella"
+help-table-desc: >-
+  La tabella mostra le note esistenti (sola lettura, grigio) e le nuove note
+  (modificabili, bianco). Solo la colonna del campo di ordinamento è direttamente modificabile;
+  fai doppio clic su un'altra cella in una riga modificabile per raggiungerla.
+
+help-table-insert-clipboard: "Incolla gli appunti come nuove righe (una riga per voce)."
+help-table-update-selection: "Aggiorna le righe di esempio dalla selezione attuale."
+help-table-right-click-header: "Clic destro sull'intestazione"
+help-table-right-click-header-desc: "Mostra o nascondi colonne."
+help-table-enter: "Conferma la cella attuale e passa alla riga successiva. Una nuova riga viene aggiunta automaticamente alla fine."
+help-table-delete: "Rimuovi la riga modificabile selezionata."
+help-table-backspace: "Rimuovi la riga selezionata se il campo di ordinamento è vuoto."
+
+help-text-heading: "Vista testo"
+help-text-desc: >-
+  Passa alla vista Testo per modificare le note in formato YAML. Il pannello superiore mostra
+  le note di esempio selezionate; il pannello inferiore è per le nuove note.
+  Tornando alla vista Tabella il YAML viene validato e applicato.
+
+help-text-options: >-
+  Configura il formato di copia (YAML, JSON, XML, CSV o TSV),
+  se includere le note di esempio e il testo aggiuntivo.
+help-text-copy: >-
+  Copia il contenuto nel formato scelto, pronto per incollare
+  in un LLM o altro strumento.
+
+help-bulk-add-heading: "Aggiunta massiva"
+help-bulk-add-desc: >-
+  Fai clic su Aggiunta massiva per creare note da tutte le righe modificabili
+  con contenuto nel campo di ordinamento. Le note vengono aggiunte al mazzo selezionato.
+
+help-link-issues: "Segnala un problema"
+help-link-discussions: "Suggerimenti e discussione"
+help-link-github: "GitHub"

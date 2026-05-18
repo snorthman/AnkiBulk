@@ -30,63 +30,54 @@ from pathlib import Path
 import yaml
 from anki.lang import current_lang
 
-_VAR_RE = re.compile(r'\{(\w+)\}')
 
-
-def _load_catalog(path: Path) -> dict[str, str | dict[str, str]]:
-    """Load a YAML translation file.  Returns {} on any error."""
-    try:
-        with open(path, encoding='utf-8') as f:
-            data = yaml.safe_load(f)
-        return data if isinstance(data, dict) else {}
-    except Exception:
-        return {}
-
-
-def _format(template: str, kwargs: dict[str, object]) -> str:
-    """Replace {var} placeholders with keyword arguments."""
-
-    def _sub(m: re.Match[str]) -> str:
-        key = m.group(1)
-        return str(kwargs[key]) if key in kwargs else m.group(0)
-
-    return _VAR_RE.sub(_sub, template)
-
-
+# noinspection PyPep8Naming
 class i18n:
-    """YAML-based i18n with live locale switching."""
-
     def __init__(self) -> None:
-        self._base = Path(__file__).parent / 'i18n'
-        self._locale: str | None = None
-        self._catalog: dict[str, str | dict[str, str]] = {}
-        self._fallback_catalog = _load_catalog(self._base / self.fallback / 'ankibulk.yaml')
+        self._locale = self.fallback
+        self._fallback_catalog = self.load_catalog(self.base / self.fallback / 'ankibulk.yaml')
+        self._catalog = self._fallback_catalog.copy()
+        self._re = re.compile(r'\{(\w+)}')
+
+    def __getitem__(self, key: str) -> str | dict[str, str] | None:
+        return self._catalog.get(key) or self._fallback_catalog.get(key)
+
+    def __iter__(self):
+        for key in self._catalog.keys():
+            yield key
+
+    @property
+    def base(self) -> Path:
+        return Path(__file__).parent / 'i18n'
 
     @property
     def fallback(self) -> str:
         return 'en-US'
 
+    @property
+    def get_locale(self) -> str:
+        return current_lang.replace('_', '-')
+
     def sync(self) -> bool:
-        new_locale = current_lang.replace('_', '-')
+        new_locale = self.get_locale
         if new_locale == self._locale:
             return False
 
         if new_locale == self.fallback:
             self._catalog = self._fallback_catalog
         else:
-            self._catalog = _load_catalog(self._base / new_locale / 'ankibulk.yaml')
+            self._catalog = self.load_catalog(self.base / new_locale / 'ankibulk.yaml')
 
         self._locale = new_locale
         return True
 
-    def tr(self, key: str, **kwargs: object) -> str:
+    def tr(self, key: str, **kwargs) -> str:
         self.sync()
-        entry = self._catalog.get(key) or self._fallback_catalog.get(key)
+        entry = self[key]
 
         if entry is None:
             return key
 
-        # Plural form: dict with one/other keys
         if isinstance(entry, dict):
             n = kwargs.get('n', 0)
             form = 'one' if n == 1 else 'other'
@@ -94,7 +85,26 @@ class i18n:
         else:
             template = str(entry)
 
-        return _format(template, kwargs)
+        return self.format(template, **kwargs)
+
+    def format(self, template: str, **kwargs) -> str:
+        """Replace {var} placeholders with keyword arguments."""
+
+        def _sub(m: re.Match[str]) -> str:
+            key = m.group(1)
+            return str(kwargs[key]) if key in kwargs else m.group(0)
+
+        return self._re.sub(_sub, template)
+
+    @staticmethod
+    def load_catalog(path: Path) -> dict[str, str | dict[str, str]]:
+        """Load a YAML translation file.  Returns {} on any error."""
+        try:
+            with open(path, encoding='utf-8') as f:
+                data = yaml.safe_load(f)
+            return data if isinstance(data, dict) else {}
+        except Exception:
+            return {}
 
 
 tr = i18n().tr

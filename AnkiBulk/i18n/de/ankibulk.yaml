@@ -1,0 +1,177 @@
+# AnkiBulk — Deutsch (de)
+
+# ── Common buttons ──────────────────────────────────────────────────
+
+btn-ok: "OK"
+btn-cancel: "Abbrechen"
+btn-close: "Schließen"
+btn-confirm: "Bestätigen"
+btn-bulk-add: "Stapelweise hinzufügen"
+
+
+# ── Top-level menu (main.py) ────────────────────────────────────────
+
+menu-ankibulk: "AnkiBulk"
+menu-bulk-add: "Stapelweise hinzufügen"
+menu-help: "Hilfe"
+
+
+# ── Main dialog (dialog.py) ─────────────────────────────────────────
+
+dialog-title: "Stapelweise hinzufügen"
+dialog-invalid-yaml-title: "Ungültiges YAML"
+dialog-invalid-yaml-body: "Der YAML-Inhalt ist ungültig und kann nicht auf die Tabelle angewendet werden."
+dialog-discard: "Verwerfen"
+
+
+# ── Toggle labels (group names) ─────────────────────────────────────
+
+group-table: "Tabelle"
+group-text: "Text"
+
+hint-first-time: >-
+  Tipp: Wechsle zur Textansicht, um deine Notizen in die Zwischenablage zu kopieren,
+  damit du die Zeilen mit einem LLM, einer Tabellenkalkulation oder einem anderen Werkzeug bearbeiten kannst.
+
+
+# ── Table group (table/group.py) ────────────────────────────────────
+
+table-undo-tooltip: "Rückgängig (Strg+Z)"
+table-redo-tooltip: "Wiederherstellen (Strg+Y)"
+table-row-insert-tooltip: "Neue Zeile einfügen (Eingabe)"
+table-row-remove-tooltip: "Ausgewählte Zeile löschen (Entf)"
+table-row-clear-tooltip: "Sortierfeld leeren oder Zeile löschen, wenn leer (Rücktaste)"
+table-insert-clipboard-tooltip: "Zwischenablage-Zeilen als neue Zeilen einfügen (Strg+V)"
+table-update-from-selection-tooltip: "Beispielzeilen und Notiztyp aus der aktuellen Browserauswahl aktualisieren (Strg+R)"
+table-unsaved-title: "Ungespeicherte Einträge"
+table-unsaved-body: "Alle neuen Einträge in der Tabelle werden verworfen. Bist du sicher?"
+table-update-notetype-change: >-
+  Die Aktualisierung der Auswahl ändert den Notiztyp von {old} zu {new}.
+  Dadurch werden alle neuen Einträge in der Tabelle gelöscht.
+table-updated-example-rows: "Beispielzeilen aktualisiert, Notiztyp {name}"
+table-added-rows:
+  one: "1 Zeile hinzugefügt"
+  other: "{n} Zeilen hinzugefügt"
+
+
+# ── Text group (text/group.py) ──────────────────────────────────────
+
+text-undo-tooltip: "Rückgängig (Strg+Z)"
+text-redo-tooltip: "Wiederherstellen (Strg+Y)"
+text-options-tooltip: "In Zwischenablage kopieren – Optionen"
+text-copy-to-clipboard-tooltip: "Inhalt in Zwischenablage kopieren (Strg+Umschalt+C)"
+text-examples-placeholder: "Keine Beispielnotizen ..."
+text-editables-placeholder: "Keine neuen Notizen ..."
+text-copied: "Kopiert"
+text-copy-yaml-error: "YAML enthält Fehler; Kopieren als {format} nicht möglich"
+
+
+# ── Options dialog (text/options.py) ─────────────────────────────────
+
+options-title: "In Zwischenablage kopieren – Optionen"
+options-preset: "Vorlage"
+options-copy-as: "Kopieren als"
+options-include-examples: "Beispielnotizen einschließen"
+options-mark-examples: "Beispiele markieren als"
+options-mark-tag-placeholder: "beispiel_notiz"
+options-non-yaml-warning: "Dieses Format ist zum Einfügen in externe Werkzeuge. Füge YAML zurück in den Editor ein."
+options-additional-text: "Zusätzlicher Text:"
+options-additional-text-placeholder: "z. B. Anweisungen für ein LLM ..."
+
+
+# ── Bulk add results (dialog.py) ─────────────────────────────────────
+
+bulk-add-invalid-yaml: "Behebe zuerst die YAML-Fehler in der Textansicht."
+bulk-add-no-content: "Keine neuen Notizen zum Hinzufügen"
+bulk-add-no-notes: "Keine Notizen zum Hinzufügen"
+bulk-add-added:
+  one: "1 Notiz hinzugefügt"
+  other: "{n} Notizen hinzugefügt"
+bulk-add-failed:
+  one: "1 Notiz konnte nicht hinzugefügt werden."
+  other: "{n} Notizen konnten nicht hinzugefügt werden."
+
+
+# ── Linter messages (text/linter.py) ─────────────────────────────────
+
+lint-flow-style: "Verwende Blockformat (jeden Eintrag mit '- ' beginnen), nicht Flussformat (Klammern/geschweifte Klammern)."
+lint-syntax-error: "Syntaxfehler: {msg}"
+lint-parse-error: "Syntaxfehler: Der Inhalt konnte nicht verarbeitet werden; überprüfe die Formatierung."
+lint-not-list: "Jeder Eintrag sollte mit '- ' beginnen."
+lint-not-dict: "Jeder Eintrag sollte aus 'Feld: Wert'-Paaren bestehen."
+lint-unknown-fields:
+  one: "Notiztyp \"{notetype}\" hat kein Feld namens: {fields}"
+  other: "Notiztyp \"{notetype}\" hat keine Felder namens: {fields}"
+lint-value-not-text: "Feld \"{key}\": Der Wert muss Text sein. Setze den Wert in Anführungszeichen, z. B. \"{key}: '{val}'\"."
+
+lint-err-special-char: "Ein Sonderzeichen muss in Anführungszeichen stehen."
+lint-err-block-end: "Unerwarteter Text nach einem Wert in Anführungszeichen; entferne überzählige Zeichen oder korrigiere die Anführungszeichen."
+lint-err-no-colon-allowed: "Unerwarteter Doppelpunkt; wenn der Wert einen Doppelpunkt enthält, setze ihn in Anführungszeichen."
+lint-err-missing-colon: "Fehlender Doppelpunkt nach dem Feldnamen."
+lint-err-mismatched-brackets: "Nicht übereinstimmende Klammern; überprüfe fehlende Anführungszeichen."
+lint-err-unexpected-colon: "Unerwarteter Doppelpunkt; setze Werte mit Doppelpunkten in Anführungszeichen."
+lint-err-unclosed-quotes: "Nicht geschlossene Anführungszeichen oder Klammern; überprüfe, ob alle Anführungszeichen geschlossen sind."
+lint-err-formatting: "Formatierungsfehler; überprüfe fehlende Anführungszeichen oder Sonderzeichen."
+lint-err-generic: "Der Inhalt konnte nicht verarbeitet werden; überprüfe die Formatierung."
+
+
+# ── Help dialog (help.py) ────────────────────────────────────────────
+
+help-title: "AnkiBulk Hilfe"
+help-heading: "AnkiBulk"
+help-intro: >-
+  AnkiBulk ist dafür gemacht, viele Notizen auf einmal hinzuzufügen.
+  Die Idee ist einfach: Du tippst Wörter in die Sortierfeldspalte
+  der Tabelle — eins pro Zeile — und wechselst dann zur
+  Textansicht, um alles in deine Zwischenablage zu kopieren. Von dort
+  fügst du es in ein LLM, eine Tabellenkalkulation oder ein anderes
+  Werkzeug ein, um die restlichen Felder auszufüllen. Wenn du fertig
+  bist, füge das Ergebnis wieder ein und klicke auf Stapelweise hinzufügen.
+
+help-selection-heading: "Browserauswahl"
+help-selection-desc: >-
+  Wähle eine oder mehrere Karten im Browser aus, bevor du AnkiBulk öffnest.
+  Der Notiztyp der ersten Karte bestimmt die Tabellenspalten, und alle
+  ausgewählten Notizen erscheinen als schreibgeschützte Beispielzeilen (grau).
+  Diese Beispiele geben Kontext beim Ausfüllen neuer Notizen — zum Beispiel
+  kann ein LLM deine vorhandenen Karten sehen und den Stil übernehmen.
+  Wenn nichts ausgewählt ist, kannst du einen beliebigen Notiztyp manuell wählen.
+
+help-table-heading: "Tabellenansicht"
+help-table-desc: >-
+  Die Tabelle zeigt vorhandene Notizen (schreibgeschützt, grau) und neue
+  Notizen (bearbeitbar, weiß). Nur die Sortierfeldspalte ist direkt
+  bearbeitbar; doppelklicke auf eine andere Zelle in einer bearbeitbaren
+  Zeile, um dorthin zu springen.
+
+help-table-insert-clipboard: "Zwischenablage als neue Zeilen einfügen (eine Zeile pro Eintrag)."
+help-table-update-selection: "Beispielzeilen aus der aktuellen Browserauswahl aktualisieren."
+help-table-right-click-header: "Rechtsklick auf Kopfzeile"
+help-table-right-click-header-desc: "Spalten ein- oder ausblenden."
+help-table-enter: "Aktuelle Zelle bestätigen und zur nächsten Zeile wechseln. Am Ende wird automatisch eine neue Zeile hinzugefügt."
+help-table-delete: "Die ausgewählte bearbeitbare Zeile entfernen."
+help-table-backspace: "Die ausgewählte Zeile entfernen, wenn das Sortierfeld leer ist."
+
+help-text-heading: "Textansicht"
+help-text-desc: >-
+  Wechsle zur Textansicht, um Notizen im YAML-Format zu bearbeiten.
+  Der obere Bereich zeigt deine ausgewählten Beispielnotizen; der untere
+  Bereich ist für deine neuen Notizen. Beim Zurückwechseln zur Tabellenansicht
+  wird das YAML validiert und angewendet.
+
+help-text-options: >-
+  Konfiguriere das Kopierformat (YAML, JSON, XML, CSV oder TSV),
+  ob Beispielnotizen eingeschlossen werden sollen, und zusätzlichen Text.
+help-text-copy: >-
+  Kopiere den Inhalt im gewählten Format, bereit zum Einfügen
+  in ein LLM oder anderes Werkzeug.
+
+help-bulk-add-heading: "Stapelweise hinzufügen"
+help-bulk-add-desc: >-
+  Klicke auf Stapelweise hinzufügen, um Notizen aus allen bearbeitbaren Zeilen
+  zu erstellen, die Inhalt im Sortierfeld haben. Notizen werden dem
+  ausgewählten Stapel hinzugefügt.
+
+help-link-issues: "Problem melden"
+help-link-discussions: "Vorschläge & Diskussion"
+help-link-github: "GitHub"

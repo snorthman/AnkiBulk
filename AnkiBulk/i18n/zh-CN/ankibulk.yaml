@@ -1,0 +1,173 @@
+# AnkiBulk — 简体中文 (zh-CN)
+
+# ── 通用按钮 ──────────────────────────────────────────────────
+
+btn-ok: "确定"
+btn-cancel: "取消"
+btn-close: "关闭"
+btn-confirm: "确认"
+btn-bulk-add: "批量添加"
+
+
+# ── 顶级菜单 (main.py) ────────────────────────────────────────
+
+menu-ankibulk: "AnkiBulk"
+menu-bulk-add: "批量添加"
+menu-help: "帮助"
+
+
+# ── 主对话框 (dialog.py) ─────────────────────────────────────
+
+dialog-title: "批量添加"
+dialog-invalid-yaml-title: "无效的 YAML"
+dialog-invalid-yaml-body: "YAML 内容无效，无法应用到表格。"
+dialog-discard: "丢弃"
+
+
+# ── 切换标签（分组名称）─────────────────────────────────────
+
+group-table: "表格"
+group-text: "文本"
+
+hint-first-time: >-
+  提示：切换到文本视图，将笔记复制到剪贴板，
+  然后使用 LLM、电子表格或其他工具编辑这些行。
+
+
+# ── 表格组 (table/group.py) ────────────────────────────────────
+
+table-undo-tooltip: "撤销 (Ctrl+Z)"
+table-redo-tooltip: "重做 (Ctrl+Y)"
+table-row-insert-tooltip: "插入新行 (Enter)"
+table-row-remove-tooltip: "删除选中的行 (Delete)"
+table-row-clear-tooltip: "清除排序字段，或删除空行 (Backspace)"
+table-insert-clipboard-tooltip: "将剪贴板内容作为新行插入 (Ctrl+V)"
+table-update-from-selection-tooltip: "根据当前浏览器选择重新加载示例行和笔记类型 (Ctrl+R)"
+table-unsaved-title: "未保存的条目"
+table-unsaved-body: "表格中所有新条目将被丢弃。确定要继续吗？"
+table-update-notetype-change: >-
+  更新选择将导致笔记类型从 {old} 更改为 {new}。
+  这将清除表格中所有新条目。
+table-updated-example-rows: "已更新示例行，使用 {name} 笔记类型"
+table-added-rows:
+  one: "已添加 1 行"
+  other: "已添加 {n} 行"
+
+
+# ── 文本组 (text/group.py) ──────────────────────────────────────
+
+text-undo-tooltip: "撤销 (Ctrl+Z)"
+text-redo-tooltip: "重做 (Ctrl+Y)"
+text-options-tooltip: "复制到剪贴板选项"
+text-copy-to-clipboard-tooltip: "复制内容到剪贴板 (Ctrl+Shift+C)"
+text-examples-placeholder: "没有示例笔记 ..."
+text-editables-placeholder: "没有新笔记 ..."
+text-copied: "已复制"
+text-copy-yaml-error: "YAML 有错误；无法复制为 {format}"
+
+
+# ── 选项对话框 (text/options.py) ─────────────────────────────────
+
+options-title: "复制到剪贴板选项"
+options-preset: "预设"
+options-copy-as: "复制为"
+options-include-examples: "包含示例笔记"
+options-mark-examples: "将示例标记为"
+options-mark-tag-placeholder: "示例笔记"
+options-non-yaml-warning: "此格式用于粘贴到外部工具。请将 YAML 粘贴回编辑器。"
+options-additional-text: "附加文本："
+options-additional-text-placeholder: "例如，给 LLM 的指令 ..."
+
+
+# ── 批量添加结果 (dialog.py) ─────────────────────────────────────
+
+bulk-add-invalid-yaml: "请先修复文本视图中的 YAML 错误。"
+bulk-add-no-content: "没有新笔记可添加"
+bulk-add-no-notes: "没有笔记可添加"
+bulk-add-added:
+  one: "已添加 1 条笔记"
+  other: "已添加 {n} 条笔记"
+bulk-add-failed:
+  one: "1 条笔记添加失败。"
+  other: "{n} 条笔记添加失败。"
+
+
+# ── 检查器消息 (text/linter.py) ─────────────────────────────────
+
+lint-flow-style: "请使用块格式（每个条目以 '- ' 开头），不要使用流格式（方括号/花括号）。"
+lint-syntax-error: "语法错误：{msg}"
+lint-parse-error: "语法错误：无法解析内容；请检查格式。"
+lint-not-list: "每个条目应以 '- ' 开头。"
+lint-not-dict: "每个条目应为一组 '字段: 值' 对。"
+lint-unknown-fields:
+  one: "笔记类型 \"{notetype}\" 没有名为 {fields} 的字段"
+  other: "笔记类型 \"{notetype}\" 没有名为 {fields} 的字段"
+lint-value-not-text: "字段 \"{key}\"：值必须是文本。请用引号包裹，例如 \"{key}: '{val}'\"。"
+
+lint-err-special-char: "特殊字符需要放在引号内。"
+lint-err-block-end: "引号值后有意外文本；请删除多余字符或修正引号。"
+lint-err-no-colon-allowed: "发现意外的冒号；如果值包含冒号，请用引号包裹。"
+lint-err-missing-colon: "字段名后缺少冒号。"
+lint-err-mismatched-brackets: "括号不匹配；请检查是否缺少引号。"
+lint-err-unexpected-colon: "意外的冒号；请将包含冒号的值放在引号内。"
+lint-err-unclosed-quotes: "引号或括号未闭合；请检查所有引号是否已关闭。"
+lint-err-formatting: "格式错误；请检查缺少的引号或特殊字符。"
+lint-err-generic: "无法解析内容；请检查格式。"
+
+
+# ── 帮助对话框 (help.py) ────────────────────────────────────────
+
+help-title: "AnkiBulk 帮助"
+help-heading: "AnkiBulk"
+help-intro: >-
+  AnkiBulk 专为一次性添加大量笔记而设计。
+  方法很简单：在表格的排序字段列中输入单词——每行一个——然后切换到
+  文本视图，将所有内容复制到剪贴板。接着，
+  粘贴到 LLM、电子表格或其他工具中来填写
+  剩余字段。完成后，将结果粘贴回来并
+  点击批量添加。
+
+help-selection-heading: "浏览器选择"
+help-selection-desc: >-
+  在打开 AnkiBulk 之前，在浏览器中选择一张或多张卡片。
+  第一张卡片的笔记类型决定表格列，所有
+  选中的笔记以只读示例行（灰色）显示。
+  这些示例在填写新笔记时提供上下文——例如，
+  LLM 可以看到你现有的卡片并匹配风格。
+  如果未选择任何内容，可以手动选择任意笔记类型。
+
+help-table-heading: "表格视图"
+help-table-desc: >-
+  表格显示现有笔记（只读，灰色）和新笔记
+  （可编辑，白色）。只有排序字段列可直接编辑；
+  双击可编辑行中的其他单元格可跳转到该处。
+
+help-table-insert-clipboard: "将剪贴板粘贴为新行（每行一个）。"
+help-table-update-selection: "从当前浏览器选择刷新示例行。"
+help-table-right-click-header: "右键单击表头"
+help-table-right-click-header-desc: "显示或隐藏列。"
+help-table-enter: "确认当前单元格并移到下一行。末尾会自动添加新行。"
+help-table-delete: "删除选中的可编辑行。"
+help-table-backspace: "如果排序字段为空，则删除选中的行。"
+
+help-text-heading: "文本视图"
+help-text-desc: >-
+  切换到文本视图以 YAML 格式编辑笔记。上方窗格显示
+  你选择的示例笔记；下方窗格用于你的新笔记。
+  切换回表格视图时会验证并应用 YAML。
+
+help-text-options: >-
+  配置复制格式（YAML、JSON、XML、CSV 或 TSV），
+  是否包含示例笔记，以及附加文本。
+help-text-copy: >-
+  以所选格式复制内容，可以直接粘贴
+  到 LLM 或其他工具。
+
+help-bulk-add-heading: "批量添加"
+help-bulk-add-desc: >-
+  点击批量添加，从所有排序字段有内容的可编辑行
+  创建笔记。笔记将添加到所选牌组。
+
+help-link-issues: "报告问题"
+help-link-discussions: "建议与讨论"
+help-link-github: "GitHub"

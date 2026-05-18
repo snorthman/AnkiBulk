@@ -1,0 +1,174 @@
+# AnkiBulk — Français (fr)
+
+# ── Boutons communs ──────────────────────────────────────────────────
+
+btn-ok: "OK"
+btn-cancel: "Annuler"
+btn-close: "Fermer"
+btn-confirm: "Confirmer"
+btn-bulk-add: "Ajout groupé"
+
+
+# ── Menu principal (main.py) ────────────────────────────────────────
+
+menu-ankibulk: "AnkiBulk"
+menu-bulk-add: "Ajout groupé"
+menu-help: "Aide"
+
+
+# ── Dialogue principal (dialog.py) ─────────────────────────────────────
+
+dialog-title: "Ajout groupé"
+dialog-invalid-yaml-title: "YAML invalide"
+dialog-invalid-yaml-body: "Le contenu YAML est invalide et ne peut pas être appliqué au tableau."
+dialog-discard: "Abandonner"
+
+
+# ── Libellés de bascule (noms de groupe) ─────────────────────────────────────
+
+group-table: "Tableau"
+group-text: "Texte"
+
+hint-first-time: >-
+  Astuce : passez en vue Texte pour copier vos notes dans le presse-papiers,
+  afin de les modifier avec un LLM, un tableur ou un autre outil.
+
+
+# ── Groupe tableau (table/group.py) ────────────────────────────────────
+
+table-undo-tooltip: "Annuler (Ctrl+Z)"
+table-redo-tooltip: "Rétablir (Ctrl+Y)"
+table-row-insert-tooltip: "Insérer une nouvelle ligne (Entrée)"
+table-row-remove-tooltip: "Supprimer la ligne sélectionnée (Suppr)"
+table-row-clear-tooltip: "Effacer le champ de tri, ou supprimer la ligne si vide (Retour arrière)"
+table-insert-clipboard-tooltip: "Insérer les lignes du presse-papiers comme nouvelles lignes (Ctrl+V)"
+table-update-from-selection-tooltip: "Recharger les lignes d'exemple et le type de note depuis la sélection actuelle (Ctrl+R)"
+table-unsaved-title: "Entrées non enregistrées"
+table-unsaved-body: "Toutes les nouvelles entrées du tableau seront supprimées. Êtes-vous sûr ?"
+table-update-notetype-change: >-
+  La mise à jour de la sélection entraîne un changement de type de note de {old} à {new}.
+  Cela supprimera toutes les nouvelles entrées du tableau.
+table-updated-example-rows: "Lignes d'exemple mises à jour, type de note {name}"
+table-added-rows:
+  one: "1 ligne ajoutée"
+  other: "{n} lignes ajoutées"
+
+
+# ── Groupe texte (text/group.py) ──────────────────────────────────────
+
+text-undo-tooltip: "Annuler (Ctrl+Z)"
+text-redo-tooltip: "Rétablir (Ctrl+Y)"
+text-options-tooltip: "Options de copie dans le presse-papiers"
+text-copy-to-clipboard-tooltip: "Copier le contenu dans le presse-papiers (Ctrl+Maj+C)"
+text-examples-placeholder: "Aucune note d'exemple ..."
+text-editables-placeholder: "Aucune nouvelle note ..."
+text-copied: "Copié"
+text-copy-yaml-error: "Le YAML contient des erreurs ; impossible de copier en {format}"
+
+
+# ── Dialogue d'options (text/options.py) ─────────────────────────────────
+
+options-title: "Options de copie dans le presse-papiers"
+options-preset: "Préréglage"
+options-copy-as: "Copier en"
+options-include-examples: "Inclure les notes d'exemple"
+options-mark-examples: "Marquer les exemples comme"
+options-mark-tag-placeholder: "note_exemple"
+options-non-yaml-warning: "Ce format est destiné au collage dans des outils externes. Collez le YAML dans l'éditeur."
+options-additional-text: "Texte supplémentaire :"
+options-additional-text-placeholder: "ex. instructions pour un LLM ..."
+
+
+# ── Résultats de l'ajout groupé (dialog.py) ─────────────────────────────────────
+
+bulk-add-invalid-yaml: "Corrigez les erreurs YAML dans la vue Texte avant d'ajouter."
+bulk-add-no-content: "Aucune nouvelle note à ajouter"
+bulk-add-no-notes: "Aucune note à ajouter"
+bulk-add-added:
+  one: "1 note ajoutée"
+  other: "{n} notes ajoutées"
+bulk-add-failed:
+  one: "1 note n'a pas pu être ajoutée."
+  other: "{n} notes n'ont pas pu être ajoutées."
+
+
+# ── Messages du vérificateur (text/linter.py) ─────────────────────────────────
+
+lint-flow-style: "Utilisez le style bloc (commencez chaque entrée par '- '), pas le style flux (crochets/accolades)."
+lint-syntax-error: "Erreur de syntaxe : {msg}"
+lint-parse-error: "Erreur de syntaxe : impossible d'analyser le contenu ; vérifiez le formatage."
+lint-not-list: "Chaque entrée doit commencer par '- '."
+lint-not-dict: "Chaque entrée doit être un ensemble de paires 'Champ : valeur'."
+lint-unknown-fields:
+  one: "Le type de note \"{notetype}\" n'a pas de champ nommé : {fields}"
+  other: "Le type de note \"{notetype}\" n'a pas de champs nommés : {fields}"
+lint-value-not-text: "Champ \"{key}\" : la valeur doit être du texte. Mettez la valeur entre guillemets, ex. \"{key}: '{val}'\"."
+
+lint-err-special-char: "Un caractère spécial doit être entre guillemets."
+lint-err-block-end: "Texte inattendu après une valeur entre guillemets ; supprimez les caractères en trop ou corrigez les guillemets."
+lint-err-no-colon-allowed: "Deux-points inattendu ; si la valeur contient un deux-points, mettez-la entre guillemets."
+lint-err-missing-colon: "Deux-points manquant après le nom du champ."
+lint-err-mismatched-brackets: "Crochets ou accolades non appariés ; vérifiez les guillemets manquants."
+lint-err-unexpected-colon: "Deux-points inattendu ; mettez les valeurs contenant des deux-points entre guillemets."
+lint-err-unclosed-quotes: "Guillemets ou crochets non fermés ; vérifiez que tous les guillemets sont fermés."
+lint-err-formatting: "Erreur de formatage ; vérifiez les guillemets ou caractères spéciaux manquants."
+lint-err-generic: "Impossible d'analyser le contenu ; vérifiez le formatage."
+
+
+# ── Dialogue d'aide (help.py) ────────────────────────────────────────
+
+help-title: "Aide AnkiBulk"
+help-heading: "AnkiBulk"
+help-intro: >-
+  AnkiBulk est conçu pour ajouter rapidement de nombreuses notes à la fois.
+  L'idée est simple : vous tapez des mots dans la colonne du champ de tri
+  du tableau — un par ligne — puis vous passez en
+  vue Texte pour tout copier dans le presse-papiers. De là,
+  collez dans un LLM, un tableur ou tout autre outil pour remplir
+  les champs restants. Une fois terminé, collez le résultat
+  et cliquez sur Ajout groupé.
+
+help-selection-heading: "Sélection du navigateur"
+help-selection-desc: >-
+  Sélectionnez une ou plusieurs cartes dans le navigateur avant d'ouvrir AnkiBulk.
+  Le type de note de la première carte détermine les colonnes du tableau, et toutes
+  les notes sélectionnées apparaissent comme des lignes d'exemple en lecture seule (gris).
+  Ces exemples fournissent du contexte lors de la création de nouvelles notes — par exemple,
+  un LLM peut voir vos cartes existantes et reproduire le style.
+  Si rien n'est sélectionné, vous pouvez choisir n'importe quel type de note manuellement.
+
+help-table-heading: "Vue tableau"
+help-table-desc: >-
+  Le tableau affiche les notes existantes (lecture seule, gris) et les nouvelles notes
+  (modifiables, blanc). Seule la colonne du champ de tri est directement modifiable ;
+  double-cliquez sur une autre cellule d'une ligne modifiable pour y accéder.
+
+help-table-insert-clipboard: "Coller le presse-papiers comme nouvelles lignes (une ligne par entrée)."
+help-table-update-selection: "Rafraîchir les lignes d'exemple depuis la sélection actuelle."
+help-table-right-click-header: "Clic droit sur l'en-tête"
+help-table-right-click-header-desc: "Afficher ou masquer des colonnes."
+help-table-enter: "Valider la cellule actuelle et passer à la ligne suivante. Une nouvelle ligne est ajoutée automatiquement à la fin."
+help-table-delete: "Supprimer la ligne modifiable sélectionnée."
+help-table-backspace: "Supprimer la ligne sélectionnée si le champ de tri est vide."
+
+help-text-heading: "Vue texte"
+help-text-desc: >-
+  Passez en vue Texte pour modifier les notes au format YAML. Le volet supérieur affiche
+  vos notes d'exemple sélectionnées ; le volet inférieur est pour vos nouvelles notes.
+  Le retour à la vue Tableau valide et applique le YAML.
+
+help-text-options: >-
+  Configurez le format de copie (YAML, JSON, XML, CSV ou TSV),
+  l'inclusion des notes d'exemple et le texte supplémentaire.
+help-text-copy: >-
+  Copiez le contenu dans le format choisi, prêt à coller
+  dans un LLM ou un autre outil.
+
+help-bulk-add-heading: "Ajout groupé"
+help-bulk-add-desc: >-
+  Cliquez sur Ajout groupé pour créer des notes à partir de toutes les lignes modifiables
+  ayant du contenu dans le champ de tri. Les notes sont ajoutées au paquet sélectionné.
+
+help-link-issues: "Signaler un problème"
+help-link-discussions: "Suggestions et discussion"
+help-link-github: "GitHub"

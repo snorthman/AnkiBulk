@@ -1,0 +1,173 @@
+# AnkiBulk — 繁體中文 (zh-TW)
+
+# ── 通用按鈕 ──────────────────────────────────────────────────
+
+btn-ok: "確定"
+btn-cancel: "取消"
+btn-close: "關閉"
+btn-confirm: "確認"
+btn-bulk-add: "批量新增"
+
+
+# ── 頂級選單 (main.py) ────────────────────────────────────────
+
+menu-ankibulk: "AnkiBulk"
+menu-bulk-add: "批量新增"
+menu-help: "說明"
+
+
+# ── 主對話框 (dialog.py) ─────────────────────────────────────
+
+dialog-title: "批量新增"
+dialog-invalid-yaml-title: "無效的 YAML"
+dialog-invalid-yaml-body: "YAML 內容無效，無法套用至表格。"
+dialog-discard: "捨棄"
+
+
+# ── 切換標籤（分組名稱）─────────────────────────────────────
+
+group-table: "表格"
+group-text: "文字"
+
+hint-first-time: >-
+  提示：切換到文字檢視，將筆記複製到剪貼簿，
+  然後使用 LLM、試算表或其他工具編輯這些列。
+
+
+# ── 表格組 (table/group.py) ────────────────────────────────────
+
+table-undo-tooltip: "復原 (Ctrl+Z)"
+table-redo-tooltip: "重做 (Ctrl+Y)"
+table-row-insert-tooltip: "插入新列 (Enter)"
+table-row-remove-tooltip: "刪除選取的列 (Delete)"
+table-row-clear-tooltip: "清除排序欄位，或刪除空列 (Backspace)"
+table-insert-clipboard-tooltip: "將剪貼簿內容作為新列插入 (Ctrl+V)"
+table-update-from-selection-tooltip: "根據目前瀏覽器選取重新載入範例列和筆記類型 (Ctrl+R)"
+table-unsaved-title: "未儲存的項目"
+table-unsaved-body: "表格中所有新項目將被捨棄。確定要繼續嗎？"
+table-update-notetype-change: >-
+  更新選取將導致筆記類型從 {old} 變更為 {new}。
+  這將清除表格中所有新項目。
+table-updated-example-rows: "已更新範例列，使用 {name} 筆記類型"
+table-added-rows:
+  one: "已新增 1 列"
+  other: "已新增 {n} 列"
+
+
+# ── 文字組 (text/group.py) ──────────────────────────────────────
+
+text-undo-tooltip: "復原 (Ctrl+Z)"
+text-redo-tooltip: "重做 (Ctrl+Y)"
+text-options-tooltip: "複製到剪貼簿選項"
+text-copy-to-clipboard-tooltip: "複製內容到剪貼簿 (Ctrl+Shift+C)"
+text-examples-placeholder: "沒有範例筆記 ..."
+text-editables-placeholder: "沒有新筆記 ..."
+text-copied: "已複製"
+text-copy-yaml-error: "YAML 有錯誤；無法複製為 {format}"
+
+
+# ── 選項對話框 (text/options.py) ─────────────────────────────────
+
+options-title: "複製到剪貼簿選項"
+options-preset: "預設"
+options-copy-as: "複製為"
+options-include-examples: "包含範例筆記"
+options-mark-examples: "將範例標記為"
+options-mark-tag-placeholder: "範例筆記"
+options-non-yaml-warning: "此格式用於貼到外部工具。請將 YAML 貼回編輯器。"
+options-additional-text: "附加文字："
+options-additional-text-placeholder: "例如，給 LLM 的指令 ..."
+
+
+# ── 批量新增結果 (dialog.py) ─────────────────────────────────────
+
+bulk-add-invalid-yaml: "請先修復文字檢視中的 YAML 錯誤。"
+bulk-add-no-content: "沒有新筆記可新增"
+bulk-add-no-notes: "沒有筆記可新增"
+bulk-add-added:
+  one: "已新增 1 則筆記"
+  other: "已新增 {n} 則筆記"
+bulk-add-failed:
+  one: "1 則筆記新增失敗。"
+  other: "{n} 則筆記新增失敗。"
+
+
+# ── 檢查器訊息 (text/linter.py) ─────────────────────────────────
+
+lint-flow-style: "請使用區塊格式（每個項目以 '- ' 開頭），不要使用流格式（方括號/花括號）。"
+lint-syntax-error: "語法錯誤：{msg}"
+lint-parse-error: "語法錯誤：無法解析內容；請檢查格式。"
+lint-not-list: "每個項目應以 '- ' 開頭。"
+lint-not-dict: "每個項目應為一組 '欄位: 值' 對。"
+lint-unknown-fields:
+  one: "筆記類型 \"{notetype}\" 沒有名為 {fields} 的欄位"
+  other: "筆記類型 \"{notetype}\" 沒有名為 {fields} 的欄位"
+lint-value-not-text: "欄位 \"{key}\"：值必須是文字。請用引號包裹，例如 \"{key}: '{val}'\"。"
+
+lint-err-special-char: "特殊字元需要放在引號內。"
+lint-err-block-end: "引號值後有意外文字；請刪除多餘字元或修正引號。"
+lint-err-no-colon-allowed: "發現意外的冒號；如果值包含冒號，請用引號包裹。"
+lint-err-missing-colon: "欄位名稱後缺少冒號。"
+lint-err-mismatched-brackets: "括號不匹配；請檢查是否缺少引號。"
+lint-err-unexpected-colon: "意外的冒號；請將包含冒號的值放在引號內。"
+lint-err-unclosed-quotes: "引號或括號未關閉；請檢查所有引號是否已關閉。"
+lint-err-formatting: "格式錯誤；請檢查缺少的引號或特殊字元。"
+lint-err-generic: "無法解析內容；請檢查格式。"
+
+
+# ── 說明對話框 (help.py) ────────────────────────────────────────
+
+help-title: "AnkiBulk 說明"
+help-heading: "AnkiBulk"
+help-intro: >-
+  AnkiBulk 專為一次新增大量筆記而設計。
+  方法很簡單：在表格的排序欄位列中輸入單字——每列一個——然後切換到
+  文字檢視，將所有內容複製到剪貼簿。接著，
+  貼到 LLM、試算表或其他工具中來填寫
+  剩餘欄位。完成後，將結果貼回來並
+  按下批量新增。
+
+help-selection-heading: "瀏覽器選取"
+help-selection-desc: >-
+  在開啟 AnkiBulk 之前，在瀏覽器中選取一張或多張卡片。
+  第一張卡片的筆記類型決定表格欄位，所有
+  選取的筆記以唯讀範例列（灰色）顯示。
+  這些範例在填寫新筆記時提供背景——例如，
+  LLM 可以看到你現有的卡片並配合風格。
+  如果未選取任何內容，可以手動選擇任意筆記類型。
+
+help-table-heading: "表格檢視"
+help-table-desc: >-
+  表格顯示現有筆記（唯讀，灰色）和新筆記
+  （可編輯，白色）。只有排序欄位列可直接編輯；
+  雙擊可編輯列中的其他儲存格可跳到該處。
+
+help-table-insert-clipboard: "將剪貼簿貼為新列（每行一個）。"
+help-table-update-selection: "從目前瀏覽器選取重新整理範例列。"
+help-table-right-click-header: "右鍵按一下標題"
+help-table-right-click-header-desc: "顯示或隱藏欄位。"
+help-table-enter: "確認目前儲存格並移到下一列。末尾會自動新增新列。"
+help-table-delete: "移除選取的可編輯列。"
+help-table-backspace: "如果排序欄位為空，則移除選取的列。"
+
+help-text-heading: "文字檢視"
+help-text-desc: >-
+  切換到文字檢視以 YAML 格式編輯筆記。上方窗格顯示
+  你選取的範例筆記；下方窗格用於你的新筆記。
+  切換回表格檢視時會驗證並套用 YAML。
+
+help-text-options: >-
+  設定複製格式（YAML、JSON、XML、CSV 或 TSV），
+  是否包含範例筆記，以及附加文字。
+help-text-copy: >-
+  以所選格式複製內容，可以直接貼到
+  LLM 或其他工具。
+
+help-bulk-add-heading: "批量新增"
+help-bulk-add-desc: >-
+  按下批量新增，從所有排序欄位有內容的可編輯列
+  建立筆記。筆記將新增到所選牌組。
+
+help-link-issues: "回報問題"
+help-link-discussions: "建議與討論"
+help-link-github: "GitHub"

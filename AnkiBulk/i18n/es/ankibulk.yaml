@@ -1,0 +1,174 @@
+# AnkiBulk — Español (es)
+
+# ── Botones comunes ──────────────────────────────────────────────────
+
+btn-ok: "Aceptar"
+btn-cancel: "Cancelar"
+btn-close: "Cerrar"
+btn-confirm: "Confirmar"
+btn-bulk-add: "Agregar en lote"
+
+
+# ── Menú principal (main.py) ────────────────────────────────────────
+
+menu-ankibulk: "AnkiBulk"
+menu-bulk-add: "Agregar en lote"
+menu-help: "Ayuda"
+
+
+# ── Diálogo principal (dialog.py) ─────────────────────────────────────
+
+dialog-title: "Agregar en lote"
+dialog-invalid-yaml-title: "YAML inválido"
+dialog-invalid-yaml-body: "El contenido YAML no es válido y no se puede aplicar a la tabla."
+dialog-discard: "Descartar"
+
+
+# ── Etiquetas de alternancia (nombres de grupo) ─────────────────────────────────────
+
+group-table: "Tabla"
+group-text: "Texto"
+
+hint-first-time: >-
+  Consejo: cambia a la vista de Texto para copiar tus notas al portapapeles,
+  y así editarlas con un LLM, una hoja de cálculo u otra herramienta.
+
+
+# ── Grupo de tabla (table/group.py) ────────────────────────────────────
+
+table-undo-tooltip: "Deshacer (Ctrl+Z)"
+table-redo-tooltip: "Rehacer (Ctrl+Y)"
+table-row-insert-tooltip: "Insertar una nueva fila (Enter)"
+table-row-remove-tooltip: "Eliminar la fila seleccionada (Supr)"
+table-row-clear-tooltip: "Limpiar el campo de orden, o eliminar la fila si está vacía (Retroceso)"
+table-insert-clipboard-tooltip: "Insertar líneas del portapapeles como nuevas filas (Ctrl+V)"
+table-update-from-selection-tooltip: "Recargar filas de ejemplo y tipo de nota según la selección actual (Ctrl+R)"
+table-unsaved-title: "Entradas sin guardar"
+table-unsaved-body: "Se descartarán todas las nuevas entradas de la tabla. ¿Estás seguro?"
+table-update-notetype-change: >-
+  Actualizar la selección cambiará el tipo de nota de {old} a {new}.
+  Esto eliminará todas las nuevas entradas de la tabla.
+table-updated-example-rows: "Filas de ejemplo actualizadas, tipo de nota {name}"
+table-added-rows:
+  one: "1 fila agregada"
+  other: "{n} filas agregadas"
+
+
+# ── Grupo de texto (text/group.py) ──────────────────────────────────────
+
+text-undo-tooltip: "Deshacer (Ctrl+Z)"
+text-redo-tooltip: "Rehacer (Ctrl+Y)"
+text-options-tooltip: "Opciones de copia al portapapeles"
+text-copy-to-clipboard-tooltip: "Copiar contenido al portapapeles (Ctrl+Mayús+C)"
+text-examples-placeholder: "Sin notas de ejemplo ..."
+text-editables-placeholder: "Sin notas nuevas ..."
+text-copied: "Copiado"
+text-copy-yaml-error: "El YAML tiene errores; no se pudo copiar como {format}"
+
+
+# ── Diálogo de opciones (text/options.py) ─────────────────────────────────
+
+options-title: "Opciones de copia al portapapeles"
+options-preset: "Preajuste"
+options-copy-as: "Copiar como"
+options-include-examples: "Incluir notas de ejemplo"
+options-mark-examples: "Marcar ejemplos como"
+options-mark-tag-placeholder: "nota_ejemplo"
+options-non-yaml-warning: "Este formato es para pegar en herramientas externas. Pega YAML de vuelta en el editor."
+options-additional-text: "Texto adicional:"
+options-additional-text-placeholder: "ej. instrucciones para un LLM ..."
+
+
+# ── Resultados del agregado en lote (dialog.py) ─────────────────────────────────────
+
+bulk-add-invalid-yaml: "Corrige los errores de YAML en la vista de Texto antes de agregar."
+bulk-add-no-content: "No hay notas nuevas para agregar"
+bulk-add-no-notes: "No hay notas para agregar"
+bulk-add-added:
+  one: "1 nota agregada"
+  other: "{n} notas agregadas"
+bulk-add-failed:
+  one: "1 nota no se pudo agregar."
+  other: "{n} notas no se pudieron agregar."
+
+
+# ── Mensajes del verificador (text/linter.py) ─────────────────────────────────
+
+lint-flow-style: "Usa el estilo de bloque (empieza cada entrada con '- '), no el estilo de flujo (corchetes/llaves)."
+lint-syntax-error: "Error de sintaxis: {msg}"
+lint-parse-error: "Error de sintaxis: no se pudo analizar el contenido; revisa el formato."
+lint-not-list: "Cada entrada debe empezar con '- '."
+lint-not-dict: "Cada entrada debe ser un conjunto de pares 'Campo: valor'."
+lint-unknown-fields:
+  one: "El tipo de nota \"{notetype}\" no tiene un campo llamado: {fields}"
+  other: "El tipo de nota \"{notetype}\" no tiene campos llamados: {fields}"
+lint-value-not-text: "Campo \"{key}\": el valor debe ser texto. Pon el valor entre comillas, ej. \"{key}: '{val}'\"."
+
+lint-err-special-char: "Un carácter especial debe estar entre comillas."
+lint-err-block-end: "Texto inesperado después de un valor entrecomillado; elimina los caracteres sobrantes o corrige las comillas."
+lint-err-no-colon-allowed: "Se encontró un ':' inesperado; si el valor contiene dos puntos, ponlo entre comillas."
+lint-err-missing-colon: "Falta ':' después del nombre del campo."
+lint-err-mismatched-brackets: "Corchetes o llaves no coinciden; revisa si faltan comillas."
+lint-err-unexpected-colon: "':' inesperado; pon los valores con dos puntos entre comillas."
+lint-err-unclosed-quotes: "Comillas o corchetes sin cerrar; revisa que todas las comillas estén cerradas."
+lint-err-formatting: "Error de formato; revisa si faltan comillas o caracteres especiales."
+lint-err-generic: "No se pudo analizar el contenido; revisa el formato."
+
+
+# ── Diálogo de ayuda (help.py) ────────────────────────────────────────
+
+help-title: "Ayuda de AnkiBulk"
+help-heading: "AnkiBulk"
+help-intro: >-
+  AnkiBulk está diseñado para agregar muchas notas a la vez.
+  La idea es simple: escribes palabras en la columna del campo de orden
+  de la tabla — una por fila — y luego cambias a la
+  vista de Texto para copiar todo al portapapeles. Desde ahí,
+  pégalo en un LLM, una hoja de cálculo o cualquier otra herramienta para completar
+  los campos restantes. Cuando termines, pega el resultado
+  y haz clic en Agregar en lote.
+
+help-selection-heading: "Selección del navegador"
+help-selection-desc: >-
+  Selecciona una o más tarjetas en el navegador antes de abrir AnkiBulk.
+  El tipo de nota de la primera tarjeta determina las columnas de la tabla, y todas
+  las notas seleccionadas aparecen como filas de ejemplo de solo lectura (gris).
+  Estos ejemplos dan contexto al crear nuevas notas — por ejemplo,
+  un LLM puede ver tus tarjetas existentes y seguir el estilo.
+  Si no hay nada seleccionado, puedes elegir cualquier tipo de nota manualmente.
+
+help-table-heading: "Vista de tabla"
+help-table-desc: >-
+  La tabla muestra las notas existentes (solo lectura, gris) y las nuevas notas
+  (editables, blanco). Solo la columna del campo de orden es directamente editable;
+  haz doble clic en cualquier otra celda de una fila editable para ir a ella.
+
+help-table-insert-clipboard: "Pegar el portapapeles como nuevas filas (una fila por línea)."
+help-table-update-selection: "Actualizar filas de ejemplo desde la selección actual."
+help-table-right-click-header: "Clic derecho en el encabezado"
+help-table-right-click-header-desc: "Mostrar u ocultar columnas."
+help-table-enter: "Confirmar la celda actual y pasar a la siguiente fila. Se agrega una nueva fila automáticamente al final."
+help-table-delete: "Eliminar la fila editable seleccionada."
+help-table-backspace: "Eliminar la fila seleccionada si el campo de orden está vacío."
+
+help-text-heading: "Vista de texto"
+help-text-desc: >-
+  Cambia a la vista de Texto para editar notas en formato YAML. El panel superior muestra
+  tus notas de ejemplo; el panel inferior es para tus nuevas notas.
+  Al volver a la vista de Tabla se valida y aplica el YAML.
+
+help-text-options: >-
+  Configura el formato de copia (YAML, JSON, XML, CSV o TSV),
+  si incluir notas de ejemplo, y texto adicional.
+help-text-copy: >-
+  Copia el contenido en el formato elegido, listo para pegar
+  en un LLM u otra herramienta.
+
+help-bulk-add-heading: "Agregar en lote"
+help-bulk-add-desc: >-
+  Haz clic en Agregar en lote para crear notas de todas las filas editables
+  que tengan contenido en el campo de orden. Las notas se agregan al mazo seleccionado.
+
+help-link-issues: "Reportar un problema"
+help-link-discussions: "Sugerencias y discusión"
+help-link-github: "GitHub"

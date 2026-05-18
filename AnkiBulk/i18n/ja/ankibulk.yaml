@@ -1,0 +1,174 @@
+# AnkiBulk — 日本語 (ja)
+
+# ── 共通ボタン ──────────────────────────────────────────────────
+
+btn-ok: "OK"
+btn-cancel: "キャンセル"
+btn-close: "閉じる"
+btn-confirm: "確認"
+btn-bulk-add: "一括追加"
+
+
+# ── トップメニュー (main.py) ────────────────────────────────────────
+
+menu-ankibulk: "AnkiBulk"
+menu-bulk-add: "一括追加"
+menu-help: "ヘルプ"
+
+
+# ── メインダイアログ (dialog.py) ─────────────────────────────────────
+
+dialog-title: "一括追加"
+dialog-invalid-yaml-title: "無効なYAML"
+dialog-invalid-yaml-body: "YAMLの内容が無効で、テーブルに適用できません。"
+dialog-discard: "破棄"
+
+
+# ── 切り替えラベル（グループ名）─────────────────────────────────────
+
+group-table: "テーブル"
+group-text: "テキスト"
+
+hint-first-time: >-
+  ヒント：テキストビューに切り替えてノートをクリップボードにコピーし、
+  LLM、スプレッドシート、その他のツールで行を編集できます。
+
+
+# ── テーブルグループ (table/group.py) ────────────────────────────────────
+
+table-undo-tooltip: "元に戻す (Ctrl+Z)"
+table-redo-tooltip: "やり直し (Ctrl+Y)"
+table-row-insert-tooltip: "新しい行を挿入 (Enter)"
+table-row-remove-tooltip: "選択した行を削除 (Delete)"
+table-row-clear-tooltip: "ソートフィールドをクリア、または空なら行を削除 (Backspace)"
+table-insert-clipboard-tooltip: "クリップボードの行を新しい行として挿入 (Ctrl+V)"
+table-update-from-selection-tooltip: "現在のブラウザ選択から例の行とノートタイプを再読み込み (Ctrl+R)"
+table-unsaved-title: "未保存のエントリ"
+table-unsaved-body: "テーブルのすべての新しいエントリが破棄されます。よろしいですか？"
+table-update-notetype-change: >-
+  選択の更新により、ノートタイプが「{old}」から「{new}」に変更されます。
+  テーブルのすべての新しいエントリがクリアされます。
+table-updated-example-rows: "例の行を更新しました。ノートタイプ: {name}"
+table-added-rows:
+  one: "1行追加しました"
+  other: "{n}行追加しました"
+
+
+# ── テキストグループ (text/group.py) ──────────────────────────────────────
+
+text-undo-tooltip: "元に戻す (Ctrl+Z)"
+text-redo-tooltip: "やり直し (Ctrl+Y)"
+text-options-tooltip: "クリップボードにコピーのオプション"
+text-copy-to-clipboard-tooltip: "内容をクリップボードにコピー (Ctrl+Shift+C)"
+text-examples-placeholder: "例のノートなし ..."
+text-editables-placeholder: "新しいノートなし ..."
+text-copied: "コピーしました"
+text-copy-yaml-error: "YAMLにエラーがあります。{format}としてコピーできません"
+
+
+# ── オプションダイアログ (text/options.py) ─────────────────────────────────
+
+options-title: "クリップボードにコピーのオプション"
+options-preset: "プリセット"
+options-copy-as: "コピー形式"
+options-include-examples: "例のノートを含める"
+options-mark-examples: "例に付けるマーク"
+options-mark-tag-placeholder: "例のノート"
+options-non-yaml-warning: "この形式は外部ツールへの貼り付け用です。YAMLはエディタに貼り付けてください。"
+options-additional-text: "追加テキスト："
+options-additional-text-placeholder: "例：LLMへの指示 ..."
+
+
+# ── 一括追加の結果 (dialog.py) ─────────────────────────────────────
+
+bulk-add-invalid-yaml: "追加する前にテキストビューのYAMLエラーを修正してください。"
+bulk-add-no-content: "追加する新しいノートがありません"
+bulk-add-no-notes: "追加するノートがありません"
+bulk-add-added:
+  one: "1件のノートを追加しました"
+  other: "{n}件のノートを追加しました"
+bulk-add-failed:
+  one: "1件のノートの追加に失敗しました。"
+  other: "{n}件のノートの追加に失敗しました。"
+
+
+# ── リンターメッセージ (text/linter.py) ─────────────────────────────────
+
+lint-flow-style: "ブロックスタイル（各エントリを '- ' で始める）を使用してください。フロースタイル（括弧/波括弧）は使用しないでください。"
+lint-syntax-error: "構文エラー: {msg}"
+lint-parse-error: "構文エラー: 内容を解析できません。書式を確認してください。"
+lint-not-list: "各エントリは '- ' で始まる必要があります。"
+lint-not-dict: "各エントリは 'フィールド: 値' のペアのセットである必要があります。"
+lint-unknown-fields:
+  one: "ノートタイプ「{notetype}」には次のフィールドがありません: {fields}"
+  other: "ノートタイプ「{notetype}」には次のフィールドがありません: {fields}"
+lint-value-not-text: "フィールド「{key}」: 値はテキストである必要があります。引用符で囲んでください。例: \"{key}: '{val}'\"。"
+
+lint-err-special-char: "特殊文字は引用符の中に入れる必要があります。"
+lint-err-block-end: "引用値の後に予期しないテキストがあります。余分な文字を削除するか、引用符を修正してください。"
+lint-err-no-colon-allowed: "予期しない ':' が見つかりました。値にコロンが含まれる場合は引用符で囲んでください。"
+lint-err-missing-colon: "フィールド名の後に ':' がありません。"
+lint-err-mismatched-brackets: "括弧が一致しません。引用符の不足を確認してください。"
+lint-err-unexpected-colon: "予期しない ':'。コロンを含む値を引用符で囲んでください。"
+lint-err-unclosed-quotes: "引用符または括弧が閉じられていません。すべての引用符が閉じられているか確認してください。"
+lint-err-formatting: "書式エラー。引用符の不足または特殊文字を確認してください。"
+lint-err-generic: "内容を解析できません。書式を確認してください。"
+
+
+# ── ヘルプダイアログ (help.py) ────────────────────────────────────────
+
+help-title: "AnkiBulk ヘルプ"
+help-heading: "AnkiBulk"
+help-intro: >-
+  AnkiBulkは多くのノートを一度に追加するためのツールです。
+  使い方はシンプルです：テーブルのソートフィールド列に単語を入力し
+  （1行に1つ）、テキストビューに切り替えて
+  すべてをクリップボードにコピーします。そこから
+  LLM、スプレッドシート、その他のツールに貼り付けて
+  残りのフィールドを埋めます。完了したら結果を貼り付けて
+  一括追加をクリックします。
+
+help-selection-heading: "ブラウザの選択"
+help-selection-desc: >-
+  AnkiBulkを開く前に、ブラウザで1枚以上のカードを選択してください。
+  最初のカードのノートタイプがテーブルの列を決定し、
+  選択したすべてのノートが読み取り専用の例の行（グレー）として表示されます。
+  これらの例は新しいノートを作成する際の参考になります。たとえば、
+  LLMが既存のカードを見てスタイルを合わせることができます。
+  何も選択していない場合は、任意のノートタイプを手動で選択できます。
+
+help-table-heading: "テーブルビュー"
+help-table-desc: >-
+  テーブルには既存のノート（読み取り専用、グレー）と新しいノート
+  （編集可能、白）が表示されます。ソートフィールド列のみ直接編集可能です。
+  編集可能な行の他のセルをダブルクリックするとそこにジャンプします。
+
+help-table-insert-clipboard: "クリップボードを新しい行として貼り付け（1行につき1エントリ）。"
+help-table-update-selection: "現在のブラウザ選択から例の行を更新。"
+help-table-right-click-header: "ヘッダーを右クリック"
+help-table-right-click-header-desc: "列の表示/非表示を切り替え。"
+help-table-enter: "現在のセルを確定して次の行に移動。最後に新しい行が自動的に追加されます。"
+help-table-delete: "選択した編集可能な行を削除。"
+help-table-backspace: "ソートフィールドが空の場合、選択した行を削除。"
+
+help-text-heading: "テキストビュー"
+help-text-desc: >-
+  テキストビューに切り替えてYAML形式でノートを編集します。上のペインには
+  選択した例のノートが表示され、下のペインは新しいノート用です。
+  テーブルビューに戻るとYAMLが検証され適用されます。
+
+help-text-options: >-
+  コピー形式（YAML、JSON、XML、CSV、TSV）、
+  例のノートを含めるかどうか、追加テキストを設定します。
+help-text-copy: >-
+  選択した形式で内容をコピーし、
+  LLMやその他のツールに貼り付けられます。
+
+help-bulk-add-heading: "一括追加"
+help-bulk-add-desc: >-
+  一括追加をクリックすると、ソートフィールドに内容がある
+  すべての編集可能な行からノートが作成されます。ノートは選択したデッキに追加されます。
+
+help-link-issues: "問題を報告"
+help-link-discussions: "提案とディスカッション"
+help-link-github: "GitHub"
