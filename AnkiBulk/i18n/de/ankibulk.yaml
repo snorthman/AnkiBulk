@@ -26,6 +26,8 @@ dialog-discard: "Verwerfen"
 
 # ── Toggle labels (group names) ─────────────────────────────────────
 
+sort-field-suffix: "(Sortierfeld)"
+
 group-table: "Tabelle"
 group-text: "Text"
 
@@ -140,9 +142,9 @@ help-selection-desc: >-
 help-table-heading: "Tabellenansicht"
 help-table-desc: >-
   Die Tabelle zeigt vorhandene Notizen (schreibgeschützt, grau) und neue
-  Notizen (bearbeitbar, weiß). Nur die Sortierfeldspalte ist direkt
-  bearbeitbar; doppelklicke auf eine andere Zelle in einer bearbeitbaren
-  Zeile, um dorthin zu springen.
+  Notizen (bearbeitbar, weiß). Alle Spalten in bearbeitbaren Zeilen können
+  direkt bearbeitet werden. Die Sortierfeldspalte ist mit einer warmen
+  Hintergrundfarbe hervorgehoben.
 
 help-table-insert-clipboard: "Zwischenablage als neue Zeilen einfügen (eine Zeile pro Eintrag)."
 help-table-update-selection: "Beispielzeilen aus der aktuellen Browserauswahl aktualisieren."

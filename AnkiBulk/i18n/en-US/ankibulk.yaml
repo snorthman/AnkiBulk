@@ -35,6 +35,8 @@ dialog-discard: "Discard"
 
 # ── Toggle labels (group names) ─────────────────────────────────────
 
+sort-field-suffix: "(sort field)"
+
 group-table: "Table"
 group-text: "Text"
 
@@ -149,8 +151,8 @@ help-selection-desc: >-
 help-table-heading: "Table view"
 help-table-desc: >-
   The table shows existing notes (read-only, grey) and new notes
-  (editable, white). Only the sort field column is directly editable;
-  double-click any other cell in an editable row to jump to it.
+  (editable, white). All columns in editable rows can be edited directly.
+  The sort field column is highlighted with a warm background color.
 
 help-table-insert-clipboard: "Paste clipboard as new rows (one row per line)."
 help-table-update-selection: "Refresh example rows from the current browser selection."

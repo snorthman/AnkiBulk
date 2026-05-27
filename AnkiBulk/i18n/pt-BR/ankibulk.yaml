@@ -26,6 +26,8 @@ dialog-discard: "Descartar"
 
 # ── Rótulos de alternância (nomes dos grupos) ─────────────────────────────────────
 
+sort-field-suffix: "(campo de classificação)"
+
 group-table: "Tabela"
 group-text: "Texto"
 
@@ -140,8 +142,8 @@ help-selection-desc: >-
 help-table-heading: "Visualização de tabela"
 help-table-desc: >-
   A tabela mostra notas existentes (somente leitura, cinza) e novas notas
-  (editáveis, branco). Apenas a coluna do campo de classificação é diretamente editável;
-  clique duas vezes em outra célula de uma linha editável para ir até ela.
+  (editáveis, branco). Todas as colunas nas linhas editáveis podem ser editadas
+  diretamente. A coluna do campo de classificação é destacada com uma cor de fundo quente.
 
 help-table-insert-clipboard: "Colar a área de transferência como novas linhas (uma linha por entrada)."
 help-table-update-selection: "Atualizar linhas de exemplo a partir da seleção atual."

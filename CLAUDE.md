@@ -34,14 +34,14 @@ AnkiBulk/
     group.py           # TextGroup: buttons + two QPlainTextEdits (examples + editables), linter, copy to clipboard
     linter.py          # Debounced YAML validation, error highlighting, field name checks, flow-style rejection
     options.py         # Per-notetype preset dialog (copy format, include examples, mark tag, additional text)
-  internal/            # Vendored dependencies (yaml, fluent) — do not modify
+  internal/            # Vendored dependencies (yaml) — do not modify
 ```
 
 ## Key patterns
 
 - **Tab base class `Group`** — owns a shared `ToggleSwitch` widget and a `_top_row` QHBoxLayout. A stretch separates the toggle (left) from subclass buttons (right). The toggle is reparented via `showEvent` when the stacked widget switches pages.
-- **Cell backgrounds** — controlled by `TableCellDelegate(QStyledItemDelegate)` in `table/cell.py`, not CSS. Qt stylesheets on parent widgets override `setBackground()`, so the delegate handles readonly/editable/selected colors in `initStyleOption()`.
-- **Sort-field-only editing** — in editable rows, only the sort field column is editable. Double-clicking any other cell redirects to the sort field. All other fields are filled via YAML in the Text view.
+- **Cell backgrounds** — controlled by `TableCellDelegate(QStyledItemDelegate)` in `table/cell.py`, not CSS. Qt stylesheets on parent widgets override `setBackground()`, so the delegate handles readonly/editable/selected/sort-field colors in `initStyleOption()`. The sort field column has a distinct warm tint (`#FFF9E6`) in editable rows.
+- **All columns editable** — in editable rows, every column is editable. The sort field column is visually distinguished with a warm background color.
 - **Tags column** — synthetic column appended after notetype fields. `table.tags_col_name` property resolves collisions if a field is named "Tags" (prepends underscores).
 - **Column visibility menu** — `TableMenu(QMenu)` with `QWidgetAction`-wrapped checkboxes. Toggles on mouse-down (not release). Mouse release is swallowed to keep the menu open.
 - **Stylesheet** — single `style.css` loaded once on the dialog. No `::item` CSS rules (they would break the cell delegate). Widget targeting uses `setObjectName()`.

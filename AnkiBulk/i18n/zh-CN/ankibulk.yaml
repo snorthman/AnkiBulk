@@ -26,6 +26,8 @@ dialog-discard: "丢弃"
 
 # ── 切换标签（分组名称）─────────────────────────────────────
 
+sort-field-suffix: "（排序字段）"
+
 group-table: "表格"
 group-text: "文本"
 
@@ -139,8 +141,8 @@ help-selection-desc: >-
 help-table-heading: "表格视图"
 help-table-desc: >-
   表格显示现有笔记（只读，灰色）和新笔记
-  （可编辑，白色）。只有排序字段列可直接编辑；
-  双击可编辑行中的其他单元格可跳转到该处。
+  （可编辑，白色）。可编辑行中的所有列都可以直接编辑。
+  排序字段列以暖色背景突出显示。
 
 help-table-insert-clipboard: "将剪贴板粘贴为新行（每行一个）。"
 help-table-update-selection: "从当前浏览器选择刷新示例行。"

@@ -15,6 +15,7 @@ from aqt.qt import (
 )
 
 from ..config import AnkiBulkConfig
+from ..i18n import tr
 from .cell import TableCellDelegate
 from .menu import TableMenu
 from .undo import UndoStack
@@ -127,7 +128,9 @@ class Table(QTableWidget):
         self.clear()
         self.setColumnCount(len(columns))
         self.setRowCount(0)
-        self.setHorizontalHeaderLabels(columns)
+        headers = list(columns)
+        headers[self._sort_col] += f" {tr('sort-field-suffix')}"
+        self.setHorizontalHeaderLabels(headers)
         self.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
         self.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
 
@@ -141,14 +144,14 @@ class Table(QTableWidget):
 
     def insert_row(self, row: int, *args: str, editable: bool = True) -> int:
         """Insert a row at *row* with optional cell values.
-        When *editable* is True only the sort-field column is editable;
+        When *editable* is True every column is editable;
         when False every column is read-only.  Append by passing
         ``self.rowCount()`` as *row*."""
         self.insertRow(row)
         n = self.columnCount()
         for col in range(n):
             item = QTableWidgetItem(args[col] if col < len(args) else "")
-            if not editable or col != self.sort_col:
+            if not editable:
                 item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEditable)
             self.setItem(row, col, item)
         return row
@@ -310,22 +313,11 @@ class Table(QTableWidget):
         self._do(self._undo.redo)
 
     def edit(self, index, trigger=None, event=None):
-        """Override to save undo state when cell editing begins.
-        If the user double-clicks a readonly cell in an editable row,
-        redirect to the editable (sort-field) cell."""
+        """Override to save undo state when cell editing begins."""
         if trigger is None:
             return super().edit(index)
 
         row = index.row()
-        col = index.column()
-
-        # Double-click on a readonly cell in an editable row → jump to sort-field
-        if (trigger == QAbstractItemView.EditTrigger.DoubleClicked
-                and row >= self.first_editable_row
-                and col != self.sort_col):
-            edit_index = self.model().index(row, self.sort_col)
-            self.setCurrentIndex(edit_index)
-            return super().edit(edit_index, trigger, event)
 
         if not self._editing_saved and row >= self.first_editable_row:
             self.push_undo()

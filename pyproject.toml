@@ -1,6 +1,6 @@
 [project]
 name = "AnkiSensei"
-version = "0.1.0"
+version = "1.0.0"
 description = "Anki addon for AI-driven generative grammar drilling"
 requires-python = ">=3.13"
 dependencies = [

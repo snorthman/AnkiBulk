@@ -26,6 +26,8 @@ dialog-discard: "Abandonner"
 
 # ── Libellés de bascule (noms de groupe) ─────────────────────────────────────
 
+sort-field-suffix: "(champ de tri)"
+
 group-table: "Tableau"
 group-text: "Texte"
 
@@ -140,8 +142,8 @@ help-selection-desc: >-
 help-table-heading: "Vue tableau"
 help-table-desc: >-
   Le tableau affiche les notes existantes (lecture seule, gris) et les nouvelles notes
-  (modifiables, blanc). Seule la colonne du champ de tri est directement modifiable ;
-  double-cliquez sur une autre cellule d'une ligne modifiable pour y accéder.
+  (modifiables, blanc). Toutes les colonnes des lignes modifiables peuvent être éditées
+  directement. La colonne du champ de tri est mise en évidence avec une couleur de fond chaude.
 
 help-table-insert-clipboard: "Coller le presse-papiers comme nouvelles lignes (une ligne par entrée)."
 help-table-update-selection: "Rafraîchir les lignes d'exemple depuis la sélection actuelle."

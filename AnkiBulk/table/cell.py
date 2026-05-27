@@ -11,13 +11,15 @@ from aqt.qt import (
 
 READONLY_BG = QColor("#F5F5F5")
 EDITABLE_BG = QColor("#FFFFFF")
+SORT_FIELD_BG = QColor("#FFF9E6")
 SELECTED_BG = QColor("#ECECEC")
 
 
 class TableCellDelegate(QStyledItemDelegate):
     def initStyleOption(self, option: QStyleOptionViewItem, index: QModelIndex) -> None:
         super().initStyleOption(option, index)
-        item = self.parent().item(index.row(), index.column())
+        table = self.parent()
+        item = table.item(index.row(), index.column())
         if item is None:
             return
 
@@ -26,6 +28,9 @@ class TableCellDelegate(QStyledItemDelegate):
             option.backgroundBrush.setColor(SELECTED_BG)
             option.palette.setColor(option.palette.ColorRole.HighlightedText, QColor("#000000"))
         elif item.flags() & Qt.ItemFlag.ItemIsEditable:
-            option.backgroundBrush.setColor(EDITABLE_BG)
+            if index.column() == table.sort_col:
+                option.backgroundBrush.setColor(SORT_FIELD_BG)
+            else:
+                option.backgroundBrush.setColor(EDITABLE_BG)
         else:
             option.backgroundBrush.setColor(READONLY_BG)

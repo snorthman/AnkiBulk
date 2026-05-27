@@ -26,6 +26,8 @@ dialog-discard: "Scarta"
 
 # ── Etichette di alternanza (nomi dei gruppi) ─────────────────────────────────────
 
+sort-field-suffix: "(campo di ordinamento)"
+
 group-table: "Tabella"
 group-text: "Testo"
 
@@ -140,8 +142,8 @@ help-selection-desc: >-
 help-table-heading: "Vista tabella"
 help-table-desc: >-
   La tabella mostra le note esistenti (sola lettura, grigio) e le nuove note
-  (modificabili, bianco). Solo la colonna del campo di ordinamento è direttamente modificabile;
-  fai doppio clic su un'altra cella in una riga modificabile per raggiungerla.
+  (modificabili, bianco). Tutte le colonne nelle righe modificabili possono essere
+  modificate direttamente. La colonna del campo di ordinamento è evidenziata con un colore di sfondo caldo.
 
 help-table-insert-clipboard: "Incolla gli appunti come nuove righe (una riga per voce)."
 help-table-update-selection: "Aggiorna le righe di esempio dalla selezione attuale."

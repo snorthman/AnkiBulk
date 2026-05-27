@@ -26,6 +26,8 @@ dialog-discard: "捨棄"
 
 # ── 切換標籤（分組名稱）─────────────────────────────────────
 
+sort-field-suffix: "（排序欄位）"
+
 group-table: "表格"
 group-text: "文字"
 
@@ -139,8 +141,8 @@ help-selection-desc: >-
 help-table-heading: "表格檢視"
 help-table-desc: >-
   表格顯示現有筆記（唯讀，灰色）和新筆記
-  （可編輯，白色）。只有排序欄位列可直接編輯；
-  雙擊可編輯列中的其他儲存格可跳到該處。
+  （可編輯，白色）。可編輯列中的所有欄位都可以直接編輯。
+  排序欄位列以暖色背景突出顯示。
 
 help-table-insert-clipboard: "將剪貼簿貼為新列（每行一個）。"
 help-table-update-selection: "從目前瀏覽器選取重新整理範例列。"

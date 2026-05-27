@@ -26,6 +26,8 @@ dialog-discard: "Descartar"
 
 # ── Etiquetas de alternancia (nombres de grupo) ─────────────────────────────────────
 
+sort-field-suffix: "(campo de orden)"
+
 group-table: "Tabla"
 group-text: "Texto"
 
@@ -140,8 +142,8 @@ help-selection-desc: >-
 help-table-heading: "Vista de tabla"
 help-table-desc: >-
   La tabla muestra las notas existentes (solo lectura, gris) y las nuevas notas
-  (editables, blanco). Solo la columna del campo de orden es directamente editable;
-  haz doble clic en cualquier otra celda de una fila editable para ir a ella.
+  (editables, blanco). Todas las columnas en las filas editables se pueden editar
+  directamente. La columna del campo de orden está resaltada con un color de fondo cálido.
 
 help-table-insert-clipboard: "Pegar el portapapeles como nuevas filas (una fila por línea)."
 help-table-update-selection: "Actualizar filas de ejemplo desde la selección actual."
