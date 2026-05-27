@@ -20,5 +20,7 @@ zip -r "../$OUT" . \
     -x "./**/__pycache__/*"
 cd ..
 
+HASH=$(sha256sum "$OUT" | cut -d' ' -f1)
 echo "Packaged: $OUT ($(du -h "$OUT" | cut -f1))"
+echo "sha256:$HASH"
 read -n 1 -s
