@@ -34,6 +34,21 @@ class Chooser(QWidget):
         self._deck_chooser = DeckChooser(mw, self._deck_widget, starting_deck_id=starting_deck_id)
         layout.addWidget(self._deck_widget)
 
+        self._cleaned_up = False
+        nc, dc = self._notetype_chooser, self._deck_chooser
+        self.destroyed.connect(lambda: Chooser._force_cleanup(nc, dc))
+
+    @staticmethod
+    def _force_cleanup(nc, dc):
+        try:
+            nc.cleanup()
+        except Exception:
+            pass
+        try:
+            dc.cleanup()
+        except Exception:
+            pass
+
     # ---- public API ------------------------------------------------------
 
     @property
@@ -57,5 +72,7 @@ class Chooser(QWidget):
         self._notetype_chooser.button.setEnabled(enabled)
 
     def cleanup(self) -> None:
-        self._notetype_chooser.cleanup()
-        self._deck_chooser.cleanup()
+        if self._cleaned_up:
+            return
+        self._cleaned_up = True
+        self._force_cleanup(self._notetype_chooser, self._deck_chooser)

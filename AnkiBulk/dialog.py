@@ -325,8 +325,6 @@ class Dialog(QDialog):
             return
         saveGeom(self, __name__)
         self.chooser.cleanup()
-
         from . import main as _main
         _main._dialog = None
-
         super().closeEvent(evt)

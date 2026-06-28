@@ -28,10 +28,14 @@ def _on_bulk_add(browser):
     from .dialog import Dialog
     from aqt import mw
 
-    if _dialog is not None and _dialog.isVisible():
-        _dialog.raise_()
-        _dialog.activateWindow()
-        return
+    if _dialog is not None:
+        try:
+            if _dialog.isVisible():
+                _dialog.raise_()
+                _dialog.activateWindow()
+                return
+        except RuntimeError:
+            _dialog = None
 
     _dialog = Dialog(browser, mw)
     _dialog.show()

@@ -16,8 +16,8 @@ REPO_PATH = Path(importlib.util.find_spec('AnkiBulk').origin).parent.parent
 TESTS_PATH = REPO_PATH / 'tests'
 PROFILE_PATH = Path(os.environ['APPDATA']) / 'Anki2' / 'AnkiSenseiTest'
 COLLECTION_PATH = PROFILE_PATH / 'collection.anki2'
-ADDON_DIR = Path(os.environ['APPDATA']) / 'Anki2' / 'addons21' / 'AnkiBulk'
-ADDON_BACKUP_DIR = ADDON_DIR.with_name('AnkiBulk.testbak')
+ADDON_DIR = Path(os.environ['APPDATA']) / 'Anki2' / 'addons21' / 'AnkiBulkTest'
+ADDON_BACKUP_DIR = ADDON_DIR.with_name('AnkiBulkTest.testbak')
 ANKI_SITE_PACKAGES_PATH = (Path(os.environ['LOCALAPPDATA'])) / 'AnkiProgramFiles' / '.venv' / 'Lib' / 'site-packages'
 if str(ANKI_SITE_PACKAGES_PATH) not in sys.path:
     sys.path.insert(0, str(ANKI_SITE_PACKAGES_PATH))
