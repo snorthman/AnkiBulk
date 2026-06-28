@@ -39,6 +39,7 @@ class Table(QTableWidget):
 
         self._undo = UndoStack[list[list[str]]]()
         self._editing_saved = False
+        self._pending_snapshot: list[list[str]] | None = None
         self.undo_changed: Callable | None = None
 
         # Visual setup
@@ -298,6 +299,7 @@ class Table(QTableWidget):
             self.undo_changed()
 
     def _do(self, f: Callable):
+        row, col = self.currentRow(), self.currentColumn()
         snapshot = f(self.snapshot())
         if snapshot is not None:
             for r in range(self.rowCount() - 1, self.first_editable_row - 1, -1):
@@ -305,6 +307,7 @@ class Table(QTableWidget):
             for row_data in snapshot:
                 self.add_row(*row_data)
         self._notify_undo_changed()
+        self.setCurrentCell(min(row, self.rowCount() - 1), col)
 
     def undo(self) -> None:
         self._do(self._undo.undo)
@@ -313,21 +316,60 @@ class Table(QTableWidget):
         self._do(self._undo.redo)
 
     def edit(self, index, trigger=None, event=None):
-        """Override to save undo state when cell editing begins."""
+        """Override to capture a pending snapshot when cell editing begins.
+        The snapshot is only pushed to the undo stack if data changes."""
         if trigger is None:
             return super().edit(index)
 
         row = index.row()
 
         if not self._editing_saved and row >= self.first_editable_row:
-            self.push_undo()
+            self._pending_snapshot = self.snapshot()
             self._editing_saved = True
         return super().edit(index, trigger, event)
 
     def closeEditor(self, editor, hint):
-        """Reset editing flag when editor closes."""
         super().closeEditor(editor, hint)
+        if self._editing_saved and self._pending_snapshot is not None:
+            if self.snapshot() != self._pending_snapshot:
+                self._undo.push(self._pending_snapshot)
+                self._notify_undo_changed()
+            self._pending_snapshot = None
         self._editing_saved = False
+
+    def _visible_cols(self) -> list[int]:
+        return [c for c in range(self.columnCount()) if not self.isColumnHidden(c)]
+
+    def eventFilter(self, obj, event):
+        if (isinstance(event, QKeyEvent)
+                and self.state() == QAbstractItemView.State.EditingState
+                and hasattr(obj, 'cursorPosition') and hasattr(obj, 'text')):
+            key = event.key()
+            move = None
+            if key == Qt.Key.Key_Left and obj.cursorPosition() == 0:
+                move = -1
+            elif key == Qt.Key.Key_Right and obj.cursorPosition() == len(obj.text()):
+                move = 1
+            if move is not None:
+                delegate = self.itemDelegate()
+                delegate.commitData.emit(obj)
+                delegate.closeEditor.emit(obj, QAbstractItemDelegate.EndEditHint.NoHint)
+                row, col = self.currentRow(), self.currentColumn()
+                visible = self._visible_cols()
+                if visible:
+                    try:
+                        idx = visible.index(col)
+                    except ValueError:
+                        idx = 0
+                    target = idx + move
+                    if 0 <= target < len(visible):
+                        self.setCurrentCell(row, visible[target])
+                    elif move == -1 and row - 1 >= 0:
+                        self.setCurrentCell(row - 1, visible[-1])
+                    elif move == 1 and row + 1 < self.rowCount():
+                        self.setCurrentCell(row + 1, visible[0])
+                return True
+        return super().eventFilter(obj, event)
 
     def keyPressEvent(self, evt: QKeyEvent | None) -> None:
         if evt is None:
@@ -345,16 +387,15 @@ class Table(QTableWidget):
                         delegate.commitData.emit(editor)
                         delegate.closeEditor.emit(editor, QAbstractItemDelegate.EndEditHint.NoHint)
 
-                sort_col = self.sort_col
-                item = self.item(row, sort_col)
+                item = self.item(row, self.sort_col)
                 next_row = row + 1
                 if next_row >= self.rowCount():
                     if item is not None and item.text():
                         self.push_undo()
                         self.add_row()
-                        self.setCurrentCell(next_row, sort_col)
+                        self.setCurrentCell(next_row, col)
                     return
-                self.setCurrentCell(next_row, sort_col)
+                self.setCurrentCell(next_row, col)
                 return
 
         if key == Qt.Key.Key_Delete:
@@ -382,5 +423,30 @@ class Table(QTableWidget):
                     self.removeRow(row)
                     self.setCurrentCell(min(row, self.rowCount() - 1), col)
                     return
+
+        if key in (Qt.Key.Key_Tab, Qt.Key.Key_Backtab):
+            if self.state() == QAbstractItemView.State.EditingState:
+                editor = self.indexWidget(self.currentIndex())
+                if editor is not None:
+                    delegate = self.itemDelegate()
+                    delegate.commitData.emit(editor)
+                    delegate.closeEditor.emit(editor, QAbstractItemDelegate.EndEditHint.NoHint)
+            visible = self._visible_cols()
+            if visible:
+                try:
+                    idx = visible.index(col)
+                except ValueError:
+                    idx = 0
+                if key == Qt.Key.Key_Tab:
+                    if idx + 1 < len(visible):
+                        self.setCurrentCell(row, visible[idx + 1])
+                    elif row + 1 < self.rowCount():
+                        self.setCurrentCell(row + 1, visible[0])
+                else:
+                    if idx - 1 >= 0:
+                        self.setCurrentCell(row, visible[idx - 1])
+                    elif row - 1 >= 0:
+                        self.setCurrentCell(row - 1, visible[-1])
+            return
 
         super().keyPressEvent(evt)

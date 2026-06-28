@@ -45,14 +45,17 @@ class TableGroup(Group):
 
         self._add_separator()
 
-        self._clipboard_button = self._add_icon_button("clipboard-plus", tr("table-insert-clipboard-tooltip"), self._on_insert_clipboard)
-        self._update_clipboard_button()
+        self._add_icon_button("clipboard-copy", tr("table-copy-clipboard-tooltip"), self._on_copy_clipboard)
+        self._clipboard_paste_button = self._add_icon_button("clipboard-plus", tr("table-insert-clipboard-tooltip"), self._on_insert_clipboard)
+        self._update_clipboard_paste_button()
 
         # Poll clipboard changes to keep button state in sync
         clipboard = QApplication.clipboard()
         if clipboard is not None:
-            qconnect(clipboard.dataChanged, self._update_clipboard_button)
-            qconnect(self.destroyed, lambda: clipboard.dataChanged.disconnect(self._update_clipboard_button))
+            qconnect(clipboard.dataChanged, self._update_clipboard_paste_button)
+            qconnect(self.destroyed, lambda: clipboard.dataChanged.disconnect(self._update_clipboard_paste_button))
+
+        self._add_separator()
 
         self._add_icon_button("reload", tr("table-update-from-selection-tooltip"), self._on_update_from_selection)
 
@@ -226,13 +229,33 @@ class TableGroup(Group):
 
     # ---- clipboard -------------------------------------------------------
 
-    def _update_clipboard_button(self) -> None:
-        """Enable the clipboard button only when the clipboard has text."""
+    def _update_clipboard_paste_button(self) -> None:
         clipboard = QApplication.clipboard()
         if clipboard is None:
             return
         text = clipboard.text()
-        self._clipboard_button.setEnabled(bool(text and text.strip()))
+        self._clipboard_paste_button.setEnabled(bool(text and text.strip()))
+
+    def _on_copy_clipboard(self) -> None:
+        """Copy the entire table (header + all rows) to clipboard as TSV."""
+        table = self.table
+        visible = table.visible_columns
+        if not visible:
+            return
+
+        lines: list[str] = []
+        lines.append("\t".join(name for _, name in visible))
+        for r in range(table.rowCount()):
+            cells: list[str] = []
+            for c, _ in visible:
+                item = table.item(r, c)
+                cells.append(item.text() if item else "")
+            lines.append("\t".join(cells))
+
+        clipboard = QApplication.clipboard()
+        if clipboard is not None:
+            clipboard.setText("\n".join(lines))
+            tooltip(tr("text-copied"))
 
     def _on_insert_clipboard(self) -> None:
         """Split clipboard text by newlines and insert as editable rows."""

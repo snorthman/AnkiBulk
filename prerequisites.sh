@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# vendor.sh - repopulates AnkiBulk/internal with packages
+# prerequisites.sh - repopulates AnkiBulk/internal with packages
 # Anki 25.09 doesn't already bundle.
 set -euo pipefail
 
