@@ -146,7 +146,9 @@ class Linter:
         if ok:
             self._raw_status.hide()
         else:
-            self._raw_status.setStyleSheet("color: #c62828; padding: 2px 4px;")
+            from aqt.theme import theme_manager
+            color = "#ef9a9a" if theme_manager.night_mode else "#c62828"
+            self._raw_status.setStyleSheet(f"color: {color}; padding: 2px 4px;")
             self._raw_status.setText(text)
             self._raw_status.show()
 
@@ -167,7 +169,8 @@ class Linter:
 
             selection = QTextEdit.ExtraSelection()
             fmt = QTextCharFormat()
-            fmt.setBackground(QColor("#ffcdd2"))
+            from aqt.theme import theme_manager
+            fmt.setBackground(QColor("#4a1c1c" if theme_manager.night_mode else "#ffcdd2"))
             fmt.setProperty(QTextCharFormat.Property.FullWidthSelection, True)
             selection.format = fmt
 

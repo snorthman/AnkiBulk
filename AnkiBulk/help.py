@@ -79,7 +79,9 @@ class Dialog(QDialog):
 
         browser = QTextBrowser()
         browser.setOpenExternalLinks(True)
-        browser.setStyleSheet("background-color: #F3F3F3; border: 0px;")
+        from aqt.theme import theme_manager
+        bg = "#2D2D2D" if theme_manager.night_mode else "#F3F3F3"
+        browser.setStyleSheet(f"background-color: {bg}; border: 0px;")
         browser.setHtml(_html())
 
         doc = browser.document()

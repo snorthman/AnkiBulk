@@ -34,7 +34,10 @@ if TYPE_CHECKING:
     from aqt.browser import Browser
 
 
-STYLESHEET = Path(__file__).with_name("style.css").read_text(encoding="utf-8")
+def _load_stylesheet() -> str:
+    from aqt.theme import theme_manager
+    name = "style-dark.css" if theme_manager.night_mode else "style.css"
+    return Path(__file__).with_name(name).read_text(encoding="utf-8")
 
 
 class Dialog(QDialog):
@@ -62,7 +65,7 @@ class Dialog(QDialog):
         root.addWidget(self.chooser)
 
         # -- Row 2: Stacked content inside a group box --
-        self.setStyleSheet(STYLESHEET)
+        self.setStyleSheet(_load_stylesheet())
 
         self.toggle = ToggleSwitch()
 

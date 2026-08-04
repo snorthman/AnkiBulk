@@ -35,9 +35,9 @@ class TableGroup(Group):
         self.chooser = chooser
 
         # ---- Icon toolbar (top row, right of toggle) ----
-        self._copy_button = self._add_icon_button("clipboard-copy", tr("table-copy-tooltip"), self._on_copy)
-        self._paste_button = self._add_icon_button("clipboard-plus", tr("table-paste-tooltip"), self._on_paste)
-        self._add_icon_button("row-clear", tr("table-clear-tooltip"), self._on_clear)
+        self._copy_button = self._add_icon_button("copy", tr("table-copy-tooltip"), self._on_copy)
+        self._paste_button = self._add_icon_button("paste", tr("table-paste-tooltip"), self._on_paste)
+        self._add_icon_button("clear", tr("table-clear-tooltip"), self._on_clear)
 
         self._add_separator()
 
