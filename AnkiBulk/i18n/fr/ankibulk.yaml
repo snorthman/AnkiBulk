@@ -36,6 +36,10 @@ hint-first-time: >-
   afin de les modifier avec un LLM, un tableur ou un autre outil.
 
 
+hint-first-time-text: >-
+  Astuce : utilisez le bouton Paramètres pour configurer le format de copie, puis
+  copiez dans le presse-papiers et collez dans un LLM pour créer du contenu rapidement.
+
 # ── Groupe tableau (table/group.py) ────────────────────────────────────
 
 table-undo-tooltip: "Annuler (Ctrl+Z)"

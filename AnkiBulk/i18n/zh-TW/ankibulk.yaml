@@ -36,6 +36,10 @@ hint-first-time: >-
   然後使用 LLM、試算表或其他工具編輯這些列。
 
 
+hint-first-time-text: >-
+  提示：使用設定按鈕配置複製格式，然後
+  複製到剪貼簿並貼到LLM中，快速建立內容。
+
 # ── 表格組 (table/group.py) ────────────────────────────────────
 
 table-undo-tooltip: "復原 (Ctrl+Z)"

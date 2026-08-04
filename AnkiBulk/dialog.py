@@ -88,6 +88,13 @@ class Dialog(QDialog):
             self._hint.setWordWrap(True)
             self.table_group.layout().insertWidget(1, self._hint)
 
+        self._text_hint = None
+        if AnkiBulkConfig.first_time_text.value:
+            self._text_hint = QLabel(tr("hint-first-time-text"))
+            self._text_hint.setObjectName("firstTimeHint")
+            self._text_hint.setWordWrap(True)
+            self.text_group.layout().insertWidget(1, self._text_hint)
+
         self.table_group.load_from_selection()
         self._stack.addWidget(self.table_group)
 
@@ -218,6 +225,11 @@ class Dialog(QDialog):
                     return
 
         # Either YAML applied successfully or user chose Discard
+        if self._text_hint is not None:
+            self._text_hint.hide()
+            self._text_hint = None
+            AnkiBulkConfig.first_time_text = False
+
         self._prev_group = self.table_group.index
         self._set_toggle(False)
         self._set_page(self.table_group.index)

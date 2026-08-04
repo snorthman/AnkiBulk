@@ -36,6 +36,10 @@ hint-first-time: >-
   y así editarlas con un LLM, una hoja de cálculo u otra herramienta.
 
 
+hint-first-time-text: >-
+  Consejo: usa el botón de Ajustes para configurar el formato de copia, luego
+  copia al portapapeles y pégalo en un LLM para crear contenido rápidamente.
+
 # ── Grupo de tabla (table/group.py) ────────────────────────────────────
 
 table-undo-tooltip: "Deshacer (Ctrl+Z)"

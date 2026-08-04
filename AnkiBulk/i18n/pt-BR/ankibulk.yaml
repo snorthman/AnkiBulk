@@ -36,6 +36,10 @@ hint-first-time: >-
   e assim editar as linhas usando um LLM, planilha ou outra ferramenta.
 
 
+hint-first-time-text: >-
+  Dica: use o botão Configurações para definir o formato de cópia, depois
+  copie para a área de transferência e cole em um LLM para criar conteúdo rapidamente.
+
 # ── Grupo de tabela (table/group.py) ────────────────────────────────────
 
 table-undo-tooltip: "Desfazer (Ctrl+Z)"

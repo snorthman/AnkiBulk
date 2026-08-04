@@ -44,6 +44,10 @@ hint-first-time: >-
   Tip: switch to Text view to copy your notes to your clipboard,
   so you can edit these rows using an LLM, spreadsheet or other tool.
 
+hint-first-time-text: >-
+  Tip: use the Settings button to configure the copy format, then
+  copy to clipboard and paste into an LLM for quick content creation.
+
 
 # ── Table group (table/group.py) ────────────────────────────────────
 

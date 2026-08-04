@@ -237,9 +237,8 @@ class TableGroup(Group):
         if same_notetype:
             # Preserve editable rows, just refresh the data rows
             editable_snapshot = self.table.snapshot()
-            # Strip trailing empty rows from the snapshot
-            sort_col = self.table.sort_col
-            while editable_snapshot and not editable_snapshot[-1][sort_col].strip():
+            # Strip trailing completely empty rows from the snapshot
+            while editable_snapshot and not any(cell.strip() for cell in editable_snapshot[-1]):
                 editable_snapshot.pop()
             self.load_from_selection()
             # Restore editable rows on top of the new data rows

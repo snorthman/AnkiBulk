@@ -129,6 +129,8 @@ class Table(QTableWidget):
         return self._selection_anchor
 
     def mousePressEvent(self, event):
+        if event.modifiers() & Qt.KeyboardModifier.ControlModifier:
+            return
         if not (event.modifiers() & Qt.KeyboardModifier.ShiftModifier):
             index = self.indexAt(event.pos())
             if index.isValid():
@@ -332,6 +334,33 @@ class Table(QTableWidget):
                         QTimer.singleShot(0, lambda r=row + 1, c=col: self.setCurrentCell(r, c))
                 else:
                     QTimer.singleShot(0, lambda r=row + 1, c=col: self.setCurrentCell(r, c))
+                return True
+
+            if key in (Qt.Key.Key_Tab, Qt.Key.Key_Backtab):
+                delegate = self.itemDelegate()
+                delegate.commitData.emit(obj)
+                delegate.closeEditor.emit(obj, QAbstractItemDelegate.EndEditHint.NoHint)
+                row, col = self.currentRow(), self.currentColumn()
+                visible = self._visible_cols()
+                if visible:
+                    try:
+                        idx = visible.index(col)
+                    except ValueError:
+                        idx = 0
+                    if key == Qt.Key.Key_Tab:
+                        if idx + 1 < len(visible):
+                            QTimer.singleShot(0, lambda r=row, c=visible[idx + 1]: self.setCurrentCell(r, c))
+                        elif row + 1 < self.rowCount():
+                            QTimer.singleShot(0, lambda r=row + 1, c=visible[0]: self.setCurrentCell(r, c))
+                        elif row >= self.first_editable_row and self._row_has_content(row):
+                            self.push_undo()
+                            self.add_row()
+                            QTimer.singleShot(0, lambda r=row + 1, c=visible[0]: self.setCurrentCell(r, c))
+                    else:
+                        if idx - 1 >= 0:
+                            QTimer.singleShot(0, lambda r=row, c=visible[idx - 1]: self.setCurrentCell(r, c))
+                        elif row - 1 >= 0:
+                            QTimer.singleShot(0, lambda r=row - 1, c=visible[-1]: self.setCurrentCell(r, c))
                 return True
 
             move = None

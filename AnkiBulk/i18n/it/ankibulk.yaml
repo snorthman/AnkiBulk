@@ -36,6 +36,10 @@ hint-first-time: >-
   così puoi modificare le righe con un LLM, un foglio di calcolo o un altro strumento.
 
 
+hint-first-time-text: >-
+  Suggerimento: usa il pulsante Impostazioni per configurare il formato di copia, poi
+  copia negli appunti e incolla in un LLM per creare contenuti rapidamente.
+
 # ── Gruppo tabella (table/group.py) ────────────────────────────────────
 
 table-undo-tooltip: "Annulla (Ctrl+Z)"

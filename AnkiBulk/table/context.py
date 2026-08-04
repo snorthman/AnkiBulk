@@ -45,6 +45,7 @@ def show_context_menu(table: Table, pos, group: TableGroup | None = None) -> Non
         menu.addSeparator()
         insert_action = menu.addAction(tr("context-insert-row"))
         delete_action = menu.addAction(tr("context-delete-row"))
+        insert_action.setEnabled(table.currentRow() >= table.first_editable_row)
         delete_action.setEnabled(table.currentRow() >= table.first_editable_row)
 
         menu.addSeparator()

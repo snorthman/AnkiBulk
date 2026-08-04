@@ -514,7 +514,7 @@
       <div class="cb-cell"><input type="checkbox"></div>
       <div class="test-content">
         <div class="action">Double-click a cell to enter edit mode. Type some text. Press <kbd>Tab</kbd>.</div>
-        <div class="expect">Commits cell, moves to the next visible column in the same row. At the last column, wraps to the first column of the next row.</div>
+        <div class="expect">Commits cell, moves to the next visible column. At the last column, wraps to the first column of the next row. At the last column of the last row (with content), a new row is created.</div>
       </div>
       <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
       <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
@@ -559,6 +559,16 @@
       <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
       <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
     </div>
+
+    <div class="test-item" data-id="nav-6">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Double-click a cell containing text to enter edit mode.</div>
+        <div class="expect">Text is NOT selected. Cursor is placed at the start if you clicked the left half of the cell, or at the end if you clicked the right half.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
   </div>
 
   <!-- SECTION: Row Creation -->
@@ -591,8 +601,8 @@
     <div class="test-item" data-id="rows-3">
       <div class="cb-cell"><input type="checkbox"></div>
       <div class="test-content">
-        <div class="action">On the last editable row with content in a cell, press <kbd>&darr;</kbd>.</div>
-        <div class="expect">A new blank row is created. Cursor moves down, same column.</div>
+        <div class="action">On the last editable row with content, press <kbd>&darr;</kbd> (both in edit mode and outside edit mode).</div>
+        <div class="expect">A new blank row is created. Cursor moves down, same column. In edit mode, the editor is committed first.</div>
       </div>
       <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
       <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
@@ -611,8 +621,8 @@
     <div class="test-item" data-id="rows-5">
       <div class="cb-cell"><input type="checkbox"></div>
       <div class="test-content">
-        <div class="action">Click the <strong>Insert Row</strong> button when the last row has content.</div>
-        <div class="expect">A new row is inserted below the current row. Current column is maintained.</div>
+        <div class="action">Place cursor on a row in the middle of the table. Click the <strong>Insert Row</strong> button.</div>
+        <div class="expect">A new row is inserted directly below the current row. Cursor moves to the new row, same column. Works regardless of whether the last row is empty.</div>
       </div>
       <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
       <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
@@ -621,8 +631,8 @@
     <div class="test-item" data-id="rows-6">
       <div class="cb-cell"><input type="checkbox"></div>
       <div class="test-content">
-        <div class="action">Click the <strong>Insert Row</strong> button when the last row is completely empty.</div>
-        <div class="expect">No new row is added. Cursor jumps to the empty last row, same column.</div>
+        <div class="action">Place cursor on the last row (which is empty). Click the <strong>Insert Row</strong> button.</div>
+        <div class="expect">No new row is added. Cursor stays on the empty last row, same column.</div>
       </div>
       <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
       <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
@@ -679,8 +689,8 @@
     <div class="test-item" data-id="sel-3">
       <div class="cb-cell"><input type="checkbox"></div>
       <div class="test-content">
-        <div class="action">Click a cell, then <kbd>Ctrl</kbd>+click additional individual cells.</div>
-        <div class="expect">Each Ctrl-clicked cell is added to the selection independently.</div>
+        <div class="action">Click a cell, then <kbd>Ctrl</kbd>+click a different cell.</div>
+        <div class="expect">Ctrl+click does NOT add individual cells to the selection. Only contiguous selection via click-drag or <kbd>Shift</kbd>+click is supported.</div>
       </div>
       <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
       <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
@@ -807,6 +817,46 @@
       <div class="test-content">
         <div class="action">Right-click on a read-only example row.</div>
         <div class="expect">Copy is enabled. Paste and Clear are disabled.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="ctx-7">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Right-click on an editable cell. Check the full context menu layout.</div>
+        <div class="expect">Menu shows: Copy, Paste, Clear | Undo, Redo | Insert Row, Delete Row | Update from Selection. Groups are separated by dividers.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="ctx-8">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Make edits, then right-click and choose <strong>Undo</strong>. Then right-click and choose <strong>Redo</strong>.</div>
+        <div class="expect">Same behavior as the toolbar Undo/Redo buttons and <kbd>Ctrl</kbd>+<kbd>Z</kbd>/<kbd>Y</kbd>. Undo/Redo are disabled when their stacks are empty.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="ctx-9">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Right-click and choose <strong>Insert Row</strong> and <strong>Delete Row</strong>.</div>
+        <div class="expect">Same behavior as the toolbar Insert/Delete Row buttons. Delete Row is disabled on read-only rows.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="ctx-10">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Right-click and choose <strong>Update from Selection</strong>.</div>
+        <div class="expect">Same behavior as the toolbar Update from Selection button and <kbd>Ctrl</kbd>+<kbd>R</kbd>.</div>
       </div>
       <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
       <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
@@ -1023,38 +1073,48 @@
     </div>
   </div>
 
-  <!-- SECTION: Clipboard Toolbar Buttons -->
-  <div class="section" data-section="clipboard-toolbar">
+  <!-- SECTION: Toolbar: Copy / Paste / Clear -->
+  <div class="section" data-section="toolbar-cpc">
     <div class="section-header">
-      <h2>Clipboard Toolbar Buttons</h2>
+      <h2>Toolbar: Copy / Paste / Clear</h2>
       <span class="section-count"></span>
     </div>
 
-    <div class="test-item" data-id="clip-1">
+    <div class="test-item" data-id="tb-1">
       <div class="cb-cell"><input type="checkbox"></div>
       <div class="test-content">
-        <div class="action">Click the <strong>Copy Table</strong> toolbar button (clipboard icon).</div>
-        <div class="expect">Entire table (header + all rows, visible columns only) is copied as TSV. Tooltip confirms.</div>
+        <div class="action">Select cells with content. Click the <strong>Copy</strong> toolbar button.</div>
+        <div class="expect">Selected cells are copied to clipboard as tab-separated values (same as context menu Copy and <kbd>Ctrl</kbd>+<kbd>C</kbd>).</div>
       </div>
       <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
       <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
     </div>
 
-    <div class="test-item" data-id="clip-2">
+    <div class="test-item" data-id="tb-2">
       <div class="cb-cell"><input type="checkbox"></div>
       <div class="test-content">
-        <div class="action">Copy a list of words (one per line) to the clipboard. Click the <strong>Paste Clipboard</strong> toolbar button.</div>
-        <div class="expect">Each line becomes a new row with the text in the sort field column. A tooltip shows how many rows were added.</div>
+        <div class="action">Copy data to clipboard, select a cell, click the <strong>Paste</strong> toolbar button.</div>
+        <div class="expect">Clipboard content is pasted starting at the selected cell (same as context menu Paste and <kbd>Ctrl</kbd>+<kbd>V</kbd>). New rows are created if needed.</div>
       </div>
       <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
       <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
     </div>
 
-    <div class="test-item" data-id="clip-3">
+    <div class="test-item" data-id="tb-3">
       <div class="cb-cell"><input type="checkbox"></div>
       <div class="test-content">
-        <div class="action">Clear your clipboard (copy empty text). Check the paste button.</div>
-        <div class="expect">The paste toolbar button is disabled (greyed out).</div>
+        <div class="action">Select editable cells with content. Click the <strong>Clear</strong> toolbar button.</div>
+        <div class="expect">All selected editable cells are emptied (same as context menu Clear and <kbd>Delete</kbd>).</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="tb-4">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Clear the clipboard (copy empty text). Check the <strong>Paste</strong> toolbar button.</div>
+        <div class="expect">The Paste button is disabled (greyed out). It re-enables when text is copied to the clipboard.</div>
       </div>
       <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
       <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>

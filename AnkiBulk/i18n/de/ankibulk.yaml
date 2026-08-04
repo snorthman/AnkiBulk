@@ -36,6 +36,10 @@ hint-first-time: >-
   damit du die Zeilen mit einem LLM, einer Tabellenkalkulation oder einem anderen Werkzeug bearbeiten kannst.
 
 
+hint-first-time-text: >-
+  Tipp: Verwende die Einstellungen-Schaltfläche, um das Kopierformat zu konfigurieren, dann
+  kopiere in die Zwischenablage und füge es in ein LLM ein, um schnell Inhalte zu erstellen.
+
 # ── Table group (table/group.py) ────────────────────────────────────
 
 table-undo-tooltip: "Rückgängig (Strg+Z)"
