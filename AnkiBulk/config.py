@@ -36,8 +36,15 @@ class ConfigField(Generic[T]):
         self.setter(value)
 
     def setter(self, value: T) -> None:
+        import os
         config = self._get_config()
         config[self._name] = value
+        addon = mw.addonManager.addonFromModule(__package__)
+        meta_path = mw.addonManager._addonMetaPath(addon)
+        if not os.path.exists(meta_path):
+            os.makedirs(os.path.dirname(meta_path), exist_ok=True)
+            with open(meta_path, "w", encoding="utf-8") as f:
+                f.write("{}")
         mw.addonManager.writeConfig(__package__, config)
 
 

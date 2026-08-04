@@ -93,6 +93,9 @@ options-additional-text-placeholder: "例：LLMへの指示 ..."
 
 bulk-add-invalid-yaml: "追加する前にテキストビューのYAMLエラーを修正してください。"
 bulk-add-no-content: "追加する新しいノートがありません"
+bulk-add-empty-sort:
+  one: "1行のソートフィールドが空のためスキップされます。続行しますか？"
+  other: "{n}行のソートフィールドが空のためスキップされます。続行しますか？"
 bulk-add-no-notes: "追加するノートがありません"
 bulk-add-added:
   one: "1件のノートを追加しました"

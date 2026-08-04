@@ -93,6 +93,9 @@ options-additional-text-placeholder: "ex. instruções para um LLM ..."
 
 bulk-add-invalid-yaml: "Corrija os erros de YAML na visualização de Texto antes de adicionar."
 bulk-add-no-content: "Nenhuma nota nova para adicionar"
+bulk-add-empty-sort:
+  one: "1 linha não tem conteúdo no campo de ordenação e será ignorada. Continuar?"
+  other: "{n} linhas não têm conteúdo no campo de ordenação e serão ignoradas. Continuar?"
 bulk-add-no-notes: "Nenhuma nota para adicionar"
 bulk-add-added:
   one: "1 nota adicionada"

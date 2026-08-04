@@ -94,6 +94,9 @@ options-additional-text-placeholder: "مثلاً تعليمات لـ LLM ..."
 
 bulk-add-invalid-yaml: "أصلح أخطاء YAML في عرض النص قبل الإضافة."
 bulk-add-no-content: "لا توجد ملاحظات جديدة للإضافة"
+bulk-add-empty-sort:
+  one: "صف واحد لا يحتوي على محتوى في حقل الترتيب وسيتم تخطيه. متابعة؟"
+  other: "{n} صفوف لا تحتوي على محتوى في حقل الترتيب وسيتم تخطيها. متابعة؟"
 bulk-add-no-notes: "لا توجد ملاحظات للإضافة"
 bulk-add-added:
   one: "تمت إضافة ملاحظة واحدة"

@@ -93,6 +93,9 @@ options-additional-text-placeholder: "例如，給 LLM 的指令 ..."
 
 bulk-add-invalid-yaml: "請先修復文字檢視中的 YAML 錯誤。"
 bulk-add-no-content: "沒有新筆記可新增"
+bulk-add-empty-sort:
+  one: "1 列的排序欄位為空，將被跳過。是否繼續？"
+  other: "{n} 列的排序欄位為空，將被跳過。是否繼續？"
 bulk-add-no-notes: "沒有筆記可新增"
 bulk-add-added:
   one: "已新增 1 則筆記"

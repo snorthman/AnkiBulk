@@ -267,6 +267,24 @@ class Dialog(QDialog):
             tooltip(tr("bulk-add-no-content"))
             return
 
+        empty_sort = 0
+        for row in range(table.first_editable_row, table.rowCount()):
+            sort_item = table.item(row, table.sort_col)
+            has_content = any(table.item(row, c) and table.item(row, c).text().strip()
+                              for c in range(table.columnCount()))
+            if has_content and (not sort_item or not sort_item.text().strip()):
+                empty_sort += 1
+
+        if empty_sort:
+            box = QMessageBox(self)
+            box.setWindowTitle(tr("dialog-title"))
+            box.setText(tr("bulk-add-empty-sort", n=empty_sort))
+            box.addButton(tr("btn-cancel"), QMessageBox.ButtonRole.RejectRole)
+            confirm = box.addButton(tr("btn-bulk-add"), QMessageBox.ButtonRole.AcceptRole)
+            box.exec()
+            if box.clickedButton() != confirm:
+                return
+
         col = self.mw.col
         notetype = table.current_notetype
         deck_id = self.chooser.deck_id

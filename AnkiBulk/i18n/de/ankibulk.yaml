@@ -93,6 +93,9 @@ options-additional-text-placeholder: "z. B. Anweisungen für ein LLM ..."
 
 bulk-add-invalid-yaml: "Behebe zuerst die YAML-Fehler in der Textansicht."
 bulk-add-no-content: "Keine neuen Notizen zum Hinzufügen"
+bulk-add-empty-sort:
+  one: "1 Zeile hat keinen Inhalt im Sortierfeld und wird übersprungen. Fortfahren?"
+  other: "{n} Zeilen haben keinen Inhalt im Sortierfeld und werden übersprungen. Fortfahren?"
 bulk-add-no-notes: "Keine Notizen zum Hinzufügen"
 bulk-add-added:
   one: "1 Notiz hinzugefügt"

@@ -93,6 +93,9 @@ options-additional-text-placeholder: "जैसे LLM के लिए नि�
 
 bulk-add-invalid-yaml: "जोड़ने से पहले पाठ दृश्य में YAML त्रुटियाँ ठीक करें।"
 bulk-add-no-content: "जोड़ने के लिए कोई नए नोट नहीं"
+bulk-add-empty-sort:
+  one: "1 पंक्ति में क्रम फ़ील्ड खाली है और छोड़ दी जाएगी। जारी रखें?"
+  other: "{n} पंक्तियों में क्रम फ़ील्ड खाली है और छोड़ दी जाएँगी। जारी रखें?"
 bulk-add-no-notes: "जोड़ने के लिए कोई नोट नहीं"
 bulk-add-added:
   one: "1 नोट जोड़ा गया"

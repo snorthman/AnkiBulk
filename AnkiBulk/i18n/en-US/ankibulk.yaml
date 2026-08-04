@@ -102,6 +102,9 @@ options-additional-text-placeholder: "e.g. instructions for an LLM..."
 
 bulk-add-invalid-yaml: "Fix the YAML errors in the Text view before adding."
 bulk-add-no-content: "No new notes to add"
+bulk-add-empty-sort:
+  one: "1 row has no content in the sort field and will be skipped. Continue?"
+  other: "{n} rows have no content in their sort field and will be skipped. Continue?"
 bulk-add-no-notes: "No notes to add"
 bulk-add-added:
   one: "Added 1 note"
