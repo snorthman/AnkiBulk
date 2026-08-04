@@ -64,7 +64,6 @@ Click **Bulk Add** to create notes from all editable rows that have content in t
 ## Contribute
 
 - [Report an issue](https://github.com/snorthman/AnkiBulk/issues)
-- [Suggestions & discussion](https://github.com/snorthman/AnkiBulk/discussions)
 
 _Tested extensively with Anki version 25.09; your results may vary for earlier versions._
 

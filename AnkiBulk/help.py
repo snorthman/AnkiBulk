@@ -61,9 +61,7 @@ def _html() -> str:
         '',
         _element('hr'),
         _element('p', *[
-            _element('a', tr("help-link-issues"), href=f'{github}/issues'), '&middot;',
-            _element('a', tr("help-link-discussions"), href=f'{github}/discussions'), '&middot;',
-            _element('a', tr("help-link-github"), href=github),
+            _element('a', tr("help-link-issues"), href=f'{github}/issues')
         ])
     ])
 
