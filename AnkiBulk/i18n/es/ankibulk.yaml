@@ -57,6 +57,13 @@ table-added-rows:
   other: "{n} filas agregadas"
 
 
+# ── Menú contextual de tabla (table/table.py) ───────────────────────
+
+context-copy: "Copiar"
+context-paste: "Pegar"
+context-clear: "Borrar"
+
+
 # ── Grupo de texto (text/group.py) ──────────────────────────────────────
 
 text-undo-tooltip: "Deshacer (Ctrl+Z)"

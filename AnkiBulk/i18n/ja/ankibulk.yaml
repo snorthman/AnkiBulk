@@ -57,6 +57,13 @@ table-added-rows:
   other: "{n}行追加しました"
 
 
+# ── テーブルコンテキストメニュー (table/table.py) ──────────────────────────
+
+context-copy: "コピー"
+context-paste: "貼り付け"
+context-clear: "クリア"
+
+
 # ── テキストグループ (text/group.py) ──────────────────────────────────────
 
 text-undo-tooltip: "元に戻す (Ctrl+Z)"

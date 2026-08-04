@@ -6,10 +6,12 @@ from aqt import AnkiQt
 from aqt.qt import (
     QAbstractItemDelegate,
     QAbstractItemView,
+    QEvent,
     QHeaderView,
     QKeyEvent,
     QTableWidget,
     QTableWidgetItem,
+    QTimer,
     Qt,
     qconnect,
 )
@@ -17,6 +19,8 @@ from aqt.qt import (
 from ..config import AnkiBulkConfig
 from ..i18n import tr
 from .cell import TableCellDelegate
+from . import context as _ctx
+from . import yaml as _yaml
 from .menu import TableMenu
 from .undo import UndoStack
 
@@ -41,12 +45,13 @@ class Table(QTableWidget):
         self._editing_saved = False
         self._pending_snapshot: list[list[str]] | None = None
         self.undo_changed: Callable | None = None
+        self._selection_anchor: tuple[int, int] = (0, 0)
 
         # Visual setup
         self.setRowCount(0)
         self.verticalHeader().setVisible(False)
-        self.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
-        self.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
+        self.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectItems)
+        self.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
         self.setItemDelegate(TableCellDelegate(self))
 
         header = self.horizontalHeader()
@@ -56,6 +61,9 @@ class Table(QTableWidget):
         header.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
         qconnect(header.customContextMenuRequested, self._on_header_context_menu)
         qconnect(header.sectionDoubleClicked, self._resize_column_to_header)
+
+        self.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
+        qconnect(self.customContextMenuRequested, lambda pos: _ctx.show_context_menu(self, pos))
 
     @property
     def first_editable_row(self) -> int:
@@ -117,6 +125,19 @@ class Table(QTableWidget):
         columns = self.column_names
         return [(c, columns[c]) for c in range(len(columns)) if not self.isColumnHidden(c)]
 
+    @property
+    def anchor(self) -> tuple[int, int]:
+        if len(self.selectedIndexes()) <= 1:
+            return (self.currentRow(), self.currentColumn())
+        return self._selection_anchor
+
+    def mousePressEvent(self, event):
+        if not (event.modifiers() & Qt.KeyboardModifier.ShiftModifier):
+            index = self.indexAt(event.pos())
+            if index.isValid():
+                self._selection_anchor = (index.row(), index.column())
+        super().mousePressEvent(event)
+
     def rebuild(self) -> None:
         """Reset table columns and clear all rows."""
         nt = self.current_notetype
@@ -132,8 +153,8 @@ class Table(QTableWidget):
         headers = list(columns)
         headers[self._sort_col] += f" {tr('sort-field-suffix')}"
         self.setHorizontalHeaderLabels(headers)
-        self.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
-        self.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
+        self.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectItems)
+        self.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
 
         self._first_editable_row = 0
         self._undo.clear()
@@ -161,82 +182,10 @@ class Table(QTableWidget):
         return self.insert_row(self.rowCount(), *args, editable=editable)
 
     def from_yaml(self, text: str) -> bool:
-        """Parse YAML *text* and replace editable rows.
-        Returns True on success (including empty text), False if invalid."""
-        import yaml
-
-        # Empty text — just clear editable rows
-        if not text.strip():
-            self.push_undo()
-            for r in range(self.rowCount() - 1, self.first_editable_row - 1, -1):
-                self.removeRow(r)
-            self.add_row()
-            return True
-
-        # Try parsing
-        try:
-            doc = yaml.safe_load(text)
-        except yaml.YAMLError:
-            return False
-
-        # Structural check
-        if not isinstance(doc, list) or not all(isinstance(e, dict) for e in doc):
-            return False
-
-        visible_names = {name for _, name in self.visible_columns}
-
-        for entry in doc:
-            if set(entry.keys()) - visible_names:
-                return False
-            for val in entry.values():
-                if val is not None and not isinstance(val, str):
-                    return False
-
-        # Valid — apply to table
-        self.push_undo()
-
-        # Remove existing editable rows
-        for r in range(self.rowCount() - 1, self.first_editable_row - 1, -1):
-            self.removeRow(r)
-
-        # Add rows from YAML
-        for entry in doc:
-            values = [str(entry.get(col, "") or "") for col in self.column_names]
-            self.add_row(*values)
-
-        # Ensure at least one editable row
-        if self.rowCount() <= self.first_editable_row:
-            self.add_row()
-
-        return True
+        return _yaml.from_yaml(self, text)
 
     def to_yaml(self) -> tuple[str, str]:
-        """Serialize table rows to two YAML strings: (existing, new).
-        Only includes visible (checked) columns."""
-        import yaml
-
-        visible = self.visible_columns
-
-        data_rows: list[dict[str, str]] = []
-        editable_rows: list[dict[str, str]] = []
-
-        for r in range(self.rowCount()):
-            row_dict: dict[str, str] = {}
-            for c, name in visible:
-                item = self.item(r, c)
-                row_dict[name] = item.text() if item else ""
-            if r < self.first_editable_row:
-                data_rows.append(row_dict)
-            else:
-                if any(v for v in row_dict.values()):
-                    editable_rows.append(row_dict)
-
-        dump = lambda rows: yaml.dump(
-            rows, allow_unicode=True, default_flow_style=False,
-            sort_keys=False, default_style="'",
-        ) if rows else ""
-
-        return dump(data_rows), dump(editable_rows)
+        return _yaml.to_yaml(self)
 
     # ---- column visibility -----------------------------------------------
 
@@ -319,14 +268,19 @@ class Table(QTableWidget):
         """Override to capture a pending snapshot when cell editing begins.
         The snapshot is only pushed to the undo stack if data changes."""
         if trigger is None:
-            return super().edit(index)
+            result = super().edit(index)
+        else:
+            row = index.row()
+            if not self._editing_saved and row >= self.first_editable_row:
+                self._pending_snapshot = self.snapshot()
+                self._editing_saved = True
+            result = super().edit(index, trigger, event)
 
-        row = index.row()
+        editor = self.indexWidget(index)
+        if editor is not None:
+            editor.installEventFilter(self)
 
-        if not self._editing_saved and row >= self.first_editable_row:
-            self._pending_snapshot = self.snapshot()
-            self._editing_saved = True
-        return super().edit(index, trigger, event)
+        return result
 
     def closeEditor(self, editor, hint):
         super().closeEditor(editor, hint)
@@ -341,7 +295,8 @@ class Table(QTableWidget):
         return [c for c in range(self.columnCount()) if not self.isColumnHidden(c)]
 
     def eventFilter(self, obj, event):
-        if (isinstance(event, QKeyEvent)
+        if (event.type() == QEvent.Type.KeyPress
+                and isinstance(event, QKeyEvent)
                 and self.state() == QAbstractItemView.State.EditingState
                 and hasattr(obj, 'cursorPosition') and hasattr(obj, 'text')):
             key = event.key()
@@ -356,18 +311,22 @@ class Table(QTableWidget):
                 delegate.closeEditor.emit(obj, QAbstractItemDelegate.EndEditHint.NoHint)
                 row, col = self.currentRow(), self.currentColumn()
                 visible = self._visible_cols()
+                target_cell = None
                 if visible:
                     try:
                         idx = visible.index(col)
                     except ValueError:
                         idx = 0
-                    target = idx + move
-                    if 0 <= target < len(visible):
-                        self.setCurrentCell(row, visible[target])
+                    t = idx + move
+                    if 0 <= t < len(visible):
+                        target_cell = (row, visible[t])
                     elif move == -1 and row - 1 >= 0:
-                        self.setCurrentCell(row - 1, visible[-1])
+                        target_cell = (row - 1, visible[-1])
                     elif move == 1 and row + 1 < self.rowCount():
-                        self.setCurrentCell(row + 1, visible[0])
+                        target_cell = (row + 1, visible[0])
+                if target_cell is not None:
+                    r, c = target_cell
+                    QTimer.singleShot(0, lambda r=r, c=c: self.setCurrentCell(r, c))
                 return True
         return super().eventFilter(obj, event)
 
@@ -387,10 +346,9 @@ class Table(QTableWidget):
                         delegate.commitData.emit(editor)
                         delegate.closeEditor.emit(editor, QAbstractItemDelegate.EndEditHint.NoHint)
 
-                item = self.item(row, self.sort_col)
                 next_row = row + 1
                 if next_row >= self.rowCount():
-                    if item is not None and item.text():
+                    if any(self.item(row, c) and self.item(row, c).text() for c in range(self.columnCount())):
                         self.push_undo()
                         self.add_row()
                         self.setCurrentCell(next_row, col)
@@ -399,30 +357,28 @@ class Table(QTableWidget):
                 return
 
         if key == Qt.Key.Key_Delete:
-            if row >= self.first_editable_row:
-                self.push_undo()
-                self.removeRow(row)
-                if (self.rowCount() - self.first_editable_row) > 1:
-                    self.setCurrentCell(min(row, self.rowCount() - 1), col)
-                else:
-                    self.add_row()
-                    self.setCurrentCell(row, col)
-                return
+            _ctx.clear(self)
+            indexes = self.selectedIndexes()
+            rows = set(idx.row() for idx in indexes)
+            if len(rows) == 1:
+                r = next(iter(rows))
+                if (r >= self.first_editable_row
+                        and self.rowCount() - self.first_editable_row > 1
+                        and all(not (self.item(r, c) and self.item(r, c).text()) for c in range(self.columnCount()))):
+                    self.removeRow(r)
+                    self.setCurrentCell(min(r, self.rowCount() - 1), col)
+            return
 
         if key == Qt.Key.Key_Backspace:
-            if row >= self.first_editable_row:
-                sort_item = self.item(row, self.sort_col)
-                if sort_item and sort_item.text():
-                    # Clear the sort field
+            r, c = self.anchor
+            if r >= self.first_editable_row:
+                item = self.item(r, c)
+                if item and item.flags() & Qt.ItemFlag.ItemIsEditable:
                     self.push_undo()
-                    sort_item.setText("")
-                    return
-                # Sort field already empty — delete the row
-                if (self.rowCount() - self.first_editable_row) > 1:
-                    self.push_undo()
-                    self.removeRow(row)
-                    self.setCurrentCell(min(row, self.rowCount() - 1), col)
-                    return
+                    item.setText("")
+                    self.setCurrentCell(r, c)
+                    self.editItem(item)
+            return
 
         if key in (Qt.Key.Key_Tab, Qt.Key.Key_Backtab):
             if self.state() == QAbstractItemView.State.EditingState:

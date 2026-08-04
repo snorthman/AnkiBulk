@@ -66,6 +66,13 @@ table-added-rows:
   other: "Added {n} rows"
 
 
+# ── Table context menu (table/table.py) ─────────────────────────────
+
+context-copy: "Copy"
+context-paste: "Paste"
+context-clear: "Clear"
+
+
 # ── Text group (text/group.py) ──────────────────────────────────────
 
 text-undo-tooltip: "Undo (Ctrl+Z)"

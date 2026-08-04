@@ -1,3 +1,4 @@
+import os
 from aqt import gui_hooks
 from aqt.qt import QAction, QMenu
 
@@ -21,6 +22,9 @@ def _on_browser_menus_init(browser):
     help_action = QAction(tr("menu-help"), menu)
     help_action.triggered.connect(lambda: _on_help(browser))
     menu.addAction(help_action)
+
+    if os.environ['ANKIDEV'] == '1':
+        menu.addAction(QAction("This is the test addon.", menu))
 
 
 def _on_bulk_add(browser):

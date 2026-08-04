@@ -57,6 +57,13 @@ table-added-rows:
   other: "{n} lignes ajoutées"
 
 
+# ── Menu contextuel du tableau (table/table.py) ─────────────────────
+
+context-copy: "Copier"
+context-paste: "Coller"
+context-clear: "Effacer"
+
+
 # ── Groupe texte (text/group.py) ──────────────────────────────────────
 
 text-undo-tooltip: "Annuler (Ctrl+Z)"

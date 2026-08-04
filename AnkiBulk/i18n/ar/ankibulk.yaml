@@ -58,6 +58,13 @@ table-added-rows:
   other: "تمت إضافة {n} صفوف"
 
 
+# ── قائمة سياق الجدول (table/table.py) ──────────────────────────────
+
+context-copy: "نسخ"
+context-paste: "لصق"
+context-clear: "مسح"
+
+
 # ── مجموعة النص (text/group.py) ──────────────────────────────────────
 
 text-undo-tooltip: "تراجع (Ctrl+Z)"

@@ -57,6 +57,13 @@ table-added-rows:
   other: "已新增 {n} 列"
 
 
+# ── 表格右鍵選單 (table/table.py) ──────────────────────────────────
+
+context-copy: "複製"
+context-paste: "貼上"
+context-clear: "清除"
+
+
 # ── 文字組 (text/group.py) ──────────────────────────────────────
 
 text-undo-tooltip: "復原 (Ctrl+Z)"

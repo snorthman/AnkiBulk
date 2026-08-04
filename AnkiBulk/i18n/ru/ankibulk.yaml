@@ -57,6 +57,13 @@ table-added-rows:
   other: "Добавлено {n} строк"
 
 
+# ── Контекстное меню таблицы (table/table.py) ────────────────────────
+
+context-copy: "Копировать"
+context-paste: "Вставить"
+context-clear: "Очистить"
+
+
 # ── Группа текста (text/group.py) ──────────────────────────────────────
 
 text-undo-tooltip: "Отменить (Ctrl+Z)"

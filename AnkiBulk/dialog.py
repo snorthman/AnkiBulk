@@ -129,6 +129,9 @@ class Dialog(QDialog):
         qconnect(copy_shortcut.activated,
                  lambda: self.text_group._on_copy_to_clipboard() if self._prev_group == self.text_group.index else None)
 
+        copy_shortcut_table = QShortcut(QKeySequence("Ctrl+C"), self)
+        qconnect(copy_shortcut_table.activated, self._on_copy)
+
         paste_shortcut = QShortcut(QKeySequence("Ctrl+V"), self)
         qconnect(paste_shortcut.activated, self._on_paste)
 
@@ -174,7 +177,7 @@ class Dialog(QDialog):
     def _on_toggle_changed(self, checked: bool) -> None:
         """Toggle between Table (False/left) and Text (True/right)."""
         if checked:
-            # Switching to Text — always allowed
+            # Switching to Text, always allowed
             if self._hint is not None:
                 self._hint.hide()
                 self._hint = None
@@ -222,9 +225,15 @@ class Dialog(QDialog):
         return (self._prev_group == self.table_group.index
                 and self.table.state() != QAbstractItemView.State.EditingState)
 
+    def _on_copy(self) -> None:
+        if self._table_not_editing:
+            from .table import context as _ctx
+            _ctx.copy(self.table)
+
     def _on_paste(self) -> None:
         if self._table_not_editing:
-            self.table_group._on_insert_clipboard()
+            from .table import context as _ctx
+            _ctx.paste(self.table)
 
     def _on_undo(self) -> None:
         if self._prev_group == self.text_group.index:

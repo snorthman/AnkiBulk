@@ -57,6 +57,13 @@ table-added-rows:
   other: "{n}টি সারি যোগ হয়েছে"
 
 
+# ── টেবিল কনটেক্সট মেনু (table/table.py) ──────────────────────────────
+
+context-copy: "কপি"
+context-paste: "পেস্ট"
+context-clear: "মুছুন"
+
+
 # ── টেক্সট গোষ্ঠী (text/group.py) ──────────────────────────────────────
 
 text-undo-tooltip: "পূর্বাবস্থায় ফেরান (Ctrl+Z)"
