@@ -51,7 +51,7 @@ class Table(QTableWidget):
         self.setRowCount(0)
         self.verticalHeader().setVisible(False)
         self.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectItems)
-        self.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
+        self.setSelectionMode(QAbstractItemView.SelectionMode.ContiguousSelection)
         self.setItemDelegate(TableCellDelegate(self))
 
         header = self.horizontalHeader()
@@ -61,9 +61,6 @@ class Table(QTableWidget):
         header.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
         qconnect(header.customContextMenuRequested, self._on_header_context_menu)
         qconnect(header.sectionDoubleClicked, self._resize_column_to_header)
-
-        self.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
-        qconnect(self.customContextMenuRequested, lambda pos: _ctx.show_context_menu(self, pos))
 
     @property
     def first_editable_row(self) -> int:
@@ -154,7 +151,7 @@ class Table(QTableWidget):
         headers[self._sort_col] += f" {tr('sort-field-suffix')}"
         self.setHorizontalHeaderLabels(headers)
         self.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectItems)
-        self.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
+        self.setSelectionMode(QAbstractItemView.SelectionMode.ContiguousSelection)
 
         self._first_editable_row = 0
         self._undo.clear()
@@ -240,7 +237,10 @@ class Table(QTableWidget):
 
     def push_undo(self) -> None:
         """Save current editable state onto the undo stack, clear redo."""
-        self._undo.push(self.snapshot())
+        snap = self.snapshot()
+        if self._undo.peek() == snap:
+            return
+        self._undo.push(snap)
         self._notify_undo_changed()
 
     def _notify_undo_changed(self) -> None:
@@ -279,6 +279,18 @@ class Table(QTableWidget):
         editor = self.indexWidget(index)
         if editor is not None:
             editor.installEventFilter(self)
+            if (trigger == QAbstractItemView.EditTrigger.DoubleClicked
+                    and hasattr(editor, 'deselect')
+                    and hasattr(editor, 'setCursorPosition')):
+                pos = 0
+                if event is not None:
+                    mouse_pos = getattr(event, 'position', lambda: None)()
+                    if mouse_pos is not None:
+                        rect = self.visualRect(index)
+                        if mouse_pos.x() >= rect.center().x():
+                            pos = len(editor.text())
+                editor.setCursorPosition(pos)
+                editor.deselect()
 
         return result
 
@@ -286,13 +298,20 @@ class Table(QTableWidget):
         super().closeEditor(editor, hint)
         if self._editing_saved and self._pending_snapshot is not None:
             if self.snapshot() != self._pending_snapshot:
-                self._undo.push(self._pending_snapshot)
-                self._notify_undo_changed()
+                if self._undo.peek() != self._pending_snapshot:
+                    self._undo.push(self._pending_snapshot)
+                    self._notify_undo_changed()
             self._pending_snapshot = None
         self._editing_saved = False
 
     def _visible_cols(self) -> list[int]:
         return [c for c in range(self.columnCount()) if not self.isColumnHidden(c)]
+
+    def _row_has_content(self, row: int) -> bool:
+        return any(
+            (item := self.item(row, c)) is not None and item.text()
+            for c in range(self.columnCount())
+        )
 
     def eventFilter(self, obj, event):
         if (event.type() == QEvent.Type.KeyPress
@@ -300,6 +319,21 @@ class Table(QTableWidget):
                 and self.state() == QAbstractItemView.State.EditingState
                 and hasattr(obj, 'cursorPosition') and hasattr(obj, 'text')):
             key = event.key()
+
+            if key == Qt.Key.Key_Down:
+                delegate = self.itemDelegate()
+                delegate.commitData.emit(obj)
+                delegate.closeEditor.emit(obj, QAbstractItemDelegate.EndEditHint.NoHint)
+                row, col = self.currentRow(), self.currentColumn()
+                if row + 1 >= self.rowCount():
+                    if row >= self.first_editable_row and self._row_has_content(row):
+                        self.push_undo()
+                        self.add_row()
+                        QTimer.singleShot(0, lambda r=row + 1, c=col: self.setCurrentCell(r, c))
+                else:
+                    QTimer.singleShot(0, lambda r=row + 1, c=col: self.setCurrentCell(r, c))
+                return True
+
             move = None
             if key == Qt.Key.Key_Left and obj.cursorPosition() == 0:
                 move = -1
@@ -337,6 +371,14 @@ class Table(QTableWidget):
         row = self.currentRow()
         col = self.currentColumn()
 
+        if key == Qt.Key.Key_Down:
+            if row >= self.first_editable_row and row + 1 >= self.rowCount():
+                if self._row_has_content(row):
+                    self.push_undo()
+                    self.add_row()
+                    self.setCurrentCell(row + 1, col)
+                return
+
         if key in (Qt.Key.Key_Return, Qt.Key.Key_Enter, Qt.Key.Key_Insert):
             if row >= self.first_editable_row:
                 if self.state() == QAbstractItemView.State.EditingState:
@@ -348,7 +390,7 @@ class Table(QTableWidget):
 
                 next_row = row + 1
                 if next_row >= self.rowCount():
-                    if any(self.item(row, c) and self.item(row, c).text() for c in range(self.columnCount())):
+                    if self._row_has_content(row):
                         self.push_undo()
                         self.add_row()
                         self.setCurrentCell(next_row, col)
@@ -357,16 +399,18 @@ class Table(QTableWidget):
                 return
 
         if key == Qt.Key.Key_Delete:
-            _ctx.clear(self)
             indexes = self.selectedIndexes()
             rows = set(idx.row() for idx in indexes)
             if len(rows) == 1:
                 r = next(iter(rows))
                 if (r >= self.first_editable_row
                         and self.rowCount() - self.first_editable_row > 1
-                        and all(not (self.item(r, c) and self.item(r, c).text()) for c in range(self.columnCount()))):
+                        and not self._row_has_content(r)):
+                    self.push_undo()
                     self.removeRow(r)
                     self.setCurrentCell(min(r, self.rowCount() - 1), col)
+                    return
+            _ctx.clear(self)
             return
 
         if key == Qt.Key.Key_Backspace:
@@ -397,6 +441,10 @@ class Table(QTableWidget):
                     if idx + 1 < len(visible):
                         self.setCurrentCell(row, visible[idx + 1])
                     elif row + 1 < self.rowCount():
+                        self.setCurrentCell(row + 1, visible[0])
+                    elif row >= self.first_editable_row and self._row_has_content(row):
+                        self.push_undo()
+                        self.add_row()
                         self.setCurrentCell(row + 1, visible[0])
                 else:
                     if idx - 1 >= 0:

@@ -50,6 +50,10 @@ class UndoStack(Generic[T]):
         self._undo.append(current)
         return self._redo.pop()
 
+    def peek(self) -> T | None:
+        """Return the top of the undo stack without popping, or None."""
+        return self._undo[-1] if self._undo else None
+
     @property
     def can_undo(self) -> bool:
         return bool(self._undo)

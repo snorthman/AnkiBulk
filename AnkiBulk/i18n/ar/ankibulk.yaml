@@ -43,8 +43,9 @@ table-redo-tooltip: "إعادة (Ctrl+Y)"
 table-row-insert-tooltip: "إدراج صف جديد (Enter)"
 table-row-remove-tooltip: "حذف الصف المحدد (Delete)"
 table-row-clear-tooltip: "مسح حقل الترتيب، أو حذف الصف إذا كان فارغاً (Backspace)"
-table-copy-clipboard-tooltip: "نسخ الجدول بالكامل إلى الحافظة"
-table-insert-clipboard-tooltip: "إدراج سطور الحافظة كصفوف جديدة (Ctrl+V)"
+table-copy-tooltip: "نسخ (Ctrl+C)"
+table-paste-tooltip: "لصق (Ctrl+V)"
+table-clear-tooltip: "مسح (Delete)"
 table-update-from-selection-tooltip: "إعادة تحميل صفوف الأمثلة ونوع الملاحظة من التحديد الحالي (Ctrl+R)"
 table-unsaved-title: "إدخالات غير محفوظة"
 table-unsaved-body: "سيتم حذف جميع الإدخالات الجديدة في الجدول. هل أنت متأكد؟"
@@ -63,6 +64,11 @@ table-added-rows:
 context-copy: "نسخ"
 context-paste: "لصق"
 context-clear: "مسح"
+context-undo: "تراجع"
+context-redo: "إعادة"
+context-insert-row: "إدراج صف"
+context-delete-row: "حذف صف"
+context-update-selection: "تحديث من التحديد"
 
 
 # ── مجموعة النص (text/group.py) ──────────────────────────────────────
@@ -157,7 +163,6 @@ help-table-desc: >-
   (قابلة للتحرير، أبيض). يمكن تحرير جميع الأعمدة في الصفوف القابلة للتحرير
   مباشرة. يتم تمييز عمود حقل الترتيب بلون خلفية دافئ.
 
-help-table-insert-clipboard: "لصق الحافظة كصفوف جديدة (صف واحد لكل سطر)."
 help-table-update-selection: "تحديث صفوف الأمثلة من التحديد الحالي."
 help-table-right-click-header: "انقر بزر الفأرة الأيمن على الرأس"
 help-table-right-click-header-desc: "إظهار أو إخفاء الأعمدة."

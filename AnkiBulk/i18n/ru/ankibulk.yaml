@@ -43,8 +43,9 @@ table-redo-tooltip: "Повторить (Ctrl+Y)"
 table-row-insert-tooltip: "Вставить новую строку (Enter)"
 table-row-remove-tooltip: "Удалить выбранную строку (Delete)"
 table-row-clear-tooltip: "Очистить поле сортировки или удалить строку, если пусто (Backspace)"
-table-copy-clipboard-tooltip: "Скопировать всю таблицу в буфер обмена"
-table-insert-clipboard-tooltip: "Вставить строки из буфера обмена как новые строки (Ctrl+V)"
+table-copy-tooltip: "Копировать (Ctrl+C)"
+table-paste-tooltip: "Вставить (Ctrl+V)"
+table-clear-tooltip: "Очистить (Delete)"
 table-update-from-selection-tooltip: "Обновить примеры и тип заметки по текущему выделению (Ctrl+R)"
 table-unsaved-title: "Несохранённые записи"
 table-unsaved-body: "Все новые записи в таблице будут удалены. Вы уверены?"
@@ -62,6 +63,11 @@ table-added-rows:
 context-copy: "Копировать"
 context-paste: "Вставить"
 context-clear: "Очистить"
+context-undo: "Отменить"
+context-redo: "Повторить"
+context-insert-row: "Вставить строку"
+context-delete-row: "Удалить строку"
+context-update-selection: "Обновить из выделения"
 
 
 # ── Группа текста (text/group.py) ──────────────────────────────────────
@@ -156,7 +162,6 @@ help-table-desc: >-
   (редактируемые, белые). Все столбцы в редактируемых строках можно редактировать
   напрямую. Столбец поля сортировки выделен тёплым цветом фона.
 
-help-table-insert-clipboard: "Вставить буфер обмена как новые строки (одна строка на запись)."
 help-table-update-selection: "Обновить примеры из текущего выделения."
 help-table-right-click-header: "Правый клик по заголовку"
 help-table-right-click-header-desc: "Показать или скрыть столбцы."

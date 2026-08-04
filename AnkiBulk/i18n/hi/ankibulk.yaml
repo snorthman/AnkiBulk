@@ -43,8 +43,9 @@ table-redo-tooltip: "फिर से करें (Ctrl+Y)"
 table-row-insert-tooltip: "नई पंक्ति डालें (Enter)"
 table-row-remove-tooltip: "चयनित पंक्ति हटाएँ (Delete)"
 table-row-clear-tooltip: "क्रम फ़ील्ड साफ़ करें, या खाली होने पर पंक्ति हटाएँ (Backspace)"
-table-copy-clipboard-tooltip: "पूरी तालिका क्लिपबोर्ड पर कॉपी करें"
-table-insert-clipboard-tooltip: "क्लिपबोर्ड पंक्तियों को नई पंक्तियों के रूप में डालें (Ctrl+V)"
+table-copy-tooltip: "कॉपी (Ctrl+C)"
+table-paste-tooltip: "पेस्ट (Ctrl+V)"
+table-clear-tooltip: "साफ़ (Delete)"
 table-update-from-selection-tooltip: "वर्तमान ब्राउज़र चयन से उदाहरण पंक्तियाँ और नोट प्रकार पुनः लोड करें (Ctrl+R)"
 table-unsaved-title: "सहेजी नहीं गई प्रविष्टियाँ"
 table-unsaved-body: "तालिका की सभी नई प्रविष्टियाँ हटा दी जाएँगी। क्या आप सुनिश्चित हैं?"
@@ -62,6 +63,11 @@ table-added-rows:
 context-copy: "कॉपी करें"
 context-paste: "चिपकाएँ"
 context-clear: "साफ़ करें"
+context-undo: "पूर्ववत"
+context-redo: "फिर से"
+context-insert-row: "पंक्ति डालें"
+context-delete-row: "पंक्ति हटाएँ"
+context-update-selection: "चयन से अपडेट करें"
 
 
 # ── पाठ समूह (text/group.py) ──────────────────────────────────────
@@ -156,7 +162,6 @@ help-table-desc: >-
   (संपादन योग्य, सफ़ेद) दिखाती है। संपादन योग्य पंक्तियों के सभी कॉलम सीधे
   संपादित किए जा सकते हैं। क्रम फ़ील्ड कॉलम गर्म पृष्ठभूमि रंग से हाइलाइट है।
 
-help-table-insert-clipboard: "क्लिपबोर्ड को नई पंक्तियों के रूप में चिपकाएँ (प्रति पंक्ति एक प्रविष्टि)।"
 help-table-update-selection: "वर्तमान ब्राउज़र चयन से उदाहरण पंक्तियाँ ताज़ा करें।"
 help-table-right-click-header: "हेडर पर राइट-क्लिक"
 help-table-right-click-header-desc: "कॉलम दिखाएँ या छिपाएँ।"

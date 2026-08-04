@@ -40,8 +40,7 @@ def _html() -> str:
         _element('h3', tr("help-table-heading")),
         _element('p', tr("help-table-desc")),
         _element_table(
-            tr("table-insert-clipboard"), tr("help-table-insert-clipboard"),
-            tr("table-update-from-selection"), tr("help-table-update-selection"),
+            tr("table-update-from-selection-tooltip"), tr("help-table-update-selection"),
             tr("help-table-right-click-header"), tr("help-table-right-click-header-desc"),
             "Enter", tr("help-table-enter"),
             "Delete", tr("help-table-delete"),

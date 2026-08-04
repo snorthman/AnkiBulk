@@ -43,8 +43,9 @@ table-redo-tooltip: "重做 (Ctrl+Y)"
 table-row-insert-tooltip: "插入新行 (Enter)"
 table-row-remove-tooltip: "删除选中的行 (Delete)"
 table-row-clear-tooltip: "清除排序字段，或删除空行 (Backspace)"
-table-copy-clipboard-tooltip: "将整个表格复制到剪贴板"
-table-insert-clipboard-tooltip: "将剪贴板内容作为新行插入 (Ctrl+V)"
+table-copy-tooltip: "复制 (Ctrl+C)"
+table-paste-tooltip: "粘贴 (Ctrl+V)"
+table-clear-tooltip: "清除 (Delete)"
 table-update-from-selection-tooltip: "根据当前浏览器选择重新加载示例行和笔记类型 (Ctrl+R)"
 table-unsaved-title: "未保存的条目"
 table-unsaved-body: "表格中所有新条目将被丢弃。确定要继续吗？"
@@ -62,6 +63,11 @@ table-added-rows:
 context-copy: "复制"
 context-paste: "粘贴"
 context-clear: "清除"
+context-undo: "撤销"
+context-redo: "重做"
+context-insert-row: "插入行"
+context-delete-row: "删除行"
+context-update-selection: "从选择更新"
 
 
 # ── 文本组 (text/group.py) ──────────────────────────────────────
@@ -155,7 +161,6 @@ help-table-desc: >-
   （可编辑，白色）。可编辑行中的所有列都可以直接编辑。
   排序字段列以暖色背景突出显示。
 
-help-table-insert-clipboard: "将剪贴板粘贴为新行（每行一个）。"
 help-table-update-selection: "从当前浏览器选择刷新示例行。"
 help-table-right-click-header: "右键单击表头"
 help-table-right-click-header-desc: "显示或隐藏列。"

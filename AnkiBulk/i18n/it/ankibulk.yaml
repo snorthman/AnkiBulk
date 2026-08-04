@@ -43,8 +43,9 @@ table-redo-tooltip: "Ripristina (Ctrl+Y)"
 table-row-insert-tooltip: "Inserisci una nuova riga (Invio)"
 table-row-remove-tooltip: "Elimina la riga selezionata (Canc)"
 table-row-clear-tooltip: "Cancella il campo di ordinamento, o elimina la riga se vuota (Backspace)"
-table-copy-clipboard-tooltip: "Copia l'intera tabella negli appunti"
-table-insert-clipboard-tooltip: "Inserisci le righe dagli appunti come nuove righe (Ctrl+V)"
+table-copy-tooltip: "Copia (Ctrl+C)"
+table-paste-tooltip: "Incolla (Ctrl+V)"
+table-clear-tooltip: "Cancella (Canc)"
 table-update-from-selection-tooltip: "Ricarica le righe di esempio e il tipo di nota dalla selezione attuale (Ctrl+R)"
 table-unsaved-title: "Voci non salvate"
 table-unsaved-body: "Tutte le nuove voci nella tabella saranno eliminate. Sei sicuro?"
@@ -62,6 +63,11 @@ table-added-rows:
 context-copy: "Copia"
 context-paste: "Incolla"
 context-clear: "Cancella"
+context-undo: "Annulla"
+context-redo: "Ripristina"
+context-insert-row: "Inserisci riga"
+context-delete-row: "Elimina riga"
+context-update-selection: "Aggiorna dalla selezione"
 
 
 # ── Gruppo testo (text/group.py) ──────────────────────────────────────
@@ -156,7 +162,6 @@ help-table-desc: >-
   (modificabili, bianco). Tutte le colonne nelle righe modificabili possono essere
   modificate direttamente. La colonna del campo di ordinamento è evidenziata con un colore di sfondo caldo.
 
-help-table-insert-clipboard: "Incolla gli appunti come nuove righe (una riga per voce)."
 help-table-update-selection: "Aggiorna le righe di esempio dalla selezione attuale."
 help-table-right-click-header: "Clic destro sull'intestazione"
 help-table-right-click-header-desc: "Mostra o nascondi colonne."

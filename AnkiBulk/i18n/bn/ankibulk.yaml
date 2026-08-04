@@ -43,8 +43,9 @@ table-redo-tooltip: "পুনরায় করুন (Ctrl+Y)"
 table-row-insert-tooltip: "নতুন সারি সন্নিবেশ করুন (Enter)"
 table-row-remove-tooltip: "নির্বাচিত সারি মুছুন (Delete)"
 table-row-clear-tooltip: "সর্ট ফিল্ড মুছুন, বা খালি থাকলে সারি মুছুন (Backspace)"
-table-copy-clipboard-tooltip: "সম্পূর্ণ টেবিল ক্লিপবোর্ডে কপি করুন"
-table-insert-clipboard-tooltip: "ক্লিপবোর্ডের লাইনগুলো নতুন সারি হিসেবে সন্নিবেশ করুন (Ctrl+V)"
+table-copy-tooltip: "কপি (Ctrl+C)"
+table-paste-tooltip: "পেস্ট (Ctrl+V)"
+table-clear-tooltip: "মুছুন (Delete)"
 table-update-from-selection-tooltip: "বর্তমান ব্রাউজার নির্বাচন থেকে উদাহরণ সারি ও নোট টাইপ পুনরায় লোড করুন (Ctrl+R)"
 table-unsaved-title: "অসংরক্ষিত এন্ট্রি"
 table-unsaved-body: "টেবিলের সকল নতুন এন্ট্রি মুছে যাবে। আপনি কি নিশ্চিত?"
@@ -62,6 +63,11 @@ table-added-rows:
 context-copy: "কপি"
 context-paste: "পেস্ট"
 context-clear: "মুছুন"
+context-undo: "পূর্বাবস্থায়"
+context-redo: "পুনরায়"
+context-insert-row: "সারি সন্নিবেশ"
+context-delete-row: "সারি মুছুন"
+context-update-selection: "নির্বাচন থেকে আপডেট"
 
 
 # ── টেক্সট গোষ্ঠী (text/group.py) ──────────────────────────────────────
@@ -156,7 +162,6 @@ help-table-desc: >-
   (সম্পাদনযোগ্য, সাদা) দেখায়। সম্পাদনযোগ্য সারির সকল কলাম সরাসরি সম্পাদনা
   করা যায়। সর্ট ফিল্ড কলাম উষ্ণ পটভূমি রঙে হাইলাইট করা হয়।
 
-help-table-insert-clipboard: "ক্লিপবোর্ড নতুন সারি হিসেবে পেস্ট করুন (প্রতি লাইনে একটি এন্ট্রি)।"
 help-table-update-selection: "বর্তমান ব্রাউজার নির্বাচন থেকে উদাহরণ সারি রিফ্রেশ করুন।"
 help-table-right-click-header: "হেডারে রাইট-ক্লিক"
 help-table-right-click-header-desc: "কলাম দেখান বা লুকান।"

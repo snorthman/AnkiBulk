@@ -52,8 +52,9 @@ table-redo-tooltip: "Redo (Ctrl+Y)"
 table-row-insert-tooltip: "Insert a new row (Enter)"
 table-row-remove-tooltip: "Delete the selected row (Delete)"
 table-row-clear-tooltip: "Clear the sort field, or delete the row if empty (Backspace)"
-table-copy-clipboard-tooltip: "Copy the entire table to clipboard"
-table-insert-clipboard-tooltip: "Insert clipboard lines as new rows (Ctrl+V)"
+table-copy-tooltip: "Copy (Ctrl+C)"
+table-paste-tooltip: "Paste (Ctrl+V)"
+table-clear-tooltip: "Clear (Delete)"
 table-update-from-selection-tooltip: "Reload example rows and notetype given the current browser selection (Ctrl+R)"
 table-unsaved-title: "Unsaved entries"
 table-unsaved-body: "All new entries in the table will be discarded. Are you sure?"
@@ -66,11 +67,16 @@ table-added-rows:
   other: "Added {n} rows"
 
 
-# ── Table context menu (table/table.py) ─────────────────────────────
+# ── Table context menu (table/context.py) ──────────────────────────
 
 context-copy: "Copy"
 context-paste: "Paste"
 context-clear: "Clear"
+context-undo: "Undo"
+context-redo: "Redo"
+context-insert-row: "Insert Row"
+context-delete-row: "Delete Row"
+context-update-selection: "Update from Selection"
 
 
 # ── Text group (text/group.py) ──────────────────────────────────────
@@ -165,7 +171,6 @@ help-table-desc: >-
   (editable, white). All columns in editable rows can be edited directly.
   The sort field column is highlighted with a warm background color.
 
-help-table-insert-clipboard: "Paste clipboard as new rows (one row per line)."
 help-table-update-selection: "Refresh example rows from the current browser selection."
 help-table-right-click-header: "Right-click header"
 help-table-right-click-header-desc: "Show or hide columns."

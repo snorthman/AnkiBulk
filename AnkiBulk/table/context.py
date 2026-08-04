@@ -7,10 +7,11 @@ from aqt.qt import QApplication, QMenu, Qt
 from ..i18n import tr
 
 if TYPE_CHECKING:
+    from .group import TableGroup
     from .table import Table
 
 
-def show_context_menu(table: Table, pos) -> None:
+def show_context_menu(table: Table, pos, group: TableGroup | None = None) -> None:
     menu = QMenu(table)
 
     copy_action = menu.addAction(tr("context-copy"))
@@ -31,13 +32,43 @@ def show_context_menu(table: Table, pos) -> None:
         and table.currentRow() >= table.first_editable_row
     )
 
+    undo_action = redo_action = None
+    insert_action = delete_action = update_action = None
+
+    if group is not None:
+        menu.addSeparator()
+        undo_action = menu.addAction(tr("context-undo"))
+        redo_action = menu.addAction(tr("context-redo"))
+        undo_action.setEnabled(table.can_undo)
+        redo_action.setEnabled(table.can_redo)
+
+        menu.addSeparator()
+        insert_action = menu.addAction(tr("context-insert-row"))
+        delete_action = menu.addAction(tr("context-delete-row"))
+        delete_action.setEnabled(table.currentRow() >= table.first_editable_row)
+
+        menu.addSeparator()
+        update_action = menu.addAction(tr("context-update-selection"))
+
     action = menu.exec(table.mapToGlobal(pos))
+    if action is None:
+        return
     if action == copy_action:
         copy(table)
     elif action == paste_action:
         paste(table)
     elif action == clear_action:
         clear(table)
+    elif action == undo_action:
+        group._on_undo()
+    elif action == redo_action:
+        group._on_redo()
+    elif action == insert_action:
+        group._on_insert_row()
+    elif action == delete_action:
+        group._on_remove_row()
+    elif action == update_action:
+        group._on_update_from_selection()
 
 
 def copy(table: Table) -> None:
@@ -134,6 +165,14 @@ def paste(table: Table) -> None:
 def clear(table: Table) -> None:
     indexes = [idx for idx in table.selectedIndexes() if idx.row() >= table.first_editable_row]
     if not indexes:
+        return
+    has_content = any(
+        (item := table.item(idx.row(), idx.column())) is not None
+        and item.flags() & Qt.ItemFlag.ItemIsEditable
+        and item.text()
+        for idx in indexes
+    )
+    if not has_content:
         return
     table.push_undo()
     for idx in indexes:

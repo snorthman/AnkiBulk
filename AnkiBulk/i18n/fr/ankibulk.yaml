@@ -43,8 +43,9 @@ table-redo-tooltip: "Rétablir (Ctrl+Y)"
 table-row-insert-tooltip: "Insérer une nouvelle ligne (Entrée)"
 table-row-remove-tooltip: "Supprimer la ligne sélectionnée (Suppr)"
 table-row-clear-tooltip: "Effacer le champ de tri, ou supprimer la ligne si vide (Retour arrière)"
-table-copy-clipboard-tooltip: "Copier l'ensemble du tableau dans le presse-papiers"
-table-insert-clipboard-tooltip: "Insérer les lignes du presse-papiers comme nouvelles lignes (Ctrl+V)"
+table-copy-tooltip: "Copier (Ctrl+C)"
+table-paste-tooltip: "Coller (Ctrl+V)"
+table-clear-tooltip: "Effacer (Suppr)"
 table-update-from-selection-tooltip: "Recharger les lignes d'exemple et le type de note depuis la sélection actuelle (Ctrl+R)"
 table-unsaved-title: "Entrées non enregistrées"
 table-unsaved-body: "Toutes les nouvelles entrées du tableau seront supprimées. Êtes-vous sûr ?"
@@ -62,6 +63,11 @@ table-added-rows:
 context-copy: "Copier"
 context-paste: "Coller"
 context-clear: "Effacer"
+context-undo: "Annuler"
+context-redo: "Rétablir"
+context-insert-row: "Insérer une ligne"
+context-delete-row: "Supprimer la ligne"
+context-update-selection: "Mettre à jour depuis la sélection"
 
 
 # ── Groupe texte (text/group.py) ──────────────────────────────────────
@@ -156,7 +162,6 @@ help-table-desc: >-
   (modifiables, blanc). Toutes les colonnes des lignes modifiables peuvent être éditées
   directement. La colonne du champ de tri est mise en évidence avec une couleur de fond chaude.
 
-help-table-insert-clipboard: "Coller le presse-papiers comme nouvelles lignes (une ligne par entrée)."
 help-table-update-selection: "Rafraîchir les lignes d'exemple depuis la sélection actuelle."
 help-table-right-click-header: "Clic droit sur l'en-tête"
 help-table-right-click-header-desc: "Afficher ou masquer des colonnes."

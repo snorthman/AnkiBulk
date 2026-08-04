@@ -43,8 +43,9 @@ table-redo-tooltip: "Wiederherstellen (Strg+Y)"
 table-row-insert-tooltip: "Neue Zeile einfügen (Eingabe)"
 table-row-remove-tooltip: "Ausgewählte Zeile löschen (Entf)"
 table-row-clear-tooltip: "Sortierfeld leeren oder Zeile löschen, wenn leer (Rücktaste)"
-table-copy-clipboard-tooltip: "Gesamte Tabelle in die Zwischenablage kopieren"
-table-insert-clipboard-tooltip: "Zwischenablage-Zeilen als neue Zeilen einfügen (Strg+V)"
+table-copy-tooltip: "Kopieren (Strg+C)"
+table-paste-tooltip: "Einfügen (Strg+V)"
+table-clear-tooltip: "Leeren (Entf)"
 table-update-from-selection-tooltip: "Beispielzeilen und Notiztyp aus der aktuellen Browserauswahl aktualisieren (Strg+R)"
 table-unsaved-title: "Ungespeicherte Einträge"
 table-unsaved-body: "Alle neuen Einträge in der Tabelle werden verworfen. Bist du sicher?"
@@ -62,6 +63,11 @@ table-added-rows:
 context-copy: "Kopieren"
 context-paste: "Einfügen"
 context-clear: "Leeren"
+context-undo: "Rückgängig"
+context-redo: "Wiederherstellen"
+context-insert-row: "Zeile einfügen"
+context-delete-row: "Zeile löschen"
+context-update-selection: "Aus Auswahl aktualisieren"
 
 
 # ── Text group (text/group.py) ──────────────────────────────────────
@@ -157,7 +163,6 @@ help-table-desc: >-
   direkt bearbeitet werden. Die Sortierfeldspalte ist mit einer warmen
   Hintergrundfarbe hervorgehoben.
 
-help-table-insert-clipboard: "Zwischenablage als neue Zeilen einfügen (eine Zeile pro Eintrag)."
 help-table-update-selection: "Beispielzeilen aus der aktuellen Browserauswahl aktualisieren."
 help-table-right-click-header: "Rechtsklick auf Kopfzeile"
 help-table-right-click-header-desc: "Spalten ein- oder ausblenden."
