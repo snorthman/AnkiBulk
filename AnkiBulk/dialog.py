@@ -88,6 +88,12 @@ class Dialog(QDialog):
             self._hint.setWordWrap(True)
             self.table_group.layout().insertWidget(1, self._hint)
 
+        self.table_group.load_from_selection()
+        self._stack.addWidget(self.table_group)
+
+        # ---- Page 1: Text group ----
+        self.text_group = TextGroup(self.toggle, self.table)
+
         self._text_hint = None
         if AnkiBulkConfig.first_time_text.value:
             self._text_hint = QLabel(tr("hint-first-time-text"))
@@ -95,11 +101,6 @@ class Dialog(QDialog):
             self._text_hint.setWordWrap(True)
             self.text_group.layout().insertWidget(1, self._text_hint)
 
-        self.table_group.load_from_selection()
-        self._stack.addWidget(self.table_group)
-
-        # ---- Page 1: Text group ----
-        self.text_group = TextGroup(self.toggle, self.table)
         self._stack.addWidget(self.text_group)
 
         root.addWidget(group, stretch=1)

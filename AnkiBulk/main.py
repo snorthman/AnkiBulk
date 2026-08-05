@@ -23,7 +23,7 @@ def _on_browser_menus_init(browser):
     help_action.triggered.connect(lambda: _on_help(browser))
     menu.addAction(help_action)
 
-    if os.environ['ANKIDEV'] == '1':
+    if os.environ.get('ANKIDEV') == '1':
         menu.addAction(QAction("This is the test addon.", menu))
 
 
