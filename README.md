@@ -24,42 +24,31 @@ Open AnkiBulk from the browser menu: **AnkiBulk > Bulk Add**.
 
 ### Table view
 
-The table shows existing notes (read-only, grey) and new notes (editable, white). Only the sort field column is directly editable; double-click any other cell in an editable row to jump to it.
+The table shows existing notes (read-only, grey) and new notes (editable, white). Right-click a column header to show or hide columns. Right-click a cell for the full context menu.
 
-| Action | Description |
-|--------|-------------|
-| Insert Clipboard to Table | Paste clipboard as new rows (one row per line) |
-| Update from Selection | Refresh example rows from the current browser selection |
-| Right-click header | Show or hide columns |
-| Enter | Commit the current cell and move to the next row |
-| Delete | Remove the selected editable row |
-| Backspace | Clear the sort field, or remove the row if already empty |
-| Ctrl+V | Insert clipboard lines as new rows |
-| Ctrl+Z / Ctrl+Y | Undo / Redo |
+| Action | Shortcut | Description |
+|--------|----------|-------------|
+| Copy | Ctrl+C | Copy selected cells to clipboard |
+| Paste | Ctrl+V | Paste clipboard into selected cells, adding rows as needed |
+| Undo / Redo | Ctrl+Z / Ctrl+Y | Undo or redo table changes |
+| Insert Row | Enter | Insert a new row below the current one |
+| Delete Row | Delete | Remove the selected editable row |
+| Update from Selection | Ctrl+R | Refresh example rows from the current browser selection |
+| Tab / Shift+Tab | | Move between cells; Tab on the last cell of the last row adds a new row |
+| Backspace | | Clear the sort field, or remove the row if already empty |
 
 ### Text view
 
 Toggle to Text view to edit notes in YAML format. The top pane shows your selected example notes (read-only); the bottom pane is for your new notes. Switching back to Table view validates and applies the YAML.
 
-| Action | Description |
-|--------|-------------|
-| Copy to Clipboard | Copy content in the chosen format (YAML, JSON, XML, CSV, or TSV) |
-| Options | Configure copy format, whether to include example notes, and additional text |
-| Ctrl+Shift+C | Copy to clipboard |
+| Action | Shortcut | Description |
+|--------|----------|-------------|
+| Copy to Clipboard | Ctrl+Shift+C | Copy content in the chosen format (YAML, JSON, XML, CSV, or TSV) |
+| Settings | | Configure copy format, whether to include example notes, and additional text |
 
 ### Bulk Add
 
 Click **Bulk Add** to create notes from all editable rows that have content in the sort field. Notes are added to the selected deck. The browser updates to show the newly created notes.
-
-## Keyboard shortcuts
-
-| Shortcut | Action |
-|----------|--------|
-| Ctrl+R | Update from Selection (Table view) |
-| Ctrl+V | Insert clipboard as rows (Table view) |
-| Ctrl+Z | Undo (Table view) |
-| Ctrl+Y | Redo (Table view) |
-| Ctrl+Shift+C | Copy to Clipboard (Text view) |
 
 ## Contribute
 
