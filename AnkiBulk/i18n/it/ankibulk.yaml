@@ -36,6 +36,10 @@ hint-first-time: >-
   così puoi modificare le righe con un LLM, un foglio di calcolo o un altro strumento.
 
 
+hint-first-time-text: >-
+  Suggerimento: usa il pulsante Impostazioni per configurare il formato di copia, poi
+  copia negli appunti e incolla in un LLM per creare contenuti rapidamente.
+
 # ── Gruppo tabella (table/group.py) ────────────────────────────────────
 
 table-undo-tooltip: "Annulla (Ctrl+Z)"
@@ -43,8 +47,9 @@ table-redo-tooltip: "Ripristina (Ctrl+Y)"
 table-row-insert-tooltip: "Inserisci una nuova riga (Invio)"
 table-row-remove-tooltip: "Elimina la riga selezionata (Canc)"
 table-row-clear-tooltip: "Cancella il campo di ordinamento, o elimina la riga se vuota (Backspace)"
-table-copy-clipboard-tooltip: "Copia l'intera tabella negli appunti"
-table-insert-clipboard-tooltip: "Inserisci le righe dagli appunti come nuove righe (Ctrl+V)"
+table-copy-tooltip: "Copia (Ctrl+C)"
+table-paste-tooltip: "Incolla (Ctrl+V)"
+table-clear-tooltip: "Cancella (Canc)"
 table-update-from-selection-tooltip: "Ricarica le righe di esempio e il tipo di nota dalla selezione attuale (Ctrl+R)"
 table-unsaved-title: "Voci non salvate"
 table-unsaved-body: "Tutte le nuove voci nella tabella saranno eliminate. Sei sicuro?"
@@ -55,6 +60,18 @@ table-updated-example-rows: "Righe di esempio aggiornate, tipo di nota {name}"
 table-added-rows:
   one: "Aggiunta 1 riga"
   other: "Aggiunte {n} righe"
+
+
+# ── Menu contestuale tabella (table/table.py) ───────────────────────
+
+context-copy: "Copia"
+context-paste: "Incolla"
+context-clear: "Cancella"
+context-undo: "Annulla"
+context-redo: "Ripristina"
+context-insert-row: "Inserisci riga"
+context-delete-row: "Elimina riga"
+context-update-selection: "Aggiorna dalla selezione"
 
 
 # ── Gruppo testo (text/group.py) ──────────────────────────────────────
@@ -86,6 +103,9 @@ options-additional-text-placeholder: "es. istruzioni per un LLM ..."
 
 bulk-add-invalid-yaml: "Correggi gli errori YAML nella vista Testo prima di aggiungere."
 bulk-add-no-content: "Nessuna nuova nota da aggiungere"
+bulk-add-empty-sort:
+  one: "1 riga non ha contenuto nel campo di ordinamento e verrà ignorata. Continuare?"
+  other: "{n} righe non hanno contenuto nel campo di ordinamento e verranno ignorate. Continuare?"
 bulk-add-no-notes: "Nessuna nota da aggiungere"
 bulk-add-added:
   one: "Aggiunta 1 nota"
@@ -146,7 +166,6 @@ help-table-desc: >-
   (modificabili, bianco). Tutte le colonne nelle righe modificabili possono essere
   modificate direttamente. La colonna del campo di ordinamento è evidenziata con un colore di sfondo caldo.
 
-help-table-insert-clipboard: "Incolla gli appunti come nuove righe (una riga per voce)."
 help-table-update-selection: "Aggiorna le righe di esempio dalla selezione attuale."
 help-table-right-click-header: "Clic destro sull'intestazione"
 help-table-right-click-header-desc: "Mostra o nascondi colonne."

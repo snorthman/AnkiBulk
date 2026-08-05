@@ -36,6 +36,10 @@ hint-first-time: >-
   حتى تتمكن من تحرير هذه الصفوف باستخدام LLM أو جدول بيانات أو أداة أخرى.
 
 
+hint-first-time-text: >-
+  نصيحة: استخدم زر الإعدادات لتهيئة تنسيق النسخ، ثم
+  انسخ إلى الحافظة والصقه في نموذج لغوي كبير لإنشاء المحتوى بسرعة.
+
 # ── مجموعة الجدول (table/group.py) ────────────────────────────────────
 
 table-undo-tooltip: "تراجع (Ctrl+Z)"
@@ -43,8 +47,9 @@ table-redo-tooltip: "إعادة (Ctrl+Y)"
 table-row-insert-tooltip: "إدراج صف جديد (Enter)"
 table-row-remove-tooltip: "حذف الصف المحدد (Delete)"
 table-row-clear-tooltip: "مسح حقل الترتيب، أو حذف الصف إذا كان فارغاً (Backspace)"
-table-copy-clipboard-tooltip: "نسخ الجدول بالكامل إلى الحافظة"
-table-insert-clipboard-tooltip: "إدراج سطور الحافظة كصفوف جديدة (Ctrl+V)"
+table-copy-tooltip: "نسخ (Ctrl+C)"
+table-paste-tooltip: "لصق (Ctrl+V)"
+table-clear-tooltip: "مسح (Delete)"
 table-update-from-selection-tooltip: "إعادة تحميل صفوف الأمثلة ونوع الملاحظة من التحديد الحالي (Ctrl+R)"
 table-unsaved-title: "إدخالات غير محفوظة"
 table-unsaved-body: "سيتم حذف جميع الإدخالات الجديدة في الجدول. هل أنت متأكد؟"
@@ -56,6 +61,18 @@ table-updated-example-rows: "تم تحديث صفوف الأمثلة، نوع ا
 table-added-rows:
   one: "تمت إضافة صف واحد"
   other: "تمت إضافة {n} صفوف"
+
+
+# ── قائمة سياق الجدول (table/table.py) ──────────────────────────────
+
+context-copy: "نسخ"
+context-paste: "لصق"
+context-clear: "مسح"
+context-undo: "تراجع"
+context-redo: "إعادة"
+context-insert-row: "إدراج صف"
+context-delete-row: "حذف صف"
+context-update-selection: "تحديث من التحديد"
 
 
 # ── مجموعة النص (text/group.py) ──────────────────────────────────────
@@ -87,6 +104,9 @@ options-additional-text-placeholder: "مثلاً تعليمات لـ LLM ..."
 
 bulk-add-invalid-yaml: "أصلح أخطاء YAML في عرض النص قبل الإضافة."
 bulk-add-no-content: "لا توجد ملاحظات جديدة للإضافة"
+bulk-add-empty-sort:
+  one: "صف واحد لا يحتوي على محتوى في حقل الترتيب وسيتم تخطيه. متابعة؟"
+  other: "{n} صفوف لا تحتوي على محتوى في حقل الترتيب وسيتم تخطيها. متابعة؟"
 bulk-add-no-notes: "لا توجد ملاحظات للإضافة"
 bulk-add-added:
   one: "تمت إضافة ملاحظة واحدة"
@@ -147,7 +167,6 @@ help-table-desc: >-
   (قابلة للتحرير، أبيض). يمكن تحرير جميع الأعمدة في الصفوف القابلة للتحرير
   مباشرة. يتم تمييز عمود حقل الترتيب بلون خلفية دافئ.
 
-help-table-insert-clipboard: "لصق الحافظة كصفوف جديدة (صف واحد لكل سطر)."
 help-table-update-selection: "تحديث صفوف الأمثلة من التحديد الحالي."
 help-table-right-click-header: "انقر بزر الفأرة الأيمن على الرأس"
 help-table-right-click-header-desc: "إظهار أو إخفاء الأعمدة."

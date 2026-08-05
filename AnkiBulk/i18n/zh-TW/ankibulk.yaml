@@ -36,6 +36,10 @@ hint-first-time: >-
   然後使用 LLM、試算表或其他工具編輯這些列。
 
 
+hint-first-time-text: >-
+  提示：使用設定按鈕配置複製格式，然後
+  複製到剪貼簿並貼到LLM中，快速建立內容。
+
 # ── 表格組 (table/group.py) ────────────────────────────────────
 
 table-undo-tooltip: "復原 (Ctrl+Z)"
@@ -43,8 +47,9 @@ table-redo-tooltip: "重做 (Ctrl+Y)"
 table-row-insert-tooltip: "插入新列 (Enter)"
 table-row-remove-tooltip: "刪除選取的列 (Delete)"
 table-row-clear-tooltip: "清除排序欄位，或刪除空列 (Backspace)"
-table-copy-clipboard-tooltip: "將整個表格複製到剪貼簿"
-table-insert-clipboard-tooltip: "將剪貼簿內容作為新列插入 (Ctrl+V)"
+table-copy-tooltip: "複製 (Ctrl+C)"
+table-paste-tooltip: "貼上 (Ctrl+V)"
+table-clear-tooltip: "清除 (Delete)"
 table-update-from-selection-tooltip: "根據目前瀏覽器選取重新載入範例列和筆記類型 (Ctrl+R)"
 table-unsaved-title: "未儲存的項目"
 table-unsaved-body: "表格中所有新項目將被捨棄。確定要繼續嗎？"
@@ -55,6 +60,18 @@ table-updated-example-rows: "已更新範例列，使用 {name} 筆記類型"
 table-added-rows:
   one: "已新增 1 列"
   other: "已新增 {n} 列"
+
+
+# ── 表格右鍵選單 (table/table.py) ──────────────────────────────────
+
+context-copy: "複製"
+context-paste: "貼上"
+context-clear: "清除"
+context-undo: "復原"
+context-redo: "重做"
+context-insert-row: "插入列"
+context-delete-row: "刪除列"
+context-update-selection: "從選擇更新"
 
 
 # ── 文字組 (text/group.py) ──────────────────────────────────────
@@ -86,6 +103,9 @@ options-additional-text-placeholder: "例如，給 LLM 的指令 ..."
 
 bulk-add-invalid-yaml: "請先修復文字檢視中的 YAML 錯誤。"
 bulk-add-no-content: "沒有新筆記可新增"
+bulk-add-empty-sort:
+  one: "1 列的排序欄位為空，將被跳過。是否繼續？"
+  other: "{n} 列的排序欄位為空，將被跳過。是否繼續？"
 bulk-add-no-notes: "沒有筆記可新增"
 bulk-add-added:
   one: "已新增 1 則筆記"
@@ -145,7 +165,6 @@ help-table-desc: >-
   （可編輯，白色）。可編輯列中的所有欄位都可以直接編輯。
   排序欄位列以暖色背景突出顯示。
 
-help-table-insert-clipboard: "將剪貼簿貼為新列（每行一個）。"
 help-table-update-selection: "從目前瀏覽器選取重新整理範例列。"
 help-table-right-click-header: "右鍵按一下標題"
 help-table-right-click-header-desc: "顯示或隱藏欄位。"

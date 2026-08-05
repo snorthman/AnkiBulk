@@ -34,7 +34,10 @@ if TYPE_CHECKING:
     from aqt.browser import Browser
 
 
-STYLESHEET = Path(__file__).with_name("style.css").read_text(encoding="utf-8")
+def _load_stylesheet() -> str:
+    from aqt.theme import theme_manager
+    name = "style-dark.css" if theme_manager.night_mode else "style.css"
+    return Path(__file__).with_name(name).read_text(encoding="utf-8")
 
 
 class Dialog(QDialog):
@@ -62,7 +65,7 @@ class Dialog(QDialog):
         root.addWidget(self.chooser)
 
         # -- Row 2: Stacked content inside a group box --
-        self.setStyleSheet(STYLESHEET)
+        self.setStyleSheet(_load_stylesheet())
 
         self.toggle = ToggleSwitch()
 
@@ -84,6 +87,13 @@ class Dialog(QDialog):
             self._hint.setObjectName("firstTimeHint")
             self._hint.setWordWrap(True)
             self.table_group.layout().insertWidget(1, self._hint)
+
+        self._text_hint = None
+        if AnkiBulkConfig.first_time_text.value:
+            self._text_hint = QLabel(tr("hint-first-time-text"))
+            self._text_hint.setObjectName("firstTimeHint")
+            self._text_hint.setWordWrap(True)
+            self.text_group.layout().insertWidget(1, self._text_hint)
 
         self.table_group.load_from_selection()
         self._stack.addWidget(self.table_group)
@@ -128,6 +138,9 @@ class Dialog(QDialog):
         copy_shortcut = QShortcut(QKeySequence("Ctrl+Shift+C"), self)
         qconnect(copy_shortcut.activated,
                  lambda: self.text_group._on_copy_to_clipboard() if self._prev_group == self.text_group.index else None)
+
+        copy_shortcut_table = QShortcut(QKeySequence("Ctrl+C"), self)
+        qconnect(copy_shortcut_table.activated, self._on_copy)
 
         paste_shortcut = QShortcut(QKeySequence("Ctrl+V"), self)
         qconnect(paste_shortcut.activated, self._on_paste)
@@ -174,7 +187,7 @@ class Dialog(QDialog):
     def _on_toggle_changed(self, checked: bool) -> None:
         """Toggle between Table (False/left) and Text (True/right)."""
         if checked:
-            # Switching to Text — always allowed
+            # Switching to Text, always allowed
             if self._hint is not None:
                 self._hint.hide()
                 self._hint = None
@@ -212,6 +225,11 @@ class Dialog(QDialog):
                     return
 
         # Either YAML applied successfully or user chose Discard
+        if self._text_hint is not None:
+            self._text_hint.hide()
+            self._text_hint = None
+            AnkiBulkConfig.first_time_text = False
+
         self._prev_group = self.table_group.index
         self._set_toggle(False)
         self._set_page(self.table_group.index)
@@ -222,9 +240,15 @@ class Dialog(QDialog):
         return (self._prev_group == self.table_group.index
                 and self.table.state() != QAbstractItemView.State.EditingState)
 
+    def _on_copy(self) -> None:
+        if self._table_not_editing:
+            from .table import context as _ctx
+            _ctx.copy(self.table)
+
     def _on_paste(self) -> None:
         if self._table_not_editing:
-            self.table_group._on_insert_clipboard()
+            from .table import context as _ctx
+            _ctx.paste(self.table)
 
     def _on_undo(self) -> None:
         if self._prev_group == self.text_group.index:
@@ -257,6 +281,24 @@ class Dialog(QDialog):
         if not table.has_editable_content:
             tooltip(tr("bulk-add-no-content"))
             return
+
+        empty_sort = 0
+        for row in range(table.first_editable_row, table.rowCount()):
+            sort_item = table.item(row, table.sort_col)
+            has_content = any(table.item(row, c) and table.item(row, c).text().strip()
+                              for c in range(table.columnCount()))
+            if has_content and (not sort_item or not sort_item.text().strip()):
+                empty_sort += 1
+
+        if empty_sort:
+            box = QMessageBox(self)
+            box.setWindowTitle(tr("dialog-title"))
+            box.setText(tr("bulk-add-empty-sort", n=empty_sort))
+            box.addButton(tr("btn-cancel"), QMessageBox.ButtonRole.RejectRole)
+            confirm = box.addButton(tr("btn-bulk-add"), QMessageBox.ButtonRole.AcceptRole)
+            box.exec()
+            if box.clickedButton() != confirm:
+                return
 
         col = self.mw.col
         notetype = table.current_notetype

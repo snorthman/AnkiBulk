@@ -44,6 +44,10 @@ hint-first-time: >-
   Tip: switch to Text view to copy your notes to your clipboard,
   so you can edit these rows using an LLM, spreadsheet or other tool.
 
+hint-first-time-text: >-
+  Tip: use the Settings button to configure the copy format, then
+  copy to clipboard and paste into an LLM for quick content creation.
+
 
 # ── Table group (table/group.py) ────────────────────────────────────
 
@@ -52,8 +56,9 @@ table-redo-tooltip: "Redo (Ctrl+Y)"
 table-row-insert-tooltip: "Insert a new row (Enter)"
 table-row-remove-tooltip: "Delete the selected row (Delete)"
 table-row-clear-tooltip: "Clear the sort field, or delete the row if empty (Backspace)"
-table-copy-clipboard-tooltip: "Copy the entire table to clipboard"
-table-insert-clipboard-tooltip: "Insert clipboard lines as new rows (Ctrl+V)"
+table-copy-tooltip: "Copy (Ctrl+C)"
+table-paste-tooltip: "Paste (Ctrl+V)"
+table-clear-tooltip: "Clear (Delete)"
 table-update-from-selection-tooltip: "Reload example rows and notetype given the current browser selection (Ctrl+R)"
 table-unsaved-title: "Unsaved entries"
 table-unsaved-body: "All new entries in the table will be discarded. Are you sure?"
@@ -64,6 +69,18 @@ table-updated-example-rows: "Updated example rows, using {name} notetype"
 table-added-rows:
   one: "Added 1 row"
   other: "Added {n} rows"
+
+
+# ── Table context menu (table/context.py) ──────────────────────────
+
+context-copy: "Copy"
+context-paste: "Paste"
+context-clear: "Clear"
+context-undo: "Undo"
+context-redo: "Redo"
+context-insert-row: "Insert Row"
+context-delete-row: "Delete Row"
+context-update-selection: "Update from Selection"
 
 
 # ── Text group (text/group.py) ──────────────────────────────────────
@@ -95,6 +112,9 @@ options-additional-text-placeholder: "e.g. instructions for an LLM..."
 
 bulk-add-invalid-yaml: "Fix the YAML errors in the Text view before adding."
 bulk-add-no-content: "No new notes to add"
+bulk-add-empty-sort:
+  one: "1 row has no content in the sort field and will be skipped. Continue?"
+  other: "{n} rows have no content in their sort field and will be skipped. Continue?"
 bulk-add-no-notes: "No notes to add"
 bulk-add-added:
   one: "Added 1 note"
@@ -155,7 +175,6 @@ help-table-desc: >-
   (editable, white). All columns in editable rows can be edited directly.
   The sort field column is highlighted with a warm background color.
 
-help-table-insert-clipboard: "Paste clipboard as new rows (one row per line)."
 help-table-update-selection: "Refresh example rows from the current browser selection."
 help-table-right-click-header: "Right-click header"
 help-table-right-click-header-desc: "Show or hide columns."

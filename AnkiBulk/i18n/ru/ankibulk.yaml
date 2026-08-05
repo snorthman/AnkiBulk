@@ -36,6 +36,10 @@ hint-first-time: >-
   и редактировать строки с помощью LLM, электронной таблицы или другого инструмента.
 
 
+hint-first-time-text: >-
+  Совет: используйте кнопку Настройки для настройки формата копирования, затем
+  скопируйте в буфер обмена и вставьте в LLM для быстрого создания контента.
+
 # ── Группа таблицы (table/group.py) ────────────────────────────────────
 
 table-undo-tooltip: "Отменить (Ctrl+Z)"
@@ -43,8 +47,9 @@ table-redo-tooltip: "Повторить (Ctrl+Y)"
 table-row-insert-tooltip: "Вставить новую строку (Enter)"
 table-row-remove-tooltip: "Удалить выбранную строку (Delete)"
 table-row-clear-tooltip: "Очистить поле сортировки или удалить строку, если пусто (Backspace)"
-table-copy-clipboard-tooltip: "Скопировать всю таблицу в буфер обмена"
-table-insert-clipboard-tooltip: "Вставить строки из буфера обмена как новые строки (Ctrl+V)"
+table-copy-tooltip: "Копировать (Ctrl+C)"
+table-paste-tooltip: "Вставить (Ctrl+V)"
+table-clear-tooltip: "Очистить (Delete)"
 table-update-from-selection-tooltip: "Обновить примеры и тип заметки по текущему выделению (Ctrl+R)"
 table-unsaved-title: "Несохранённые записи"
 table-unsaved-body: "Все новые записи в таблице будут удалены. Вы уверены?"
@@ -55,6 +60,18 @@ table-updated-example-rows: "Примеры обновлены, тип заме�
 table-added-rows:
   one: "Добавлена 1 строка"
   other: "Добавлено {n} строк"
+
+
+# ── Контекстное меню таблицы (table/table.py) ────────────────────────
+
+context-copy: "Копировать"
+context-paste: "Вставить"
+context-clear: "Очистить"
+context-undo: "Отменить"
+context-redo: "Повторить"
+context-insert-row: "Вставить строку"
+context-delete-row: "Удалить строку"
+context-update-selection: "Обновить из выделения"
 
 
 # ── Группа текста (text/group.py) ──────────────────────────────────────
@@ -86,6 +103,9 @@ options-additional-text-placeholder: "напр. инструкции для LLM 
 
 bulk-add-invalid-yaml: "Исправьте ошибки YAML в текстовом режиме перед добавлением."
 bulk-add-no-content: "Нет новых заметок для добавления"
+bulk-add-empty-sort:
+  one: "1 строка не содержит данных в поле сортировки и будет пропущена. Продолжить?"
+  other: "{n} строк не содержат данных в поле сортировки и будут пропущены. Продолжить?"
 bulk-add-no-notes: "Нет заметок для добавления"
 bulk-add-added:
   one: "Добавлена 1 заметка"
@@ -146,7 +166,6 @@ help-table-desc: >-
   (редактируемые, белые). Все столбцы в редактируемых строках можно редактировать
   напрямую. Столбец поля сортировки выделен тёплым цветом фона.
 
-help-table-insert-clipboard: "Вставить буфер обмена как новые строки (одна строка на запись)."
 help-table-update-selection: "Обновить примеры из текущего выделения."
 help-table-right-click-header: "Правый клик по заголовку"
 help-table-right-click-header-desc: "Показать или скрыть столбцы."

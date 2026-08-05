@@ -36,6 +36,10 @@ hint-first-time: >-
   e assim editar as linhas usando um LLM, planilha ou outra ferramenta.
 
 
+hint-first-time-text: >-
+  Dica: use o botão Configurações para definir o formato de cópia, depois
+  copie para a área de transferência e cole em um LLM para criar conteúdo rapidamente.
+
 # ── Grupo de tabela (table/group.py) ────────────────────────────────────
 
 table-undo-tooltip: "Desfazer (Ctrl+Z)"
@@ -43,8 +47,9 @@ table-redo-tooltip: "Refazer (Ctrl+Y)"
 table-row-insert-tooltip: "Inserir uma nova linha (Enter)"
 table-row-remove-tooltip: "Excluir a linha selecionada (Delete)"
 table-row-clear-tooltip: "Limpar o campo de classificação, ou excluir a linha se vazia (Backspace)"
-table-copy-clipboard-tooltip: "Copiar toda a tabela para a área de transferência"
-table-insert-clipboard-tooltip: "Inserir linhas da área de transferência como novas linhas (Ctrl+V)"
+table-copy-tooltip: "Copiar (Ctrl+C)"
+table-paste-tooltip: "Colar (Ctrl+V)"
+table-clear-tooltip: "Limpar (Delete)"
 table-update-from-selection-tooltip: "Recarregar linhas de exemplo e tipo de nota com base na seleção atual (Ctrl+R)"
 table-unsaved-title: "Entradas não salvas"
 table-unsaved-body: "Todas as novas entradas na tabela serão descartadas. Tem certeza?"
@@ -55,6 +60,18 @@ table-updated-example-rows: "Linhas de exemplo atualizadas, tipo de nota {name}"
 table-added-rows:
   one: "1 linha adicionada"
   other: "{n} linhas adicionadas"
+
+
+# ── Menu de contexto da tabela (table/table.py) ─────────────────────
+
+context-copy: "Copiar"
+context-paste: "Colar"
+context-clear: "Limpar"
+context-undo: "Desfazer"
+context-redo: "Refazer"
+context-insert-row: "Inserir linha"
+context-delete-row: "Excluir linha"
+context-update-selection: "Atualizar da seleção"
 
 
 # ── Grupo de texto (text/group.py) ──────────────────────────────────────
@@ -86,6 +103,9 @@ options-additional-text-placeholder: "ex. instruções para um LLM ..."
 
 bulk-add-invalid-yaml: "Corrija os erros de YAML na visualização de Texto antes de adicionar."
 bulk-add-no-content: "Nenhuma nota nova para adicionar"
+bulk-add-empty-sort:
+  one: "1 linha não tem conteúdo no campo de ordenação e será ignorada. Continuar?"
+  other: "{n} linhas não têm conteúdo no campo de ordenação e serão ignoradas. Continuar?"
 bulk-add-no-notes: "Nenhuma nota para adicionar"
 bulk-add-added:
   one: "1 nota adicionada"
@@ -146,7 +166,6 @@ help-table-desc: >-
   (editáveis, branco). Todas as colunas nas linhas editáveis podem ser editadas
   diretamente. A coluna do campo de classificação é destacada com uma cor de fundo quente.
 
-help-table-insert-clipboard: "Colar a área de transferência como novas linhas (uma linha por entrada)."
 help-table-update-selection: "Atualizar linhas de exemplo a partir da seleção atual."
 help-table-right-click-header: "Clique com botão direito no cabeçalho"
 help-table-right-click-header-desc: "Mostrar ou ocultar colunas."

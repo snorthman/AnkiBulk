@@ -40,8 +40,7 @@ def _html() -> str:
         _element('h3', tr("help-table-heading")),
         _element('p', tr("help-table-desc")),
         _element_table(
-            tr("table-insert-clipboard"), tr("help-table-insert-clipboard"),
-            tr("table-update-from-selection"), tr("help-table-update-selection"),
+            tr("table-update-from-selection-tooltip"), tr("help-table-update-selection"),
             tr("help-table-right-click-header"), tr("help-table-right-click-header-desc"),
             "Enter", tr("help-table-enter"),
             "Delete", tr("help-table-delete"),
@@ -62,9 +61,7 @@ def _html() -> str:
         '',
         _element('hr'),
         _element('p', *[
-            _element('a', tr("help-link-issues"), href=f'{github}/issues'), '&middot;',
-            _element('a', tr("help-link-discussions"), href=f'{github}/discussions'), '&middot;',
-            _element('a', tr("help-link-github"), href=github),
+            _element('a', tr("help-link-issues"), href=f'{github}/issues')
         ])
     ])
 
@@ -80,7 +77,9 @@ class Dialog(QDialog):
 
         browser = QTextBrowser()
         browser.setOpenExternalLinks(True)
-        browser.setStyleSheet("background-color: #F3F3F3; border: 0px;")
+        from aqt.theme import theme_manager
+        bg = "#2D2D2D" if theme_manager.night_mode else "#F3F3F3"
+        browser.setStyleSheet(f"background-color: {bg}; border: 0px;")
         browser.setHtml(_html())
 
         doc = browser.document()
