@@ -1,0 +1,1398 @@
+<title>AnkiBulk Manual Test Checklist</title>
+<style>
+  :root {
+    --bg: #F5F6F8;
+    --surface: #FFFFFF;
+    --text: #1A1D23;
+    --text-secondary: #555B66;
+    --accent: #4A6FA5;
+    --accent-light: #E8EEF6;
+    --border: #D8DBE2;
+    --pass: #3D8B5F;
+    --pass-bg: #EBF5F0;
+    --fail: #C0392B;
+    --fail-bg: #FDEDED;
+    --fail-border: #E8A9A3;
+    --fail-input-bg: #FFF8F7;
+    --warn: #C4842D;
+    --warn-bg: #FFF6E9;
+    --key-bg: #ECEEF2;
+    --key-border: #C8CBD2;
+    --key-shadow: #B0B3BA;
+    --section-stripe: #4A6FA5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14161B;
+      --surface: #1E2028;
+      --text: #E0E2E8;
+      --text-secondary: #8E93A0;
+      --accent: #7BA3D4;
+      --accent-light: #252A35;
+      --border: #2E3140;
+      --pass: #5DB87E;
+      --pass-bg: #1A2B22;
+      --fail: #E05A4E;
+      --fail-bg: #2B1A1A;
+      --fail-border: #4A2525;
+      --fail-input-bg: #251C1C;
+      --warn: #E0A54A;
+      --warn-bg: #2A2318;
+      --key-bg: #282B34;
+      --key-border: #3A3E4A;
+      --key-shadow: #10121A;
+      --section-stripe: #7BA3D4;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #14161B;
+    --surface: #1E2028;
+    --text: #E0E2E8;
+    --text-secondary: #8E93A0;
+    --accent: #7BA3D4;
+    --accent-light: #252A35;
+    --border: #2E3140;
+    --pass: #5DB87E;
+    --pass-bg: #1A2B22;
+    --fail: #E05A4E;
+    --fail-bg: #2B1A1A;
+    --fail-border: #4A2525;
+    --fail-input-bg: #251C1C;
+    --warn: #E0A54A;
+    --warn-bg: #2A2318;
+    --key-bg: #282B34;
+    --key-border: #3A3E4A;
+    --key-shadow: #10121A;
+    --section-stripe: #7BA3D4;
+  }
+  :root[data-theme="light"] {
+    --bg: #F5F6F8;
+    --surface: #FFFFFF;
+    --text: #1A1D23;
+    --text-secondary: #555B66;
+    --accent: #4A6FA5;
+    --accent-light: #E8EEF6;
+    --border: #D8DBE2;
+    --pass: #3D8B5F;
+    --pass-bg: #EBF5F0;
+    --fail: #C0392B;
+    --fail-bg: #FDEDED;
+    --fail-border: #E8A9A3;
+    --fail-input-bg: #FFF8F7;
+    --warn: #C4842D;
+    --warn-bg: #FFF6E9;
+    --key-bg: #ECEEF2;
+    --key-border: #C8CBD2;
+    --key-shadow: #B0B3BA;
+    --section-stripe: #4A6FA5;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+    padding: 2rem 1rem;
+  }
+
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  header {
+    margin-bottom: 2rem;
+  }
+
+  header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.35rem;
+  }
+
+  header .subtitle {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+  }
+
+  .progress-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    font-size: 0.8125rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-secondary);
+  }
+
+  .progress-track {
+    flex: 1;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .progress-fill-pass {
+    position: absolute;
+    left: 0; top: 0;
+    height: 100%;
+    background: var(--pass);
+    border-radius: 3px;
+    width: 0%;
+    transition: width 0.3s ease;
+  }
+
+  .progress-fill-fail {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background: var(--fail);
+    border-radius: 3px;
+    width: 0%;
+    transition: width 0.3s ease, left 0.3s ease;
+  }
+
+  .section {
+    margin-bottom: 1.75rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--section-stripe);
+  }
+
+  .section-header h2 {
+    font-size: 0.9375rem;
+    font-weight: 650;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .section-count {
+    margin-left: auto;
+    font-size: 0.75rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-secondary);
+  }
+
+  .test-item {
+    display: grid;
+    grid-template-columns: 28px 1fr auto;
+    gap: 0 0.625rem;
+    padding: 0.625rem 0.75rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 0.375rem;
+    transition: border-color 0.15s, background 0.15s;
+  }
+
+  .test-item:hover {
+    border-color: var(--accent);
+  }
+
+  .test-item.passed {
+    border-color: var(--pass);
+    background: var(--pass-bg);
+  }
+
+  .test-item.passed:hover {
+    border-color: var(--pass);
+  }
+
+  .test-item.failed {
+    border-color: var(--fail-border);
+    background: var(--fail-bg);
+  }
+
+  .test-item.failed:hover {
+    border-color: var(--fail);
+  }
+
+  .test-item .cb-cell {
+    display: flex;
+    align-items: start;
+    padding-top: 2px;
+  }
+
+  .test-item input[type="checkbox"] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    background: var(--surface);
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+
+  .test-item input[type="checkbox"]:checked {
+    background: var(--pass);
+    border-color: var(--pass);
+  }
+
+  .test-item input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 1px;
+    width: 6px;
+    height: 10px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  .test-item.failed input[type="checkbox"] {
+    border-color: var(--fail-border);
+  }
+
+  .test-item input[type="checkbox"]:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .test-content {
+    min-width: 0;
+  }
+
+  .action {
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .expect {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    margin-top: 0.2rem;
+  }
+
+  .fail-cell {
+    display: flex;
+    align-items: start;
+    padding-top: 1px;
+  }
+
+  .fail-btn {
+    font-family: inherit;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--surface);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+
+  .fail-btn:hover {
+    border-color: var(--fail);
+    color: var(--fail);
+  }
+
+  .test-item.failed .fail-btn {
+    background: var(--fail);
+    border-color: var(--fail);
+    color: #fff;
+  }
+
+  .fail-btn:focus-visible {
+    outline: 2px solid var(--fail);
+    outline-offset: 2px;
+  }
+
+  .fail-notes {
+    grid-column: 1 / -1;
+    margin-top: 0.5rem;
+    display: none;
+  }
+
+  .test-item.failed .fail-notes {
+    display: block;
+  }
+
+  .fail-notes textarea {
+    width: 100%;
+    font-family: inherit;
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    padding: 0.5rem;
+    border: 1px solid var(--fail-border);
+    border-radius: 4px;
+    background: var(--fail-input-bg);
+    color: var(--text);
+    resize: vertical;
+    min-height: 3rem;
+  }
+
+  .fail-notes textarea::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.7;
+  }
+
+  .fail-notes textarea:focus {
+    outline: 2px solid var(--fail);
+    outline-offset: -1px;
+    border-color: transparent;
+  }
+
+  kbd {
+    display: inline-block;
+    font-family: "Cascadia Code", "Consolas", "SF Mono", monospace;
+    font-size: 0.75rem;
+    padding: 1px 5px;
+    background: var(--key-bg);
+    border: 1px solid var(--key-border);
+    border-radius: 3px;
+    box-shadow: 0 1px 0 var(--key-shadow);
+    vertical-align: baseline;
+    line-height: 1.5;
+  }
+
+  .prereq {
+    font-size: 0.8125rem;
+    padding: 0.5rem 0.75rem;
+    background: var(--warn-bg);
+    border-left: 3px solid var(--warn);
+    border-radius: 0 4px 4px 0;
+    margin-bottom: 0.75rem;
+    color: var(--text);
+  }
+
+  .prereq strong {
+    color: var(--warn);
+    font-weight: 600;
+  }
+
+  .toolbar-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-family: inherit;
+    font-size: 0.8125rem;
+    padding: 0.375rem 0.75rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .toolbar-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .toolbar-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  footer {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .export-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: inherit;
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.5rem 1.25rem;
+    background: var(--accent);
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+
+  .export-btn:hover {
+    opacity: 0.88;
+  }
+
+  .export-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .export-hint {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .progress-fill-pass, .progress-fill-fail { transition: none; }
+    .test-item, .test-item input[type="checkbox"], .fail-btn { transition: none; }
+  }
+</style>
+
+<div class="container">
+  <header>
+    <h1>AnkiBulk Manual Test Checklist</h1>
+    <p class="subtitle">Actions to perform in Anki with the AnkiBulk addon running</p>
+    <div class="progress-bar">
+      <span class="progress-label">0 / 0</span>
+      <div class="progress-track">
+        <div class="progress-fill-pass"></div>
+        <div class="progress-fill-fail"></div>
+      </div>
+      <button class="toolbar-btn" onclick="resetAll()">Reset all</button>
+    </div>
+  </header>
+
+  <!-- SECTION: Opening & Setup -->
+  <div class="section" data-section="setup">
+    <div class="section-header">
+      <h2>Opening &amp; Setup</h2>
+      <span class="section-count"></span>
+    </div>
+    <div class="prereq"><strong>Prereq:</strong> Have a collection with at least 3-4 cards of the same notetype.</div>
+
+    <div class="test-item" data-id="setup-1">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Select 3+ cards in the browser, then open <kbd>AnkiBulk</kbd> &gt; <kbd>Bulk Add</kbd>.</div>
+        <div class="expect">Dialog opens. Example rows (grey, read-only) appear for each selected note. One blank editable row at the bottom. Notetype chooser is locked. Deck chooser reflects the first card's deck.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="setup-2">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Close the dialog. Deselect all cards in the browser, then reopen AnkiBulk.</div>
+        <div class="expect">Dialog opens with no example rows. Notetype chooser is unlocked. One blank editable row.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="setup-3">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">With the dialog open (no selection), change the notetype via the notetype chooser.</div>
+        <div class="expect">Table columns update to match the new notetype's fields. Sort field column header has "(sort field)" suffix.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+  </div>
+
+  <!-- SECTION: Cell Navigation -->
+  <div class="section" data-section="nav">
+    <div class="section-header">
+      <h2>Cell Navigation</h2>
+      <span class="section-count"></span>
+    </div>
+
+    <div class="test-item" data-id="nav-1">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Double-click a cell to enter edit mode. Type some text. Press <kbd>Tab</kbd>.</div>
+        <div class="expect">Commits cell, moves to the next visible column. At the last column, wraps to the first column of the next row. At the last column of the last row (with content), a new row is created.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="nav-2">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">In edit mode, press <kbd>Shift+Tab</kbd>.</div>
+        <div class="expect">Moves to the previous visible column. At the first column, wraps to the last column of the previous row.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="nav-3">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">In edit mode, type "hello". Place cursor at the end of the text. Press <kbd>&rarr;</kbd>.</div>
+        <div class="expect">Commits cell and moves one cell to the right (single step, not double).</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="nav-4">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">In edit mode, place cursor at position 0 (start of text). Press <kbd>&larr;</kbd>.</div>
+        <div class="expect">Commits cell and moves one cell to the left. Does NOT trigger when cursor is at position 1 or later.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="nav-5">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">In edit mode, press <kbd>&rarr;</kbd> when cursor is in the middle of the text.</div>
+        <div class="expect">Cursor moves within the text normally. Does not leave the cell.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="nav-6">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Double-click a cell containing text to enter edit mode.</div>
+        <div class="expect">Text is NOT selected. Cursor is placed at the start if you clicked the left half of the cell, or at the end if you clicked the right half.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+  </div>
+
+  <!-- SECTION: Row Creation -->
+  <div class="section" data-section="rows">
+    <div class="section-header">
+      <h2>Row Creation &amp; Deletion</h2>
+      <span class="section-count"></span>
+    </div>
+
+    <div class="test-item" data-id="rows-1">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">On the last editable row, type text in any cell (not just sort field). Press <kbd>Enter</kbd>.</div>
+        <div class="expect">A new blank row is created below. Cursor moves to that row, same column.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="rows-2">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">On the last editable row, leave all cells empty. Press <kbd>Enter</kbd>.</div>
+        <div class="expect">No new row is created. Cursor stays on the current row.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="rows-3">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">On the last editable row with content, press <kbd>&darr;</kbd> (both in edit mode and outside edit mode).</div>
+        <div class="expect">A new blank row is created. Cursor moves down, same column. In edit mode, the editor is committed first.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="rows-4">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">On the last editable row with all cells empty, press <kbd>&darr;</kbd>.</div>
+        <div class="expect">No new row is created.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="rows-5">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Place cursor on a row in the middle of the table. Click the <strong>Insert Row</strong> button.</div>
+        <div class="expect">A new row is inserted directly below the current row. Cursor moves to the new row, same column. Works regardless of whether the last row is empty.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="rows-6">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Place cursor on the last row (which is empty). Click the <strong>Insert Row</strong> button.</div>
+        <div class="expect">No new row is added. Cursor stays on the empty last row, same column.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="rows-7">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Select a row in the middle. Click the <strong>Delete Row</strong> button.</div>
+        <div class="expect">Row is removed. Cursor moves to the same position (or last row if at end). Current column is maintained.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="rows-8">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Delete all editable rows until only one remains.</div>
+        <div class="expect">The last editable row cannot be deleted. At least one editable row always exists.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+  </div>
+
+  <!-- SECTION: Selection & Multi-select -->
+  <div class="section" data-section="selection">
+    <div class="section-header">
+      <h2>Selection &amp; Multi-select</h2>
+      <span class="section-count"></span>
+    </div>
+
+    <div class="test-item" data-id="sel-1">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Click a cell, then click-drag across multiple cells.</div>
+        <div class="expect">All cells in the drag range are selected (highlighted).</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="sel-2">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Click a cell, then <kbd>Shift</kbd>+click a distant cell.</div>
+        <div class="expect">Rectangular selection from the anchor cell to the shift-clicked cell.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="sel-3">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Click a cell, then <kbd>Ctrl</kbd>+click a different cell.</div>
+        <div class="expect">Ctrl+click does NOT add individual cells to the selection. Only contiguous selection via click-drag or <kbd>Shift</kbd>+click is supported.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+  </div>
+
+  <!-- SECTION: Backspace & Delete -->
+  <div class="section" data-section="backspace-delete">
+    <div class="section-header">
+      <h2>Backspace &amp; Delete Keys</h2>
+      <span class="section-count"></span>
+    </div>
+
+    <div class="test-item" data-id="bksp-1">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Select a single cell with text (not in edit mode). Press <kbd>Backspace</kbd>.</div>
+        <div class="expect">Cell text is cleared and cell enters edit mode (cursor blinking in the now-empty cell).</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="bksp-2">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Select multiple cells across editable rows. Press <kbd>Backspace</kbd>.</div>
+        <div class="expect">Only the anchor cell (the first cell clicked) is cleared and enters edit mode. Other selected cells are untouched.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="bksp-3">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Select multiple cells with text. Press <kbd>Delete</kbd>.</div>
+        <div class="expect">All selected editable cells are cleared. No cell enters edit mode.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="bksp-4">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Select all cells of a single editable row (which has some text). Press <kbd>Delete</kbd> once to clear, then <kbd>Delete</kbd> again.</div>
+        <div class="expect">First press clears all cells. Second press deletes the row entirely (since all cells are empty and it's a single-row selection), unless it's the only editable row.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="bksp-5">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Try pressing <kbd>Backspace</kbd> or <kbd>Delete</kbd> on a read-only (grey) example row.</div>
+        <div class="expect">Nothing happens. Read-only cells are never modified.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+  </div>
+
+  <!-- SECTION: Context Menu -->
+  <div class="section" data-section="context">
+    <div class="section-header">
+      <h2>Context Menu (Right-click)</h2>
+      <span class="section-count"></span>
+    </div>
+
+    <div class="test-item" data-id="ctx-1">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Right-click on an editable cell with content. Choose <strong>Copy</strong>.</div>
+        <div class="expect">Cell content is placed on the clipboard.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="ctx-2">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Select a 2&times;2 block of cells with content. Right-click &gt; <strong>Copy</strong>. Open a text editor and paste.</div>
+        <div class="expect">Clipboard contains tab-separated values with newlines between rows (e.g. <code>a\tb\nc\td</code>).</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="ctx-3">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Copy a 2&times;2 block from Excel or a spreadsheet. Select a cell in AnkiBulk. Right-click &gt; <strong>Paste</strong>.</div>
+        <div class="expect">Content fills cells starting from the selected cell, respecting visible columns. All pasted cells become selected.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="ctx-4">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Copy 3 rows of data. Paste into a table that only has 1 editable row.</div>
+        <div class="expect">Two additional rows are created to accommodate the pasted data. All pasted cells selected.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="ctx-5">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Select editable cells with content. Right-click &gt; <strong>Clear</strong>.</div>
+        <div class="expect">All selected editable cells are emptied.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="ctx-6">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Right-click on a read-only example row.</div>
+        <div class="expect">Copy is enabled. Paste and Clear are disabled.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="ctx-7">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Right-click on an editable cell. Check the full context menu layout.</div>
+        <div class="expect">Menu shows: Copy, Paste, Clear | Undo, Redo | Insert Row, Delete Row | Update from Selection. Groups are separated by dividers.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="ctx-8">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Make edits, then right-click and choose <strong>Undo</strong>. Then right-click and choose <strong>Redo</strong>.</div>
+        <div class="expect">Same behavior as the toolbar Undo/Redo buttons and <kbd>Ctrl</kbd>+<kbd>Z</kbd>/<kbd>Y</kbd>. Undo/Redo are disabled when their stacks are empty.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="ctx-9">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Right-click and choose <strong>Insert Row</strong> and <strong>Delete Row</strong>.</div>
+        <div class="expect">Same behavior as the toolbar Insert/Delete Row buttons. Delete Row is disabled on read-only rows.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="ctx-10">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Right-click and choose <strong>Update from Selection</strong>.</div>
+        <div class="expect">Same behavior as the toolbar Update from Selection button and <kbd>Ctrl</kbd>+<kbd>R</kbd>.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+  </div>
+
+  <!-- SECTION: Keyboard Shortcuts -->
+  <div class="section" data-section="shortcuts">
+    <div class="section-header">
+      <h2>Keyboard Shortcuts</h2>
+      <span class="section-count"></span>
+    </div>
+
+    <div class="test-item" data-id="key-1">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Select cells, press <kbd>Ctrl</kbd>+<kbd>C</kbd>, then select a different cell and press <kbd>Ctrl</kbd>+<kbd>V</kbd>.</div>
+        <div class="expect">Identical behavior to the context menu Copy/Paste. Pasted cells are auto-selected.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="key-2">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Make some edits to cells. Press <kbd>Ctrl</kbd>+<kbd>Z</kbd>.</div>
+        <div class="expect">Last change is undone. Undo button in toolbar reflects state.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="key-3">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">After undoing, press <kbd>Ctrl</kbd>+<kbd>Y</kbd>.</div>
+        <div class="expect">Change is redone. Redo button in toolbar reflects state.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="key-4">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">While a cell editor is open (in edit mode), press <kbd>Ctrl</kbd>+<kbd>C</kbd> and <kbd>Ctrl</kbd>+<kbd>V</kbd>.</div>
+        <div class="expect">Normal text editing copy/paste within the cell. Does NOT trigger the table-level copy/paste.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+  </div>
+
+  <!-- SECTION: Undo/Redo -->
+  <div class="section" data-section="undo">
+    <div class="section-header">
+      <h2>Undo &amp; Redo</h2>
+      <span class="section-count"></span>
+    </div>
+
+    <div class="test-item" data-id="undo-1">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Type text into a cell, press <kbd>Enter</kbd> to commit. Click the <strong>Undo</strong> toolbar button.</div>
+        <div class="expect">Cell reverts to its previous content. Undo button disables when the stack is empty.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="undo-2">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Undo an action, then click the <strong>Redo</strong> toolbar button.</div>
+        <div class="expect">Change is reapplied. After making a new edit, redo stack is cleared.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="undo-3">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Delete a row, then undo.</div>
+        <div class="expect">The deleted row reappears with its content intact.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+  </div>
+
+  <!-- SECTION: Column Visibility -->
+  <div class="section" data-section="columns">
+    <div class="section-header">
+      <h2>Column Visibility</h2>
+      <span class="section-count"></span>
+    </div>
+
+    <div class="test-item" data-id="col-1">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Right-click on the table header row.</div>
+        <div class="expect">A menu appears with checkboxes for each column. Sort field column checkbox is disabled (cannot be hidden).</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="col-2">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Uncheck a column in the header context menu.</div>
+        <div class="expect">Column disappears. Menu stays open. Re-checking brings it back. Preference persists across sessions.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="col-3">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Hide a column, then use <kbd>Tab</kbd> to navigate through cells.</div>
+        <div class="expect">Tab skips the hidden column.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+  </div>
+
+  <!-- SECTION: Table / Text Toggle -->
+  <div class="section" data-section="toggle">
+    <div class="section-header">
+      <h2>Table / Text Toggle</h2>
+      <span class="section-count"></span>
+    </div>
+
+    <div class="test-item" data-id="tog-1">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Add some editable rows with data. Click the toggle to switch to <strong>Text</strong> view.</div>
+        <div class="expect">Text view shows YAML. Upper pane has example notes (read-only), lower pane has your editable notes.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="tog-2">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">In Text view, edit the YAML (valid changes). Toggle back to <strong>Table</strong>.</div>
+        <div class="expect">Table reflects the YAML changes. Data round-trips correctly.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="tog-3">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">In Text view, introduce a YAML syntax error (e.g. unclosed quote). Toggle back to Table.</div>
+        <div class="expect">A warning dialog appears. You can either cancel (stay in Text) or discard (return to Table with original data).</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="tog-4">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">On first-ever launch, observe the yellow hint label. Switch to Text view and back.</div>
+        <div class="expect">Hint disappears permanently after switching to Text view once.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+  </div>
+
+  <!-- SECTION: Update from Selection -->
+  <div class="section" data-section="update">
+    <div class="section-header">
+      <h2>Update from Selection (<kbd>Ctrl</kbd>+<kbd>R</kbd>)</h2>
+      <span class="section-count"></span>
+    </div>
+
+    <div class="test-item" data-id="upd-1">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">With the dialog open, change your browser selection to different cards (same notetype). Press <kbd>Ctrl</kbd>+<kbd>R</kbd>.</div>
+        <div class="expect">Example rows update to reflect the new selection. Your editable rows are preserved.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="upd-2">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Select cards of a different notetype. Press <kbd>Ctrl</kbd>+<kbd>R</kbd>.</div>
+        <div class="expect">A confirmation dialog warns about the notetype change and that editable data will be lost. Cancelling keeps old state.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="upd-3">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Deselect all cards in the browser. Press <kbd>Ctrl</kbd>+<kbd>R</kbd>.</div>
+        <div class="expect">Example rows are removed. Editable rows remain. Notetype chooser becomes unlocked.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+  </div>
+
+  <!-- SECTION: Toolbar: Copy / Paste / Clear -->
+  <div class="section" data-section="toolbar-cpc">
+    <div class="section-header">
+      <h2>Toolbar: Copy / Paste / Clear</h2>
+      <span class="section-count"></span>
+    </div>
+
+    <div class="test-item" data-id="tb-1">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Select cells with content. Click the <strong>Copy</strong> toolbar button.</div>
+        <div class="expect">Selected cells are copied to clipboard as tab-separated values (same as context menu Copy and <kbd>Ctrl</kbd>+<kbd>C</kbd>).</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="tb-2">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Copy data to clipboard, select a cell, click the <strong>Paste</strong> toolbar button.</div>
+        <div class="expect">Clipboard content is pasted starting at the selected cell (same as context menu Paste and <kbd>Ctrl</kbd>+<kbd>V</kbd>). New rows are created if needed.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="tb-3">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Select editable cells with content. Click the <strong>Clear</strong> toolbar button.</div>
+        <div class="expect">All selected editable cells are emptied (same as context menu Clear and <kbd>Delete</kbd>).</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="tb-4">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Clear the clipboard (copy empty text). Check the <strong>Paste</strong> toolbar button.</div>
+        <div class="expect">The Paste button is disabled (greyed out). It re-enables when text is copied to the clipboard.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+  </div>
+
+  <!-- SECTION: Bulk Add -->
+  <div class="section" data-section="bulk-add">
+    <div class="section-header">
+      <h2>Bulk Add</h2>
+      <span class="section-count"></span>
+    </div>
+
+    <div class="test-item" data-id="bulk-1">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Add 2-3 editable rows with content in the sort field and other fields. Click <strong>Bulk Add</strong>.</div>
+        <div class="expect">Notes are created. Tooltip says "N notes added". Dialog closes. Browser shows the newly added notes.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="bulk-2">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Add rows where some have content in non-sort fields but the sort field is empty. Click <strong>Bulk Add</strong>.</div>
+        <div class="expect">A warning dialog appears: "N rows have no content in their sort field and will be discarded. Continue?" Only rows with sort field content are added.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="bulk-3">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Leave all editable rows empty. Click <strong>Bulk Add</strong>.</div>
+        <div class="expect">Tooltip says "No new notes to add". Nothing happens.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="bulk-4">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Fill in Tags column for a row. Click <strong>Bulk Add</strong>.</div>
+        <div class="expect">The created note has the specified tags when viewed in the browser.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+  </div>
+
+  <!-- SECTION: Dialog Lifecycle -->
+  <div class="section" data-section="lifecycle">
+    <div class="section-header">
+      <h2>Dialog Lifecycle</h2>
+      <span class="section-count"></span>
+    </div>
+
+    <div class="test-item" data-id="life-1">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Add content to editable rows. Click <strong>Cancel</strong> or close the window.</div>
+        <div class="expect">A confirmation dialog asks whether to discard unsaved entries. Cancelling keeps the dialog open.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="life-2">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">With no editable content, close the dialog.</div>
+        <div class="expect">Dialog closes immediately without confirmation prompt.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="life-3">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">Resize the dialog, close it, then reopen.</div>
+        <div class="expect">Dialog reopens at the same size and position.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+
+    <div class="test-item" data-id="life-4">
+      <div class="cb-cell"><input type="checkbox"></div>
+      <div class="test-content">
+        <div class="action">With the dialog open, interact with the browser (click cards, navigate).</div>
+        <div class="expect">Dialog stays open (non-modal). Browser is fully interactive.</div>
+      </div>
+      <div class="fail-cell"><button class="fail-btn" onclick="toggleFail(this)">Fail</button></div>
+      <div class="fail-notes"><textarea placeholder="What went wrong?" oninput="saveState()"></textarea></div>
+    </div>
+  </div>
+
+  <footer>
+    <button class="export-btn" onclick="exportJSON()">Export results (.json)</button>
+    <span class="export-hint">Saves to tests/test_results.json</span>
+    <span style="flex:1"></span>
+    <button class="toolbar-btn" onclick="resetAll()">Reset all</button>
+  </footer>
+</div>
+
+<script>
+  const allItems = document.querySelectorAll('.test-item');
+  const allCheckboxes = document.querySelectorAll('.test-item input[type="checkbox"]');
+  const fillPass = document.querySelector('.progress-fill-pass');
+  const fillFail = document.querySelector('.progress-fill-fail');
+  const progressLabel = document.querySelector('.progress-label');
+  const STORAGE_KEY = 'ankibulk-test-checklist-v2';
+
+  function getItemState(item) {
+    if (item.classList.contains('failed')) return 'fail';
+    if (item.querySelector('input[type="checkbox"]').checked) return 'pass';
+    return 'untested';
+  }
+
+  function updateProgress() {
+    const total = allItems.length;
+    let passed = 0, failed = 0;
+    allItems.forEach(item => {
+      const s = getItemState(item);
+      if (s === 'pass') passed++;
+      if (s === 'fail') failed++;
+    });
+    const passPct = total ? (passed / total * 100) : 0;
+    const failPct = total ? (failed / total * 100) : 0;
+    fillPass.style.width = passPct + '%';
+    fillFail.style.left = passPct + '%';
+    fillFail.style.width = failPct + '%';
+    progressLabel.textContent = passed + ' passed, ' + failed + ' failed / ' + total;
+  }
+
+  function updateSectionCounts() {
+    document.querySelectorAll('.section').forEach(section => {
+      const items = section.querySelectorAll('.test-item');
+      let p = 0, f = 0;
+      items.forEach(item => {
+        const s = getItemState(item);
+        if (s === 'pass') p++;
+        if (s === 'fail') f++;
+      });
+      const counter = section.querySelector('.section-count');
+      if (!counter) return;
+      const parts = [];
+      if (p) parts.push(p + ' pass');
+      if (f) parts.push(f + ' fail');
+      counter.textContent = (parts.length ? parts.join(', ') : '0') + ' / ' + items.length;
+    });
+  }
+
+  function toggleFail(btn) {
+    const item = btn.closest('.test-item');
+    const cb = item.querySelector('input[type="checkbox"]');
+    const ta = item.querySelector('.fail-notes textarea');
+
+    if (item.classList.contains('failed')) {
+      item.classList.remove('failed');
+    } else {
+      item.classList.add('failed');
+      item.classList.remove('passed');
+      cb.checked = false;
+      setTimeout(() => ta.focus(), 50);
+    }
+    updateProgress();
+    updateSectionCounts();
+    saveState();
+  }
+
+  allCheckboxes.forEach(cb => {
+    cb.addEventListener('change', () => {
+      const item = cb.closest('.test-item');
+      if (cb.checked) {
+        item.classList.add('passed');
+        item.classList.remove('failed');
+      } else {
+        item.classList.remove('passed');
+      }
+      updateProgress();
+      updateSectionCounts();
+      saveState();
+    });
+  });
+
+  function saveState() {
+    const state = [];
+    allItems.forEach(item => {
+      state.push({
+        id: item.dataset.id,
+        status: getItemState(item),
+        notes: item.querySelector('.fail-notes textarea').value
+      });
+    });
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch {}
+  }
+
+  function loadState() {
+    try {
+      const state = JSON.parse(localStorage.getItem(STORAGE_KEY));
+      if (!state || !Array.isArray(state)) return;
+      const map = {};
+      state.forEach(s => { map[s.id] = s; });
+      allItems.forEach(item => {
+        const s = map[item.dataset.id];
+        if (!s) return;
+        const cb = item.querySelector('input[type="checkbox"]');
+        const ta = item.querySelector('.fail-notes textarea');
+        if (s.status === 'pass') {
+          cb.checked = true;
+          item.classList.add('passed');
+        } else if (s.status === 'fail') {
+          item.classList.add('failed');
+          cb.checked = false;
+        }
+        if (s.notes) ta.value = s.notes;
+      });
+    } catch {}
+  }
+
+  function resetAll() {
+    allItems.forEach(item => {
+      item.classList.remove('passed', 'failed');
+      item.querySelector('input[type="checkbox"]').checked = false;
+      item.querySelector('.fail-notes textarea').value = '';
+    });
+    updateProgress();
+    updateSectionCounts();
+    saveState();
+  }
+
+  function exportJSON() {
+    const results = {
+      exported_at: new Date().toISOString(),
+      summary: { total: 0, passed: 0, failed: 0, untested: 0 },
+      sections: []
+    };
+
+    document.querySelectorAll('.section').forEach(section => {
+      const sectionName = section.querySelector('.section-header h2').textContent.trim();
+      const tests = [];
+      section.querySelectorAll('.test-item').forEach(item => {
+        const status = getItemState(item);
+        const action = item.querySelector('.action').textContent.trim();
+        const expect = item.querySelector('.expect').textContent.trim();
+        const notes = item.querySelector('.fail-notes textarea').value.trim();
+        const entry = {
+          id: item.dataset.id,
+          status: status,
+          action: action,
+          expected: expect
+        };
+        if (notes) entry.notes = notes;
+        tests.push(entry);
+        results.summary.total++;
+        results.summary[status === 'untested' ? 'untested' : status === 'pass' ? 'passed' : 'failed']++;
+      });
+      results.sections.push({ name: sectionName, tests: tests });
+    });
+
+    const blob = new Blob([JSON.stringify(results, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'test_results.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  loadState();
+  updateProgress();
+  updateSectionCounts();
+</script>

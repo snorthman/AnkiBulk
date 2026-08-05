@@ -36,6 +36,10 @@ hint-first-time: >-
   afin de les modifier avec un LLM, un tableur ou un autre outil.
 
 
+hint-first-time-text: >-
+  Astuce : utilisez le bouton Paramètres pour configurer le format de copie, puis
+  copiez dans le presse-papiers et collez dans un LLM pour créer du contenu rapidement.
+
 # ── Groupe tableau (table/group.py) ────────────────────────────────────
 
 table-undo-tooltip: "Annuler (Ctrl+Z)"
@@ -43,8 +47,9 @@ table-redo-tooltip: "Rétablir (Ctrl+Y)"
 table-row-insert-tooltip: "Insérer une nouvelle ligne (Entrée)"
 table-row-remove-tooltip: "Supprimer la ligne sélectionnée (Suppr)"
 table-row-clear-tooltip: "Effacer le champ de tri, ou supprimer la ligne si vide (Retour arrière)"
-table-copy-clipboard-tooltip: "Copier l'ensemble du tableau dans le presse-papiers"
-table-insert-clipboard-tooltip: "Insérer les lignes du presse-papiers comme nouvelles lignes (Ctrl+V)"
+table-copy-tooltip: "Copier (Ctrl+C)"
+table-paste-tooltip: "Coller (Ctrl+V)"
+table-clear-tooltip: "Effacer (Suppr)"
 table-update-from-selection-tooltip: "Recharger les lignes d'exemple et le type de note depuis la sélection actuelle (Ctrl+R)"
 table-unsaved-title: "Entrées non enregistrées"
 table-unsaved-body: "Toutes les nouvelles entrées du tableau seront supprimées. Êtes-vous sûr ?"
@@ -55,6 +60,18 @@ table-updated-example-rows: "Lignes d'exemple mises à jour, type de note {name}
 table-added-rows:
   one: "1 ligne ajoutée"
   other: "{n} lignes ajoutées"
+
+
+# ── Menu contextuel du tableau (table/table.py) ─────────────────────
+
+context-copy: "Copier"
+context-paste: "Coller"
+context-clear: "Effacer"
+context-undo: "Annuler"
+context-redo: "Rétablir"
+context-insert-row: "Insérer une ligne"
+context-delete-row: "Supprimer la ligne"
+context-update-selection: "Mettre à jour depuis la sélection"
 
 
 # ── Groupe texte (text/group.py) ──────────────────────────────────────
@@ -86,6 +103,9 @@ options-additional-text-placeholder: "ex. instructions pour un LLM ..."
 
 bulk-add-invalid-yaml: "Corrigez les erreurs YAML dans la vue Texte avant d'ajouter."
 bulk-add-no-content: "Aucune nouvelle note à ajouter"
+bulk-add-empty-sort:
+  one: "1 ligne n'a pas de contenu dans le champ de tri et sera ignorée. Continuer ?"
+  other: "{n} lignes n'ont pas de contenu dans le champ de tri et seront ignorées. Continuer ?"
 bulk-add-no-notes: "Aucune note à ajouter"
 bulk-add-added:
   one: "1 note ajoutée"
@@ -146,7 +166,6 @@ help-table-desc: >-
   (modifiables, blanc). Toutes les colonnes des lignes modifiables peuvent être éditées
   directement. La colonne du champ de tri est mise en évidence avec une couleur de fond chaude.
 
-help-table-insert-clipboard: "Coller le presse-papiers comme nouvelles lignes (une ligne par entrée)."
 help-table-update-selection: "Rafraîchir les lignes d'exemple depuis la sélection actuelle."
 help-table-right-click-header: "Clic droit sur l'en-tête"
 help-table-right-click-header-desc: "Afficher ou masquer des colonnes."

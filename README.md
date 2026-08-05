@@ -14,11 +14,16 @@ Type words into the sort field column, one per row, then switch to Text view to 
 1. Open Anki and go to **Tools > Add-ons > Get Add-ons**.
 2. Paste the add-on code and restart Anki.
 
+## Version History
+
+- **V1.1** - Improved table editing (Tab/arrow navigation, context menu, better copy/paste/clear and undo/redo), Anki dark mode support.
+- **V1.0** - Initial release.
+
 ## Usage
 
 ### Browser selection
 
-Select one or more cards in the browser before opening AnkiBulk. The first card's notetype determines the table columns, and all selected notes appear as read-only example rows (grey). These examples give context when filling in new notes — for instance, an LLM can see your existing cards and match the style. If nothing is selected, you can choose any notetype manually.
+Select one or more cards in the browser before opening AnkiBulk. The first card's notetype determines the table columns, and all selected notes appear as read-only example rows (grey). These examples give context when filling in new notes, for instance, an LLM can see your existing cards and match the style. If nothing is selected, you can choose any notetype manually.
 
 Open AnkiBulk from the browser menu: **AnkiBulk > Bulk Add**.
 
@@ -64,7 +69,6 @@ Click **Bulk Add** to create notes from all editable rows that have content in t
 ## Contribute
 
 - [Report an issue](https://github.com/snorthman/AnkiBulk/issues)
-- [Suggestions & discussion](https://github.com/snorthman/AnkiBulk/discussions)
 
 _Tested extensively with Anki version 25.09; your results may vary for earlier versions._
 

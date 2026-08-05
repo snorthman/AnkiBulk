@@ -8,6 +8,7 @@ from aqt import AnkiQt
 from aqt.qt import (
     QApplication,
     QMessageBox,
+    Qt,
     qconnect,
 )
 from aqt.utils import tooltip
@@ -20,6 +21,7 @@ from ..i18n import tr
 from .table import Table
 from ..toggle import ToggleSwitch
 from ..group import Group
+from . import context as _ctx
 
 
 class TableGroup(Group):
@@ -33,6 +35,12 @@ class TableGroup(Group):
         self.chooser = chooser
 
         # ---- Icon toolbar (top row, right of toggle) ----
+        self._copy_button = self._add_icon_button("copy", tr("table-copy-tooltip"), self._on_copy)
+        self._paste_button = self._add_icon_button("paste", tr("table-paste-tooltip"), self._on_paste)
+        self._add_icon_button("clear", tr("table-clear-tooltip"), self._on_clear)
+
+        self._add_separator()
+
         self._undo_button = self._add_icon_button("undo", tr("table-undo-tooltip"), self._on_undo)
         self._redo_button = self._add_icon_button("redo", tr("table-redo-tooltip"), self._on_redo)
         self._undo_button.setEnabled(False)
@@ -45,25 +53,24 @@ class TableGroup(Group):
 
         self._add_separator()
 
-        self._add_icon_button("clipboard-copy", tr("table-copy-clipboard-tooltip"), self._on_copy_clipboard)
-        self._clipboard_paste_button = self._add_icon_button("clipboard-plus", tr("table-insert-clipboard-tooltip"), self._on_insert_clipboard)
-        self._update_clipboard_paste_button()
+        self._add_icon_button("reload", tr("table-update-from-selection-tooltip"), self._on_update_from_selection)
 
-        # Poll clipboard changes to keep button state in sync
+        # Clipboard monitoring for paste button state
+        self._update_paste_button()
         clipboard = QApplication.clipboard()
         if clipboard is not None:
-            qconnect(clipboard.dataChanged, self._update_clipboard_paste_button)
-            qconnect(self.destroyed, lambda: clipboard.dataChanged.disconnect(self._update_clipboard_paste_button))
-
-        self._add_separator()
-
-        self._add_icon_button("reload", tr("table-update-from-selection-tooltip"), self._on_update_from_selection)
+            qconnect(clipboard.dataChanged, self._update_paste_button)
+            qconnect(self.destroyed, lambda: clipboard.dataChanged.disconnect(self._update_paste_button))
 
         # ---- Table ----
         layout = self.layout()
         self.table = Table(mw)
         self.table.undo_changed = self._update_undo_buttons
         layout.addWidget(self.table, stretch=1)
+
+        # Context menu on table
+        self.table.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
+        qconnect(self.table.customContextMenuRequested, lambda pos: _ctx.show_context_menu(self.table, pos, self))
 
     @property
     def index(self) -> int:
@@ -91,6 +98,25 @@ class TableGroup(Group):
         box.exec()
         return box.clickedButton() == confirm
 
+    # ---- copy / paste / clear --------------------------------------------
+
+    def _on_copy(self) -> None:
+        _ctx.copy(self.table)
+
+    def _on_paste(self) -> None:
+        _ctx.paste(self.table)
+
+    def _on_clear(self) -> None:
+        _ctx.clear(self.table)
+
+    def _update_paste_button(self) -> None:
+        clipboard = QApplication.clipboard()
+        if clipboard is None:
+            return
+        text = clipboard.text()
+        self._paste_button.setEnabled(bool(text and text.strip()))
+
+    # ---- undo / redo -----------------------------------------------------
 
     def _update_undo_buttons(self) -> None:
         self._undo_button.setEnabled(self.table.can_undo)
@@ -104,29 +130,37 @@ class TableGroup(Group):
         self.table.redo()
         self._update_undo_buttons()
 
+    # ---- row management --------------------------------------------------
 
     def _on_insert_row(self) -> None:
         table = self.table
+        col = table.currentColumn()
         row = table.currentRow()
         if row < table.first_editable_row:
             insert_at = table.first_editable_row
         else:
             insert_at = row + 1
+        if insert_at >= table.rowCount():
+            last = table.rowCount() - 1
+            if last >= table.first_editable_row and not table._row_has_content(last):
+                table.setCurrentCell(last, col)
+                return
         table.push_undo()
         table.insert_row(insert_at)
-        table.setCurrentCell(insert_at, table.sort_col)
+        table.setCurrentCell(insert_at, col)
         self._update_undo_buttons()
 
     def _on_remove_row(self) -> None:
         table = self.table
         row = table.currentRow()
+        col = table.currentColumn()
         if row < table.first_editable_row:
             return
         table.push_undo()
         table.removeRow(row)
         if (table.rowCount() - table.first_editable_row) < 1:
             table.add_row()
-        table.setCurrentCell(min(row, table.rowCount() - 1), table.sort_col)
+        table.setCurrentCell(min(row, table.rowCount() - 1), col)
         self._update_undo_buttons()
 
     # ---- selection -------------------------------------------------------
@@ -203,9 +237,8 @@ class TableGroup(Group):
         if same_notetype:
             # Preserve editable rows, just refresh the data rows
             editable_snapshot = self.table.snapshot()
-            # Strip trailing empty rows from the snapshot
-            sort_col = self.table.sort_col
-            while editable_snapshot and not editable_snapshot[-1][sort_col].strip():
+            # Strip trailing completely empty rows from the snapshot
+            while editable_snapshot and not any(cell.strip() for cell in editable_snapshot[-1]):
                 editable_snapshot.pop()
             self.load_from_selection()
             # Restore editable rows on top of the new data rows
@@ -226,76 +259,3 @@ class TableGroup(Group):
             self.load_from_selection()
 
         tooltip(tr("table-updated-example-rows", name=self.table.current_notetype["name"]))
-
-    # ---- clipboard -------------------------------------------------------
-
-    def _update_clipboard_paste_button(self) -> None:
-        clipboard = QApplication.clipboard()
-        if clipboard is None:
-            return
-        text = clipboard.text()
-        self._clipboard_paste_button.setEnabled(bool(text and text.strip()))
-
-    def _on_copy_clipboard(self) -> None:
-        """Copy the entire table (header + all rows) to clipboard as TSV."""
-        table = self.table
-        visible = table.visible_columns
-        if not visible:
-            return
-
-        lines: list[str] = []
-        lines.append("\t".join(name for _, name in visible))
-        for r in range(table.rowCount()):
-            cells: list[str] = []
-            for c, _ in visible:
-                item = table.item(r, c)
-                cells.append(item.text() if item else "")
-            lines.append("\t".join(cells))
-
-        clipboard = QApplication.clipboard()
-        if clipboard is not None:
-            clipboard.setText("\n".join(lines))
-            tooltip(tr("text-copied"))
-
-    def _on_insert_clipboard(self) -> None:
-        """Split clipboard text by newlines and insert as editable rows."""
-        clipboard = QApplication.clipboard()
-        if clipboard is None:
-            return
-
-        text = clipboard.text()
-        if not text or not text.strip():
-            return
-
-        lines = [line.strip() for line in text.split("\n") if line.strip()]
-        if not lines:
-            return
-
-        table = self.table
-        table.push_undo()
-
-        # Determine insertion point: on the row if it's empty, otherwise after it
-        row = table.currentRow()
-        if row < table.first_editable_row or row < 0:
-            insert_at = table.first_editable_row
-        else:
-            sort_item = table.item(row, table.sort_col)
-            if sort_item is None or not sort_item.text().strip():
-                table.removeRow(row)
-                insert_at = row
-            else:
-                insert_at = row + 1
-
-        for i, line in enumerate(lines):
-            values = [""] * table.columnCount()
-            values[table.sort_col] = line
-            table.insert_row(insert_at + i, *values)
-
-        # Ensure there's an empty row at the end
-        after_last = insert_at + len(lines)
-        if after_last >= table.rowCount():
-            table.add_row()
-
-        table.setCurrentCell(after_last, table.sort_col)
-        self._update_undo_buttons()
-        tooltip(tr("table-added-rows", n=len(lines)))

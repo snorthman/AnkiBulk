@@ -36,6 +36,10 @@ hint-first-time: >-
   ताकि आप इन पंक्तियों को LLM, स्प्रेडशीट या अन्य उपकरण से संपादित कर सकें।
 
 
+hint-first-time-text: >-
+  सुझाव: कॉपी प्रारूप कॉन्फ़िगर करने के लिए सेटिंग्स बटन का उपयोग करें, फिर
+  क्लिपबोर्ड पर कॉपी करें और त्वरित सामग्री निर्माण के लिए LLM में पेस्ट करें।
+
 # ── तालिका समूह (table/group.py) ────────────────────────────────────
 
 table-undo-tooltip: "पूर्ववत करें (Ctrl+Z)"
@@ -43,8 +47,9 @@ table-redo-tooltip: "फिर से करें (Ctrl+Y)"
 table-row-insert-tooltip: "नई पंक्ति डालें (Enter)"
 table-row-remove-tooltip: "चयनित पंक्ति हटाएँ (Delete)"
 table-row-clear-tooltip: "क्रम फ़ील्ड साफ़ करें, या खाली होने पर पंक्ति हटाएँ (Backspace)"
-table-copy-clipboard-tooltip: "पूरी तालिका क्लिपबोर्ड पर कॉपी करें"
-table-insert-clipboard-tooltip: "क्लिपबोर्ड पंक्तियों को नई पंक्तियों के रूप में डालें (Ctrl+V)"
+table-copy-tooltip: "कॉपी (Ctrl+C)"
+table-paste-tooltip: "पेस्ट (Ctrl+V)"
+table-clear-tooltip: "साफ़ (Delete)"
 table-update-from-selection-tooltip: "वर्तमान ब्राउज़र चयन से उदाहरण पंक्तियाँ और नोट प्रकार पुनः लोड करें (Ctrl+R)"
 table-unsaved-title: "सहेजी नहीं गई प्रविष्टियाँ"
 table-unsaved-body: "तालिका की सभी नई प्रविष्टियाँ हटा दी जाएँगी। क्या आप सुनिश्चित हैं?"
@@ -55,6 +60,18 @@ table-updated-example-rows: "उदाहरण पंक्तियाँ अ�
 table-added-rows:
   one: "1 पंक्ति जोड़ी गई"
   other: "{n} पंक्तियाँ जोड़ी गईं"
+
+
+# ── तालिका संदर्भ मेनू (table/table.py) ──────────────────────────────
+
+context-copy: "कॉपी करें"
+context-paste: "चिपकाएँ"
+context-clear: "साफ़ करें"
+context-undo: "पूर्ववत"
+context-redo: "फिर से"
+context-insert-row: "पंक्ति डालें"
+context-delete-row: "पंक्ति हटाएँ"
+context-update-selection: "चयन से अपडेट करें"
 
 
 # ── पाठ समूह (text/group.py) ──────────────────────────────────────
@@ -86,6 +103,9 @@ options-additional-text-placeholder: "जैसे LLM के लिए नि�
 
 bulk-add-invalid-yaml: "जोड़ने से पहले पाठ दृश्य में YAML त्रुटियाँ ठीक करें।"
 bulk-add-no-content: "जोड़ने के लिए कोई नए नोट नहीं"
+bulk-add-empty-sort:
+  one: "1 पंक्ति में क्रम फ़ील्ड खाली है और छोड़ दी जाएगी। जारी रखें?"
+  other: "{n} पंक्तियों में क्रम फ़ील्ड खाली है और छोड़ दी जाएँगी। जारी रखें?"
 bulk-add-no-notes: "जोड़ने के लिए कोई नोट नहीं"
 bulk-add-added:
   one: "1 नोट जोड़ा गया"
@@ -146,7 +166,6 @@ help-table-desc: >-
   (संपादन योग्य, सफ़ेद) दिखाती है। संपादन योग्य पंक्तियों के सभी कॉलम सीधे
   संपादित किए जा सकते हैं। क्रम फ़ील्ड कॉलम गर्म पृष्ठभूमि रंग से हाइलाइट है।
 
-help-table-insert-clipboard: "क्लिपबोर्ड को नई पंक्तियों के रूप में चिपकाएँ (प्रति पंक्ति एक प्रविष्टि)।"
 help-table-update-selection: "वर्तमान ब्राउज़र चयन से उदाहरण पंक्तियाँ ताज़ा करें।"
 help-table-right-click-header: "हेडर पर राइट-क्लिक"
 help-table-right-click-header-desc: "कॉलम दिखाएँ या छिपाएँ।"

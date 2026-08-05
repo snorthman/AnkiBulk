@@ -36,6 +36,10 @@ hint-first-time: >-
   LLM、スプレッドシート、その他のツールで行を編集できます。
 
 
+hint-first-time-text: >-
+  ヒント：設定ボタンでコピー形式を設定し、
+  クリップボードにコピーしてLLMに貼り付けると、素早くコンテンツを作成できます。
+
 # ── テーブルグループ (table/group.py) ────────────────────────────────────
 
 table-undo-tooltip: "元に戻す (Ctrl+Z)"
@@ -43,8 +47,9 @@ table-redo-tooltip: "やり直し (Ctrl+Y)"
 table-row-insert-tooltip: "新しい行を挿入 (Enter)"
 table-row-remove-tooltip: "選択した行を削除 (Delete)"
 table-row-clear-tooltip: "ソートフィールドをクリア、または空なら行を削除 (Backspace)"
-table-copy-clipboard-tooltip: "テーブル全体をクリップボードにコピー"
-table-insert-clipboard-tooltip: "クリップボードの行を新しい行として挿入 (Ctrl+V)"
+table-copy-tooltip: "コピー (Ctrl+C)"
+table-paste-tooltip: "貼り付け (Ctrl+V)"
+table-clear-tooltip: "クリア (Delete)"
 table-update-from-selection-tooltip: "現在のブラウザ選択から例の行とノートタイプを再読み込み (Ctrl+R)"
 table-unsaved-title: "未保存のエントリ"
 table-unsaved-body: "テーブルのすべての新しいエントリが破棄されます。よろしいですか？"
@@ -55,6 +60,18 @@ table-updated-example-rows: "例の行を更新しました。ノートタイプ
 table-added-rows:
   one: "1行追加しました"
   other: "{n}行追加しました"
+
+
+# ── テーブルコンテキストメニュー (table/table.py) ──────────────────────────
+
+context-copy: "コピー"
+context-paste: "貼り付け"
+context-clear: "クリア"
+context-undo: "元に戻す"
+context-redo: "やり直し"
+context-insert-row: "行を挿入"
+context-delete-row: "行を削除"
+context-update-selection: "選択から更新"
 
 
 # ── テキストグループ (text/group.py) ──────────────────────────────────────
@@ -86,6 +103,9 @@ options-additional-text-placeholder: "例：LLMへの指示 ..."
 
 bulk-add-invalid-yaml: "追加する前にテキストビューのYAMLエラーを修正してください。"
 bulk-add-no-content: "追加する新しいノートがありません"
+bulk-add-empty-sort:
+  one: "1行のソートフィールドが空のためスキップされます。続行しますか？"
+  other: "{n}行のソートフィールドが空のためスキップされます。続行しますか？"
 bulk-add-no-notes: "追加するノートがありません"
 bulk-add-added:
   one: "1件のノートを追加しました"
@@ -146,7 +166,6 @@ help-table-desc: >-
   （編集可能、白）が表示されます。編集可能な行のすべての列を直接編集できます。
   ソートフィールド列は暖色の背景色で強調表示されます。
 
-help-table-insert-clipboard: "クリップボードを新しい行として貼り付け（1行につき1エントリ）。"
 help-table-update-selection: "現在のブラウザ選択から例の行を更新。"
 help-table-right-click-header: "ヘッダーを右クリック"
 help-table-right-click-header-desc: "列の表示/非表示を切り替え。"

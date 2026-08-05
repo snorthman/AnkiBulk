@@ -36,6 +36,10 @@ hint-first-time: >-
   y así editarlas con un LLM, una hoja de cálculo u otra herramienta.
 
 
+hint-first-time-text: >-
+  Consejo: usa el botón de Ajustes para configurar el formato de copia, luego
+  copia al portapapeles y pégalo en un LLM para crear contenido rápidamente.
+
 # ── Grupo de tabla (table/group.py) ────────────────────────────────────
 
 table-undo-tooltip: "Deshacer (Ctrl+Z)"
@@ -43,8 +47,9 @@ table-redo-tooltip: "Rehacer (Ctrl+Y)"
 table-row-insert-tooltip: "Insertar una nueva fila (Enter)"
 table-row-remove-tooltip: "Eliminar la fila seleccionada (Supr)"
 table-row-clear-tooltip: "Limpiar el campo de orden, o eliminar la fila si está vacía (Retroceso)"
-table-copy-clipboard-tooltip: "Copiar toda la tabla al portapapeles"
-table-insert-clipboard-tooltip: "Insertar líneas del portapapeles como nuevas filas (Ctrl+V)"
+table-copy-tooltip: "Copiar (Ctrl+C)"
+table-paste-tooltip: "Pegar (Ctrl+V)"
+table-clear-tooltip: "Limpiar (Supr)"
 table-update-from-selection-tooltip: "Recargar filas de ejemplo y tipo de nota según la selección actual (Ctrl+R)"
 table-unsaved-title: "Entradas sin guardar"
 table-unsaved-body: "Se descartarán todas las nuevas entradas de la tabla. ¿Estás seguro?"
@@ -55,6 +60,18 @@ table-updated-example-rows: "Filas de ejemplo actualizadas, tipo de nota {name}"
 table-added-rows:
   one: "1 fila agregada"
   other: "{n} filas agregadas"
+
+
+# ── Menú contextual de tabla (table/table.py) ───────────────────────
+
+context-copy: "Copiar"
+context-paste: "Pegar"
+context-clear: "Borrar"
+context-undo: "Deshacer"
+context-redo: "Rehacer"
+context-insert-row: "Insertar fila"
+context-delete-row: "Eliminar fila"
+context-update-selection: "Actualizar desde selección"
 
 
 # ── Grupo de texto (text/group.py) ──────────────────────────────────────
@@ -86,6 +103,9 @@ options-additional-text-placeholder: "ej. instrucciones para un LLM ..."
 
 bulk-add-invalid-yaml: "Corrige los errores de YAML en la vista de Texto antes de agregar."
 bulk-add-no-content: "No hay notas nuevas para agregar"
+bulk-add-empty-sort:
+  one: "1 fila no tiene contenido en el campo de orden y se omitirá. ¿Continuar?"
+  other: "{n} filas no tienen contenido en el campo de orden y se omitirán. ¿Continuar?"
 bulk-add-no-notes: "No hay notas para agregar"
 bulk-add-added:
   one: "1 nota agregada"
@@ -146,7 +166,6 @@ help-table-desc: >-
   (editables, blanco). Todas las columnas en las filas editables se pueden editar
   directamente. La columna del campo de orden está resaltada con un color de fondo cálido.
 
-help-table-insert-clipboard: "Pegar el portapapeles como nuevas filas (una fila por línea)."
 help-table-update-selection: "Actualizar filas de ejemplo desde la selección actual."
 help-table-right-click-header: "Clic derecho en el encabezado"
 help-table-right-click-header-desc: "Mostrar u ocultar columnas."

@@ -36,6 +36,10 @@ hint-first-time: >-
   damit du die Zeilen mit einem LLM, einer Tabellenkalkulation oder einem anderen Werkzeug bearbeiten kannst.
 
 
+hint-first-time-text: >-
+  Tipp: Verwende die Einstellungen-Schaltfläche, um das Kopierformat zu konfigurieren, dann
+  kopiere in die Zwischenablage und füge es in ein LLM ein, um schnell Inhalte zu erstellen.
+
 # ── Table group (table/group.py) ────────────────────────────────────
 
 table-undo-tooltip: "Rückgängig (Strg+Z)"
@@ -43,8 +47,9 @@ table-redo-tooltip: "Wiederherstellen (Strg+Y)"
 table-row-insert-tooltip: "Neue Zeile einfügen (Eingabe)"
 table-row-remove-tooltip: "Ausgewählte Zeile löschen (Entf)"
 table-row-clear-tooltip: "Sortierfeld leeren oder Zeile löschen, wenn leer (Rücktaste)"
-table-copy-clipboard-tooltip: "Gesamte Tabelle in die Zwischenablage kopieren"
-table-insert-clipboard-tooltip: "Zwischenablage-Zeilen als neue Zeilen einfügen (Strg+V)"
+table-copy-tooltip: "Kopieren (Strg+C)"
+table-paste-tooltip: "Einfügen (Strg+V)"
+table-clear-tooltip: "Leeren (Entf)"
 table-update-from-selection-tooltip: "Beispielzeilen und Notiztyp aus der aktuellen Browserauswahl aktualisieren (Strg+R)"
 table-unsaved-title: "Ungespeicherte Einträge"
 table-unsaved-body: "Alle neuen Einträge in der Tabelle werden verworfen. Bist du sicher?"
@@ -55,6 +60,18 @@ table-updated-example-rows: "Beispielzeilen aktualisiert, Notiztyp {name}"
 table-added-rows:
   one: "1 Zeile hinzugefügt"
   other: "{n} Zeilen hinzugefügt"
+
+
+# ── Table context menu (table/table.py) ─────────────────────────────
+
+context-copy: "Kopieren"
+context-paste: "Einfügen"
+context-clear: "Leeren"
+context-undo: "Rückgängig"
+context-redo: "Wiederherstellen"
+context-insert-row: "Zeile einfügen"
+context-delete-row: "Zeile löschen"
+context-update-selection: "Aus Auswahl aktualisieren"
 
 
 # ── Text group (text/group.py) ──────────────────────────────────────
@@ -86,6 +103,9 @@ options-additional-text-placeholder: "z. B. Anweisungen für ein LLM ..."
 
 bulk-add-invalid-yaml: "Behebe zuerst die YAML-Fehler in der Textansicht."
 bulk-add-no-content: "Keine neuen Notizen zum Hinzufügen"
+bulk-add-empty-sort:
+  one: "1 Zeile hat keinen Inhalt im Sortierfeld und wird übersprungen. Fortfahren?"
+  other: "{n} Zeilen haben keinen Inhalt im Sortierfeld und werden übersprungen. Fortfahren?"
 bulk-add-no-notes: "Keine Notizen zum Hinzufügen"
 bulk-add-added:
   one: "1 Notiz hinzugefügt"
@@ -147,7 +167,6 @@ help-table-desc: >-
   direkt bearbeitet werden. Die Sortierfeldspalte ist mit einer warmen
   Hintergrundfarbe hervorgehoben.
 
-help-table-insert-clipboard: "Zwischenablage als neue Zeilen einfügen (eine Zeile pro Eintrag)."
 help-table-update-selection: "Beispielzeilen aus der aktuellen Browserauswahl aktualisieren."
 help-table-right-click-header: "Rechtsklick auf Kopfzeile"
 help-table-right-click-header-desc: "Spalten ein- oder ausblenden."

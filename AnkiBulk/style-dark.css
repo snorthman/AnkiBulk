@@ -1,0 +1,89 @@
+/* ================================================================
+   AnkiBulk — Dark mode stylesheet
+   ================================================================ */
+
+
+/* -- Content group box ------------------------------------------- */
+
+QGroupBox#contentGroup {
+    padding: 0px;
+    margin: 0px;
+    border: 1px solid #4A4A4A;
+}
+
+
+/* -- Icon toolbar buttons ---------------------------------------- */
+
+QPushButton#iconBtn {
+    border: 1px solid #4A4A4A;
+    border-radius: 3px;
+    padding: 1px;
+    background: transparent;
+    min-width: 24px;
+    min-height: 24px;
+    max-width: 24px;
+    max-height: 24px;
+}
+
+QPushButton#iconBtn:hover {
+    border: 1px solid #666666;
+    background-color: #3A3A3A;
+}
+
+QPushButton#iconBtn:pressed {
+    border: 1px solid #777777;
+    background-color: #444444;
+}
+
+QPushButton#iconBtn:disabled {
+    opacity: 0.4;
+}
+
+/* Button group: flush buttons with rounded outer corners only */
+QPushButton#iconBtn[btnPos="first"] {
+    border-radius: 3px 0px 0px 3px;
+    border-right: none;
+}
+QPushButton#iconBtn[btnPos="middle"] {
+    border-radius: 0px;
+    border-right: none;
+}
+QPushButton#iconBtn[btnPos="last"] {
+    border-radius: 0px 3px 3px 0px;
+}
+QPushButton#iconBtn[btnPos="solo"] {
+    border-radius: 3px;
+}
+
+/* Restore full border on hover/pressed for grouped buttons */
+QPushButton#iconBtn[btnPos="first"]:hover,
+QPushButton#iconBtn[btnPos="middle"]:hover {
+    border-right: 1px solid #666666;
+}
+QPushButton#iconBtn[btnPos="first"]:pressed,
+QPushButton#iconBtn[btnPos="middle"]:pressed {
+    border-right: 1px solid #777777;
+}
+
+/* Button group container spacing */
+QWidget#btnGroup { margin: 0px 2px; }
+
+
+/* -- TableGroup -------------------------------------------------- */
+
+#tableGroup {
+    background-color: #2D2D2D;
+}
+
+
+/* Existing notes (read-only) */
+#textExamples {
+    background-color: #2D2D2D;
+}
+
+#firstTimeHint {
+    background-color: #3D3A1E;
+    border: 2px solid #888888;
+    color: #E0E0E0;
+    padding: 6px 10px;
+}
